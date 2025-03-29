@@ -1,0 +1,5 @@
+;
+===============================================
+(define-public (hello-world)
+  (print "Hello, World!")
+)

@@ -1,0 +1,10 @@
+//
+===============================================
+import ballerina/http;
+import ballerinax/googleapis.sheets;
+
+configurable string githubPAT = ?;
+configurable string repository = "ballerina-platform/ballerina-lang";
+configurable string sheetsAccessToken = ?;
+configurable string spreadSheetId = ?;
+config

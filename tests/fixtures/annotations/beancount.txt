@@ -1,0 +1,5 @@
+;
+===============================================
+2015-01-01 * "Taxi home from concert in Brooklyn"
+  Assets:Cash      -20 USD  ; inline comment
+  Expenses:Taxi

@@ -1,0 +1,32 @@
+:::config { "language": "php" }
+// torchlight! {"diffIndicators": false, "lineNumbers": false}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+
+        // Add Torchlight syntax highlighting.
+        SomeOtherHighlighter::class, // [tl! remove]
+        TorchlightExtension::class, // [tl! add]
+    ]
+]
+:::expectation
+<pre class='phiki language-php nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='php' class='torchlight has-remove-lines has-add-lines' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #81A1C1;">return</span><span class="token"> </span><span class="token" style="color: #ECEFF4;">[</span><span class="token">
+</span></div><div class='line'><span class="token">    </span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">extensions</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token"> </span><span class="token" style="color: #81A1C1;">=&gt;</span><span class="token"> </span><span class="token" style="color: #ECEFF4;">[</span><span class="token">
+</span></div><div class='line'><span class="token">        </span><span class="token" style="color: #616E88;">//</span><span class="token" style="color: #616E88;"> Add attributes straight from markdown.
+</span></div><div class='line'><span class="token">        </span><span class="token" style="color: #8FBCBB;">AttributesExtension</span><span class="token" style="color: #81A1C1;">::</span><span class="token" style="color: #81A1C1;">class</span><span class="token" style="color: #ECEFF4;">,</span><span class="token">
+</span></div><div class='line'><span class="token">
+</span></div><div class='line'><span class="token">        </span><span class="token" style="color: #616E88;">//</span><span class="token" style="color: #616E88;"> Add Torchlight syntax highlighting.
+</span></div><div style="background: #bf616a4d"class='line line-remove line-has-background'><span class="token">        </span><span class="token" style="color: #BF616A;">SomeOtherHighlighter</span><span class="token" style="color: #BF616A;">::</span><span class="token" style="color: #BF616A;">class</span><span class="token" style="color: #BF616A;">,</span><span class="token"> </span></div><div style="background: #81a1c133"class='line line-add line-has-background'><span class="token">        </span><span class="token" style="color: #A3BE8C;">TorchlightExtension</span><span class="token" style="color: #A3BE8C;">::</span><span class="token" style="color: #A3BE8C;">class</span><span class="token" style="color: #A3BE8C;">,</span><span class="token"> </span></div><div class='line'><span class="token">    </span><span class="token" style="color: #ECEFF4;">]</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">]</span><span class="token">
+</span></div></code></pre>
+:::end
+<pre class='phiki language-php nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='php' class='torchlight has-remove-lines has-add-lines' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #81A1C1;">return</span><span class="token"> </span><span class="token" style="color: #ECEFF4;">[</span><span class="token">
+</span></div><div class='line'><span class="token">    </span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">extensions</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token"> </span><span class="token" style="color: #81A1C1;">=&gt;</span><span class="token"> </span><span class="token" style="color: #ECEFF4;">[</span><span class="token">
+</span></div><div class='line'><span class="token">        </span><span class="token" style="color: #616E88;">//</span><span class="token" style="color: #616E88;"> Add attributes straight from markdown.
+</span></div><div class='line'><span class="token">        </span><span class="token" style="color: #8FBCBB;">AttributesExtension</span><span class="token" style="color: #81A1C1;">::</span><span class="token" style="color: #81A1C1;">class</span><span class="token" style="color: #ECEFF4;">,</span><span class="token">
+</span></div><div class='line'><span class="token">
+</span></div><div class='line'><span class="token">        </span><span class="token" style="color: #616E88;">//</span><span class="token" style="color: #616E88;"> Add Torchlight syntax highlighting.
+</span></div><div style="background: #bf616a4d"class='line line-remove line-has-background'><span class="token">        </span><span class="token" style="color: #BF616A;">SomeOtherHighlighter</span><span class="token" style="color: #BF616A;">::</span><span class="token" style="color: #BF616A;">class</span><span class="token" style="color: #BF616A;">,</span><span class="token"> </span></div><div style="background: #81a1c133"class='line line-add line-has-background'><span class="token">        </span><span class="token" style="color: #A3BE8C;">TorchlightExtension</span><span class="token" style="color: #A3BE8C;">::</span><span class="token" style="color: #A3BE8C;">class</span><span class="token" style="color: #A3BE8C;">,</span><span class="token"> </span></div><div class='line'><span class="token">    </span><span class="token" style="color: #ECEFF4;">]</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">]</span><span class="token">
+</span></div></code></pre>

@@ -1,0 +1,62 @@
+:::config { "language": "dockerfile" }
+# syntax=docker/dockerfile:1
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+WORKDIR /app
+
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
+
+# Copy everything else and build
+COPY ../engine/examples ./
+RUN dotnet publish -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:3.1
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+
+# From https://docs.docker.com/samples/dotnetcore/
+:::expectation
+<pre class='phiki language-dockerfile nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='dockerfile' class='torchlight' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 1</span><span class="token" style="color: #616E88;">#</span><span class="token" style="color: #616E88;"> syntax=docker/dockerfile:1
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 2</span><span class="token" style="color: #81A1C1;">FROM</span><span class="token" style="color: #d8dee9ff;"> mcr.microsoft.com/dotnet/sdk:5.0 </span><span class="token" style="color: #81A1C1;">AS</span><span class="token" style="color: #d8dee9ff;"> build-env
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 3</span><span class="token" style="color: #81A1C1;">WORKDIR</span><span class="token" style="color: #d8dee9ff;"> /app
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 4</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 5</span><span class="token" style="color: #616E88;">#</span><span class="token" style="color: #616E88;"> Copy csproj and restore as distinct layers
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 6</span><span class="token" style="color: #81A1C1;">COPY</span><span class="token" style="color: #d8dee9ff;"> *.csproj ./
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 7</span><span class="token" style="color: #81A1C1;">RUN</span><span class="token" style="color: #d8dee9ff;"> dotnet restore
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 8</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 9</span><span class="token" style="color: #616E88;">#</span><span class="token" style="color: #616E88;"> Copy everything else and build
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">10</span><span class="token" style="color: #81A1C1;">COPY</span><span class="token" style="color: #d8dee9ff;"> ../engine/examples ./
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">11</span><span class="token" style="color: #81A1C1;">RUN</span><span class="token" style="color: #d8dee9ff;"> dotnet publish -c Release -o out
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">12</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">13</span><span class="token" style="color: #616E88;">#</span><span class="token" style="color: #616E88;"> Build runtime image
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">14</span><span class="token" style="color: #81A1C1;">FROM</span><span class="token" style="color: #d8dee9ff;"> mcr.microsoft.com/dotnet/aspnet:3.1
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">15</span><span class="token" style="color: #81A1C1;">WORKDIR</span><span class="token" style="color: #d8dee9ff;"> /app
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">16</span><span class="token" style="color: #81A1C1;">COPY</span><span class="token" style="color: #d8dee9ff;"> --from=build-env /app/out .
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">17</span><span class="token" style="color: #81A1C1;">ENTRYPOINT</span><span class="token" style="color: #d8dee9ff;"> [</span><span class="token" style="color: #A3BE8C;">&quot;dotnet&quot;</span><span class="token" style="color: #d8dee9ff;">, </span><span class="token" style="color: #A3BE8C;">&quot;aspnetapp.dll&quot;</span><span class="token" style="color: #d8dee9ff;">]
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">18</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">19</span><span class="token" style="color: #616E88;">#</span><span class="token" style="color: #616E88;"> From https://docs.docker.com/samples/dotnetcore/
+</span></div></code></pre>
+:::end
+<pre class='phiki language-dockerfile nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='dockerfile' class='torchlight' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 1</span><span class="token" style="color: #616E88;">#</span><span class="token" style="color: #616E88;"> syntax=docker/dockerfile:1
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 2</span><span class="token" style="color: #81A1C1;">FROM</span><span class="token" style="color: #d8dee9ff;"> mcr.microsoft.com/dotnet/sdk:5.0 </span><span class="token" style="color: #81A1C1;">AS</span><span class="token" style="color: #d8dee9ff;"> build-env
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 3</span><span class="token" style="color: #81A1C1;">WORKDIR</span><span class="token" style="color: #d8dee9ff;"> /app
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 4</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 5</span><span class="token" style="color: #616E88;">#</span><span class="token" style="color: #616E88;"> Copy csproj and restore as distinct layers
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 6</span><span class="token" style="color: #81A1C1;">COPY</span><span class="token" style="color: #d8dee9ff;"> *.csproj ./
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 7</span><span class="token" style="color: #81A1C1;">RUN</span><span class="token" style="color: #d8dee9ff;"> dotnet restore
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 8</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 9</span><span class="token" style="color: #616E88;">#</span><span class="token" style="color: #616E88;"> Copy everything else and build
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">10</span><span class="token" style="color: #81A1C1;">COPY</span><span class="token" style="color: #d8dee9ff;"> ../engine/examples ./
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">11</span><span class="token" style="color: #81A1C1;">RUN</span><span class="token" style="color: #d8dee9ff;"> dotnet publish -c Release -o out
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">12</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">13</span><span class="token" style="color: #616E88;">#</span><span class="token" style="color: #616E88;"> Build runtime image
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">14</span><span class="token" style="color: #81A1C1;">FROM</span><span class="token" style="color: #d8dee9ff;"> mcr.microsoft.com/dotnet/aspnet:3.1
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">15</span><span class="token" style="color: #81A1C1;">WORKDIR</span><span class="token" style="color: #d8dee9ff;"> /app
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">16</span><span class="token" style="color: #81A1C1;">COPY</span><span class="token" style="color: #d8dee9ff;"> --from=build-env /app/out .
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">17</span><span class="token" style="color: #81A1C1;">ENTRYPOINT</span><span class="token" style="color: #d8dee9ff;"> [</span><span class="token" style="color: #A3BE8C;">&quot;dotnet&quot;</span><span class="token" style="color: #d8dee9ff;">, </span><span class="token" style="color: #A3BE8C;">&quot;aspnetapp.dll&quot;</span><span class="token" style="color: #d8dee9ff;">]
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">18</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">19</span><span class="token" style="color: #616E88;">#</span><span class="token" style="color: #616E88;"> From https://docs.docker.com/samples/dotnetcore/
+</span></div></code></pre>

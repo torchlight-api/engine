@@ -1,0 +1,47 @@
+{
+    "name": "torchlight/engine",
+    "description": "The PHP-based Torchlight code annotation and rendering engine.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "syntax highlighting",
+        "code highlighting"
+    ],
+    "authors": [
+        {
+            "name": "Aaron Francis",
+            "email": "aaron@hammerstone.dev"
+        },
+        {
+            "name": "John Koster",
+            "email": "john@stillat.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "phiki/phiki": "^1.1"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2",
+        "laravel/pint": "^1.13",
+        "ext-libxml": "*",
+        "ext-dom": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Torchlight\\Engine\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Torchlight\\Engine\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

@@ -1,0 +1,32 @@
+:::config { "language": "nginx", "theme": "night-owl" }
+server {
+    location / {
+        proxy_pass http://localhost:8080/;
+    }
+
+    location ~ \.(gif|jpg|png)$ {
+        root /data/images;
+    }
+}
+:::expectation
+<pre class='phiki language-nginx night-owl' style='background-color: #011627;color: #d6deeb;'><code data-theme='night-owl' data-lang='nginx' class='torchlight' style='--theme-selection-background: #4373c2'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">1</span><span class="token" style="color: #c792ea;">server</span><span class="token" style="color: #d6deeb;"> {
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">2</span><span class="token">    </span><span class="token" style="color: #c792ea;">location</span><span class="token"> </span><span class="token" style="color: #d6deeb;">/ </span><span class="token" style="color: #d6deeb;">{
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">3</span><span class="token">        </span><span class="token" style="color: #d6deeb;">proxy_pass</span><span class="token" style="color: #d6deeb;"> http://localhost:8080/</span><span class="token" style="color: #d6deeb;">;</span><span class="token">
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">4</span><span class="token" style="color: #d6deeb;">    }</span><span class="token">
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">5</span><span class="token">
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">6</span><span class="token">    </span><span class="token" style="color: #c792ea;">location</span><span class="token"> </span><span class="token" style="color: #d6deeb;">~</span><span class="token"> </span><span class="token" style="color: #5ca7e4;">\.(gif|jpg|png)$ </span><span class="token" style="color: #d6deeb;">{
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">7</span><span class="token">        </span><span class="token" style="color: #d6deeb;">root</span><span class="token" style="color: #d6deeb;"> /data/images</span><span class="token" style="color: #d6deeb;">;</span><span class="token">
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">8</span><span class="token" style="color: #d6deeb;">    }</span><span class="token">
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">9</span><span class="token" style="color: #d6deeb;">}</span><span class="token">
+</span></div></code></pre>
+:::end
+<pre class='phiki language-nginx night-owl' style='background-color: #011627;color: #d6deeb;'><code data-theme='night-owl' data-lang='nginx' class='torchlight' style='--theme-selection-background: #4373c2'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">1</span><span class="token" style="color: #c792ea;">server</span><span class="token" style="color: #d6deeb;"> {
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">2</span><span class="token">    </span><span class="token" style="color: #c792ea;">location</span><span class="token"> </span><span class="token" style="color: #d6deeb;">/ </span><span class="token" style="color: #d6deeb;">{
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">3</span><span class="token">        </span><span class="token" style="color: #d6deeb;">proxy_pass</span><span class="token" style="color: #d6deeb;"> http://localhost:8080/</span><span class="token" style="color: #d6deeb;">;</span><span class="token">
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">4</span><span class="token" style="color: #d6deeb;">    }</span><span class="token">
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">5</span><span class="token">
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">6</span><span class="token">    </span><span class="token" style="color: #c792ea;">location</span><span class="token"> </span><span class="token" style="color: #d6deeb;">~</span><span class="token"> </span><span class="token" style="color: #5ca7e4;">\.(gif|jpg|png)$ </span><span class="token" style="color: #d6deeb;">{
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">7</span><span class="token">        </span><span class="token" style="color: #d6deeb;">root</span><span class="token" style="color: #d6deeb;"> /data/images</span><span class="token" style="color: #d6deeb;">;</span><span class="token">
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">8</span><span class="token" style="color: #d6deeb;">    }</span><span class="token">
+</span></div><div class='line'><span style="color: #4b6479; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">9</span><span class="token" style="color: #d6deeb;">}</span><span class="token">
+</span></div></code></pre>

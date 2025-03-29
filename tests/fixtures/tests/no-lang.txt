@@ -1,0 +1,20 @@
+:::config { "language": "" }
+function Panel(element, canClose, closeHandler) {
+    this.element = element;
+    this.canClose = canClosse;
+    this.closeHandler = function () { if (closeHandler) closeHandler() };
+}
+:::expectation
+<pre class='phiki nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' class='torchlight' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">1</span><span class="token" style="color: #d8dee9ff;">function Panel(element, canClose, closeHandler) {
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">2</span><span class="token" style="color: #d8dee9ff;">    this.element = element;
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">3</span><span class="token" style="color: #d8dee9ff;">    this.canClose = canClosse;
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">4</span><span class="token" style="color: #d8dee9ff;">    this.closeHandler = function () { if (closeHandler) closeHandler() };
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">5</span><span class="token" style="color: #d8dee9ff;">}
+</span></div></code></pre>
+:::end
+<pre class='phiki nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' class='torchlight' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">1</span><span class="token" style="color: #d8dee9ff;">function Panel(element, canClose, closeHandler) {
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">2</span><span class="token" style="color: #d8dee9ff;">    this.element = element;
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">3</span><span class="token" style="color: #d8dee9ff;">    this.canClose = canClosse;
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">4</span><span class="token" style="color: #d8dee9ff;">    this.closeHandler = function () { if (closeHandler) closeHandler() };
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">5</span><span class="token" style="color: #d8dee9ff;">}
+</span></div></code></pre>

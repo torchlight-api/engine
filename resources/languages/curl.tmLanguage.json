@@ -1,0 +1,67 @@
+{
+  "scopeName": "source.curl",
+  "name": "curl",
+  "patterns": [
+    {
+      "name": "entity.name",
+      "match": "curl "
+    },
+    {
+      "comment": "parameter name with quotes",
+      "name": "support.variable",
+      "match": "((?: )\".+\"(?=[=]))",
+      "captures": {
+        "0": {
+          "comment": "highest specificity token comes last, in the highest capture. the others are provided for theme fallbacks",
+          "name": "string"
+        }
+      }
+    },
+    {
+      "comment": "quoted parameter value",
+      "name": "support.function",
+      "match": "(?<==)\"([^\"]*\")"
+    },
+    {
+      "comment": "unquoted parameter value",
+      "name": "support.function",
+      "match": "(?<==)([^&\\\\\\s]*)"
+    },
+    {
+      "comment": "url",
+      "name": "keyword",
+      "match": "https?:[a-zA-Z0-9:.=\\/\\-_{}]*"
+    },
+    {
+      "comment": "parameter name",
+      "name": "support.variable",
+      "match": "[A-Za-z0-9\\[\\]-_]+ *(?=[=])",
+      "captures": {
+        "0": {
+          "comment": "highest specificity token comes last, in the highest capture. the others are provided for theme fallbacks",
+          "name": "string"
+        }
+      }
+    },
+    {
+      "comment": "header",
+      "name": "support.variable",
+      "match": "(?<=-H) \"([^:]+): ?([^\"]+)\"",
+      "captures": {
+        "1": {
+          "comment": "header name",
+          "name": "string"
+        },
+        "2": {
+          "comment": "header value",
+          "name": "support.function"
+        }
+      }
+    },
+    {
+      "name": "comment",
+      "begin": "#",
+      "end": "\n|(?=\\?>)"
+    }
+  ]
+}

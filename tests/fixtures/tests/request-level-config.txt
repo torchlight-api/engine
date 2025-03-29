@@ -1,0 +1,30 @@
+:::request { "options": { "lineNumbers": false } }
+:::config { "language": "php" }
+'a';
+'b';
+'c';
+'d';
+'e';
+'f';
+'g';
+'h';
+:::expectation
+<pre class='phiki language-php nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='php' class='torchlight' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">a</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">b</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">c</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">d</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">e</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">f</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">g</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">h</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div></code></pre>
+:::end
+<pre class='phiki language-php nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='php' class='torchlight' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">a</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">b</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">c</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">d</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">e</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">f</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">g</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #A3BE8C;">h</span><span class="token" style="color: #ECEFF4;">&#039;</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div></code></pre>

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "source.mysql-explain",
+  "name": "mysql-explain",
+  "patterns": [
+    {
+      "name": "keyword.control.columns",
+      "match": "(id|select_type|table|partitions|type|possible_keys|key|key_len|ref|rows|filtered|Extra)(?=:)"
+    },
+    {
+      "name": "comment.line",
+      "begin": "\\*",
+      "end": "$"
+    },
+    {
+      "name": "comment.line.summary",
+      "begin": "[0-9]+ row in set",
+      "end": "$"
+    },
+    {
+      "name": "constant.numeric.sql",
+      "match": "[0-9]+(\\.[0-9]+)?"
+    },
+    {
+      "name": "entity.name.type.access",
+      "match": "(?<=type:).*?\\b(system|const|eq_ref|ref|fulltext|ref_or_null|index_merge|unique_subquery|index_subquery|range|index|ALL)\\b"
+    },
+    {
+      "name": "entity.name.type.primary",
+      "match": "(?:(?<=possible_keys:)|(?<=key:)).*?\\bPRIMARY\\b"
+    },
+    {
+      "name": "entity.name.type.select",
+      "match": "(?<=select_type:).*?\\b(SIMPLE|PRIMARY|UNION|DEPENDENT UNION|UNION RESULT|SUBQUERY|DEPENDENT SUBQUERY|DERIVED|DEPENDENT DERIVED|MATERIALIZED|UNCACHEABLE SUBQUERY|UNCACHEABLE UNION)\\b"
+    },
+    {
+      "name": "entity.name.type.ref",
+      "match": "(?<=ref:).*?\\b(const|func)\\b"
+    },
+    {
+      "name": "support.type.property-name",
+      "match": "\\b(NULL)\\b"
+    }
+  ]
+}

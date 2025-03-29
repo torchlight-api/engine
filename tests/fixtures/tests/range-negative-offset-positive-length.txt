@@ -1,0 +1,22 @@
+:::config { "language": "php" }
+# torchlight! {"lineNumbers": false}
+$a = 1;
+$test = <<<EOT
+1
+2
+3
+EOT;  // [tl! highlight:-3,1]
+:::expectation
+<pre class='phiki language-php nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='php' class='torchlight has-highlight-lines' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #81A1C1;">$</span><span class="token" style="color: #D8DEE9;">a</span><span class="token"> </span><span class="token" style="color: #81A1C1;">=</span><span class="token"> </span><span class="token" style="color: #B48EAD;">1</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #81A1C1;">$</span><span class="token" style="color: #D8DEE9;">test</span><span class="token"> </span><span class="token" style="color: #81A1C1;">=</span><span class="token"> </span><span class="token" style="color: #ECEFF4;">&lt;&lt;&lt;</span><span class="token" style="color: #81A1C1;">EOT</span><span class="token">
+</span></div><div style="background: #3b4252"class='line line-highlight line-has-background'><span class="token" style="color: #A3BE8C;">1
+</span></div><div class='line'><span class="token" style="color: #A3BE8C;">2
+</span></div><div class='line'><span class="token" style="color: #A3BE8C;">3
+</span></div><div class='line'><span class="token" style="color: #81A1C1;">EOT</span><span class="token" style="color: #81A1C1;">;</span><span class="token">  </span></div></code></pre>
+:::end
+<pre class='phiki language-php nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='php' class='torchlight has-highlight-lines' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #81A1C1;">$</span><span class="token" style="color: #D8DEE9;">a</span><span class="token"> </span><span class="token" style="color: #81A1C1;">=</span><span class="token"> </span><span class="token" style="color: #B48EAD;">1</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #81A1C1;">$</span><span class="token" style="color: #D8DEE9;">test</span><span class="token"> </span><span class="token" style="color: #81A1C1;">=</span><span class="token"> </span><span class="token" style="color: #ECEFF4;">&lt;&lt;&lt;</span><span class="token" style="color: #81A1C1;">EOT</span><span class="token">
+</span></div><div style="background: #3b4252"class='line line-highlight line-has-background'><span class="token" style="color: #A3BE8C;">1
+</span></div><div class='line'><span class="token" style="color: #A3BE8C;">2
+</span></div><div class='line'><span class="token" style="color: #A3BE8C;">3
+</span></div><div class='line'><span class="token" style="color: #81A1C1;">EOT</span><span class="token" style="color: #81A1C1;">;</span><span class="token">  </span></div></code></pre>

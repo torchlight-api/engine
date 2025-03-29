@@ -1,0 +1,125 @@
+{
+    "andromeeda": {
+        "background": "#23262E",
+        "foreground": "#D5CED9"
+    },
+    "ayu-dark": {
+        "background": "#0b0e14",
+        "foreground": "#bfbdb6"
+    },
+    "material-theme-darker": {
+        "foreground": "#EEFFFF"
+    },
+    "material-theme-lighter": {
+        "foreground": "#90A4AE"
+    },
+    "material-theme-ocean": {
+        "foreground": "#A6ACCD"
+    },
+    "material-theme-palenight": {
+        "foreground": "#A6ACCD"
+    },
+    "material-theme": {
+        "background": "#263238",
+        "foreground": "#EEFFFF"
+    },
+    "min-dark": {
+        "foreground": "#b392f0"
+    },
+    "min-light": {
+        "foreground": "#24292eff"
+    },
+    "monokai": {
+        "foreground": "#F8F8F2"
+    },
+    "night-owl": {
+        "foreground": "#d6deeb"
+    },
+    "nord": {
+        "foreground": "#d8dee9ff"
+    },
+    "red": {
+        "foreground": "#F8F8F8"
+    },
+    "slack-ochin": {
+        "foreground": "#002339"
+    },
+    "solarized-dark": {
+        "foreground": "#93A1A1"
+    },
+    "solarized-light": {
+        "foreground": "#657B83"
+    },
+    "atom-one-dark": {
+        "foreground": "#ABB2BF"
+    },
+    "cobalt2": {
+        "foreground": "#fff"
+    },
+    "dark-404": {
+        "foreground": "#b9c3d5"
+    },
+    "dark-plus": {
+        "foreground": "#D4D4D4"
+    },
+    "dracula": {
+        "foreground": "#F8F8F2"
+    },
+    "fortnite": {
+        "foreground": "#f0bbf5"
+    },
+    "github-dark": {
+        "foreground": "#e1e4e8"
+    },
+    "github-light": {
+        "foreground": "#24292e"
+    },
+    "light-plus": {
+        "foreground": "#000000"
+    },
+    "material-theme-default": {
+        "foreground": "#EEFFFF"
+    },
+    "moonlight-ii": {
+        "foreground": "#c8d3f5"
+    },
+    "moonlight": {
+        "foreground": "#e4f3fa"
+    },
+    "olaolu-palenight-contrast": {
+        "foreground": "#BFC7D5"
+    },
+    "olaolu-palenight": {
+        "foreground": "#BFC7D5"
+    },
+    "one-dark-pro": {
+        "foreground": "#abb2bf"
+    },
+    "serendipity-dark": {
+        "foreground": "#f6f6f6"
+    },
+    "serendipity-light": {
+        "foreground": "#575f66"
+    },
+    "shades-of-purple": {
+        "foreground": "#FFFFFF"
+    },
+    "slack-theme-dark-mode": {
+        "foreground": "#E6E6E6"
+    },
+    "slack-theme-ochin": {
+        "foreground": "#002339"
+    },
+    "synthwave-84": {
+        "foreground": "#bbbbbb"
+    },
+    "winter-is-coming-blue": {
+        "foreground": "#bce7ff"
+    },
+    "winter-is-coming-dark": {
+        "foreground": "#bce7ff"
+    },
+    "winter-is-coming-light": {
+        "foreground": "#002339"
+    }
+}

@@ -1,0 +1,8 @@
+:::config { "language": "php", "theme": "solarized-light" }
+return 0;
+:::expectation
+<pre class='phiki language-php solarized-light' style='background-color: #FDF6E3;'><code data-theme='solarized-light' data-lang='php' class='torchlight' style='--theme-selection-background: #878b9180'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span style="color: #567983; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">1</span><span class="token" style="color: #859900;">return</span><span class="token"> </span><span class="token" style="color: #D33682;">0</span><span class="token" style="color: #657B83;">;</span><span class="token">
+</span></div></code></pre>
+:::end
+<pre class='phiki language-php solarized-light' style='background-color: #FDF6E3;'><code data-theme='solarized-light' data-lang='php' class='torchlight' style='--theme-selection-background: #878b9180'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span style="color: #567983; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">1</span><span class="token" style="color: #859900;">return</span><span class="token"> </span><span class="token" style="color: #D33682;">0</span><span class="token" style="color: #657B83;">;</span><span class="token">
+</span></div></code></pre>

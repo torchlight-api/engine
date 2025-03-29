@@ -1,0 +1,6 @@
+//
+===============================================
+final class Awaitable<T> implements PromiseInterface<T>
+{
+
+}

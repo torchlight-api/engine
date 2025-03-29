@@ -1,0 +1,63 @@
+:::config { "language": "files", "theme": "github-dark" }
+# torchlight! { "lineNumbers": false }
+resources/
+    name with space/
+    # Full line comment
+    blueprints/ # Partial comment
+        collections/
+            blog/
+                basic_post.yaml
+                art_directed_post.yaml
+        taxonomies/
+            tags/
+                tag.yaml
+        globals/
+            global.yaml
+            company.yaml
+        assets/
+            main.yaml
+        forms/
+            contact.yaml
+        user.yaml
+:::expectation
+<pre class='phiki language-files github-dark' style='background-color: #24292e;color: #e1e4e8;'><code data-theme='github-dark' data-lang='files' class='torchlight' style='--theme-selection-background: #39414a'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">resources/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">name with space/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">│  </span><span class="token" style="color: #6a737d;">#</span><span class="token" style="color: #6a737d;"> Full line comment
+</span></div><div class='line'><span class="token" style="color: #6a737d;">└─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">blueprints/</span><span class="token"> </span><span class="token" style="color: #6a737d;">#</span><span class="token" style="color: #6a737d;"> Partial comment
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   ├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">collections/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  └─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">blog/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │     ├─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>basic_post.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │     └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>art_directed_post.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   ├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">taxonomies/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  └─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">tags/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │     └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>tag.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   ├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">globals/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  ├─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>global.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>company.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   ├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">assets/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>main.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   ├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">forms/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>contact.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>user.yaml</span><span class="token">
+</span></div></code></pre>
+:::end
+<pre class='phiki language-files github-dark' style='background-color: #24292e;color: #e1e4e8;'><code data-theme='github-dark' data-lang='files' class='torchlight' style='--theme-selection-background: #39414a'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">resources/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">name with space/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">│  </span><span class="token" style="color: #6a737d;">#</span><span class="token" style="color: #6a737d;"> Full line comment
+</span></div><div class='line'><span class="token" style="color: #6a737d;">└─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">blueprints/</span><span class="token"> </span><span class="token" style="color: #6a737d;">#</span><span class="token" style="color: #6a737d;"> Partial comment
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   ├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">collections/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  └─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">blog/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │     ├─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>basic_post.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │     └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>art_directed_post.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   ├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">taxonomies/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  └─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">tags/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │     └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>tag.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   ├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">globals/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  ├─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>global.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>company.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   ├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">assets/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>main.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   ├─ </span><span class="token tl-files-folder tl-files-name" style="color: #9ecbff;">forms/</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   │  └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>contact.yaml</span><span class="token">
+</span></div><div class='line'><span class="token" style="color: #6a737d;">   └─ </span><span class="token tl-files-file tl-files-name" style="color: #9ecbff;" tl-file-extension='yaml'>user.yaml</span><span class="token">
+</span></div></code></pre>

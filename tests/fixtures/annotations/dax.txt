@@ -1,0 +1,4 @@
+//
+===============================================
+TotalSales = SUM(Sales[Amount])
+TotalSales = SUM(Sales[Amount])

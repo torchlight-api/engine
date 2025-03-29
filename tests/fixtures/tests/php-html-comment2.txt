@@ -1,0 +1,11 @@
+:::config { "language": "php" }
+<?php
+    echo 1; // comment
+:::expectation
+<pre class='phiki language-php-html nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='php-html' class='torchlight' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">1</span><span class="token" style="color: #81A1C1;">&lt;?php</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">2</span><span class="token">    </span><span class="token" style="color: #81A1C1;">echo</span><span class="token"> </span><span class="token" style="color: #B48EAD;">1</span><span class="token" style="color: #81A1C1;">;</span><span class="token"> </span><span class="token" style="color: #616E88;">//</span><span class="token" style="color: #616E88;"> comment
+</span></div></code></pre>
+:::end
+<pre class='phiki language-php-html nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='php-html' class='torchlight' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">1</span><span class="token" style="color: #81A1C1;">&lt;?php</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">2</span><span class="token">    </span><span class="token" style="color: #81A1C1;">echo</span><span class="token"> </span><span class="token" style="color: #B48EAD;">1</span><span class="token" style="color: #81A1C1;">;</span><span class="token"> </span><span class="token" style="color: #616E88;">//</span><span class="token" style="color: #616E88;"> comment
+</span></div></code></pre>

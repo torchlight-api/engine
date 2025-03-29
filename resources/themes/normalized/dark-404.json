@@ -1,0 +1,549 @@
+{
+    "name": "dark-404",
+    "type": "dark",
+    "colors": {
+        "activityBar.activeBorder": "#705fbd",
+        "activityBar.background": "#181B28",
+        "activityBar.dropBorder": "#705fbd",
+        "activityBar.foreground": "#705fbd",
+        "activityBar.inactiveForeground": "#2a3049",
+        "activityBarBadge.background": "#705fbd",
+        "activityBarBadge.foreground": "#ffffff",
+        "badge.background": "#705fbd",
+        "badge.foreground": "#ffffff",
+        "breadcrumb.activeSelectionForeground": "#9AEFEA",
+        "breadcrumb.background": "#151825",
+        "breadcrumb.focusForeground": "#e0e0e0",
+        "breadcrumb.foreground": "#4b5783",
+        "breadcrumbPicker.background": "#181B28",
+        "button.background": "#705fbd",
+        "button.foreground": "#ffffff",
+        "button.hoverBackground": "#9472c4",
+        "diffEditor.insertedTextBackground": "#5d43d010",
+        "diffEditor.removedTextBackground": "#e052521a",
+        "dropdown.background": "#181B28",
+        "editor.background": "#161926",
+        "editor.findMatchBackground": "#494949",
+        "editor.findMatchHighlightBackground": "#b5a1ff4d",
+        "editor.foreground": "#b9c3d5",
+        "editor.inactiveSelectionBackground": "#4530582f",
+        "editor.lineHighlightBackground": "#222530",
+        "editor.selectionBackground": "#313343",
+        "editorCursor.foreground": "#f8f8f0",
+        "editorGroup.dropBackground": "#1b171f",
+        "editorGroupHeader.tabsBackground": "#181B28",
+        "editorHoverWidget.background": "#181B28",
+        "editorHoverWidget.border": "#343b46",
+        "editorIndentGuide.background": "#473b64",
+        "editorSuggestWidget.background": "#181B28",
+        "editorSuggestWidget.border": "#3e3746",
+        "editorSuggestWidget.highlightForeground": "#9AEFEA",
+        "editorWhitespace.foreground": "#312d3a",
+        "editorWidget.background": "#181B28",
+        "focusBorder": "#705fbd",
+        "gitDecoration.addedResourceForeground": "#72f1b8cc",
+        "gitDecoration.deletedResourceForeground": "#fe4450",
+        "gitDecoration.ignoredResourceForeground": "#8a7c9c",
+        "gitDecoration.modifiedResourceForeground": "#af7eff",
+        "gitDecoration.untrackedResourceForeground": "#5eff81ee",
+        "input.background": "#181B28",
+        "list.activeSelectionBackground": "#2a3049",
+        "list.focusBackground": "#2a3049",
+        "list.hoverBackground": "#181B28",
+        "list.inactiveSelectionBackground": "#2a3049",
+        "list.errorForeground": "#ff65f7",
+        "list.warningForeground": "#fa8419",
+        "sideBar.background": "#181B28",
+        "sideBarSectionHeader.background": "#181B28",
+        "statusBar.background": "#181B28",
+        "statusBar.debuggingBackground": "#4b5783",
+        "statusBar.debuggingForeground": "#181B28",
+        "statusBar.noFolderBackground": "#181B28",
+        "statusBar.foreground": "#4b5783",
+        "tab.activeBorder": "#705fbd",
+        "tab.activeBorderTop": "#9adeef9c",
+        "tab.border": "#181B28",
+        "tab.inactiveBackground": "#181B28",
+        "tab.inactiveForeground": "#65737f",
+        "terminal.border": "#161926",
+        "terminal.background": "#161926",
+        "terminal.ansiBlack": "#1A1A1A",
+        "terminal.ansiBlue": "#9D65FF",
+        "terminal.ansiBrightBlack": "#625E4C",
+        "terminal.ansiBrightBlue": "#9D65FF",
+        "terminal.ansiBrightCyan": "#9D65FF",
+        "terminal.ansiBrightGreen": "#9AEFEA",
+        "terminal.ansiBrightMagenta": "#FF65F7",
+        "terminal.ansiBrightRed": "#F4005F",
+        "terminal.ansiBrightWhite": "#F6F6EF",
+        "terminal.ansiBrightYellow": "#FA8419",
+        "terminal.ansiCyan": "#9D65FF",
+        "terminal.ansiGreen": "#58EBD7",
+        "terminal.ansiMagenta": "#FF65F7",
+        "terminal.ansiRed": "#F4005F",
+        "terminal.ansiWhite": "#C4C5B5",
+        "terminal.ansiYellow": "#FA8419",
+        "terminal.foreground": "#C4C5B5",
+        "terminalCursor.background": "#c0c5ce",
+        "terminalCursor.foreground": "#c4c5b5",
+        "titleBar.activeBackground": "#181B28",
+        "titleBar.inactiveBackground": "#181B28",
+        "torchlight.markupInsertedForeground": "#58ebd7",
+        "torchlight.markupDeletedForeground": "#b082ff",
+        "torchlight.markupInsertedBackground": "#5d43d010",
+        "torchlight.markupDeletedBackground": "#e052521a",
+        "torchlight.selectionBackgroundColor": "#2a3049",
+        "torchlight.lineNumberColor": "#858585",
+        "torchlight.activeLineNumberColor": "#c6c6c6"
+    },
+    "torchlight": {
+        "markupInsertedForeground": "#58ebd7",
+        "markupDeletedForeground": "#b082ff",
+        "markupInsertedBackground": "#5d43d010",
+        "markupDeletedBackground": "#e052521a",
+        "selectionBackgroundColor": "#2a3049",
+        "lineNumberColor": "#858585",
+        "activeLineNumberColor": "#c6c6c6"
+    },
+    "fg": "#b9c3d5",
+    "bg": "#161926",
+    "settings": [
+        {
+            "settings": {
+                "foreground": "#b9c3d5",
+                "background": "#161926"
+            }
+        },
+        {
+            "name": "Comment color",
+            "scope": [
+                "comment",
+                "markup.quote.markdown",
+                "meta.diff",
+                "meta.diff.header"
+            ],
+            "settings": {
+                "foreground": "#5f6167"
+            }
+        },
+        {
+            "name": "Text Color",
+            "scope": [
+                "meta.template.expression.js",
+                "keyword.operator",
+                "constant.name.attribute.tag.jade",
+                "punctuation.definition.metadata.markdown",
+                "punctuation.definition.string.end.markdown",
+                "punctuation.definition.string.begin.markdown"
+            ],
+            "settings": {
+                "foreground": "#D5CED9"
+            }
+        },
+        {
+            "name": "Pallette Leading Color",
+            "scope": [
+                "variable",
+                "support.variable",
+                "entity.name.tag.yaml",
+                "constant.character.entity.html",
+                "source.css entity.name.tag.reference",
+                "beginning.punctuation.definition.list.markdown",
+                "source.css entity.other.attribute-name.parent-selector",
+                "meta.structure.dictionary.json support.type.property-name"
+            ],
+            "settings": {
+                "foreground": "#fca7d6"
+            }
+        },
+        {
+            "name": "Pallette Numeric",
+            "scope": [
+                "markup.bold",
+                "constant.numeric",
+                "meta.group.regexp",
+                "constant.other.php",
+                "support.constant.ext.php",
+                "constant.other.class.php",
+                "support.constant.core.php",
+                "fenced_code.block.language",
+                "constant.other.caps.python",
+                "entity.other.attribute-name",
+                "support.type.exception.python",
+                "source.css keyword.other.unit",
+                "variable.other.object.property.js.jsx",
+                "variable.other.object.js"
+            ],
+            "settings": {
+                "foreground": "#58d1eb"
+            }
+        },
+        {
+            "name": "Pallette Support Naming & Function Color",
+            "scope": [
+                "markup.list",
+                "text.xml string",
+                "entity.name.type",
+                "support.function",
+                "entity.other.attribute-name",
+                "meta.at-rule.extend",
+                "entity.name.function",
+                "entity.other.inherited-class",
+                "entity.other.keyframe-offset.css",
+                "text.html.markdown string.quoted",
+                "meta.function-call.generic.python",
+                "meta.at-rule.extend support.constant",
+                "entity.other.attribute-name.class.jade",
+                "source.css entity.other.attribute-name",
+                "text.xml punctuation.definition.string"
+            ],
+            "settings": {
+                "foreground": "#DDA2F6"
+            }
+        },
+        {
+            "name": "Pallette Self & This identifiers",
+            "scope": [
+                "markup.heading",
+                "variable.language.this.js",
+                "variable.language.this.ts",
+                "variable.language.this.jsx",
+                "variable.language.this.tsx",
+                "variable.language.special.self.python"
+            ],
+            "settings": {
+                "foreground": "#ff00aa"
+            }
+        },
+        {
+            "name": "Palette Templating & Tags",
+            "scope": [
+                "punctuation.definition.interpolation",
+                "punctuation.section.embedded.end.php",
+                "punctuation.section.embedded.end.ruby",
+                "punctuation.section.embedded.begin.php",
+                "punctuation.section.embedded.begin.ruby",
+                "punctuation.definition.template-expression",
+                "entity.name.tag"
+            ],
+            "settings": {
+                "foreground": "#8973bd"
+            }
+        },
+        {
+            "name": "Pallette Leading Reserved",
+            "scope": [
+                "storage",
+                "keyword",
+                "meta.link",
+                "meta.image",
+                "markup.italic",
+                "source.js support.type",
+                "support.type.primitive.ts",
+                "meta.interface.ts"
+            ],
+            "settings": {
+                "foreground": "#7E7EDD"
+            }
+        },
+        {
+            "name": "Pallette Expression & Markup",
+            "scope": [
+                "string.regexp",
+                "markup.changed"
+            ],
+            "settings": {
+                "foreground": "#7cb7ff"
+            }
+        },
+        {
+            "name": "Pallette Support Type Color",
+            "scope": [
+                "constant",
+                "support.class",
+                "support.constant",
+                "text.html.markdown string",
+                "source.css support.function",
+                "source.php support.function",
+                "support.function.magic.python",
+                "entity.other.attribute-name.id",
+                "markup.deleted"
+            ],
+            "settings": {
+                "foreground": "#b082ff"
+            }
+        },
+        {
+            "name": "Pallette Strings",
+            "scope": [
+                "string",
+                "text.html.php string",
+                "markup.inline.raw",
+                "markup.inserted",
+                "punctuation.definition.string",
+                "punctuation.definition.markdown",
+                "text.html meta.embedded source.js string",
+                "text.html.php punctuation.definition.string",
+                "text.html meta.embedded source.js punctuation.definition.string",
+                "text.html punctuation.definition.string",
+                "text.html string"
+            ],
+            "settings": {
+                "foreground": "#58ebd7"
+            }
+        },
+        {
+            "name": "Font Underline",
+            "scope": [
+                "entity.other.inherited-class"
+            ],
+            "settings": {
+                "fontStyle": "underline"
+            }
+        }
+    ],
+    "tokenColors": [
+        {
+            "settings": {
+                "foreground": "#b9c3d5",
+                "background": "#161926"
+            }
+        },
+        {
+            "name": "Comment color",
+            "scope": [
+                "comment",
+                "markup.quote.markdown",
+                "meta.diff",
+                "meta.diff.header"
+            ],
+            "settings": {
+                "foreground": "#5f6167"
+            }
+        },
+        {
+            "name": "Text Color",
+            "scope": [
+                "meta.template.expression.js",
+                "keyword.operator",
+                "constant.name.attribute.tag.jade",
+                "punctuation.definition.metadata.markdown",
+                "punctuation.definition.string.end.markdown",
+                "punctuation.definition.string.begin.markdown"
+            ],
+            "settings": {
+                "foreground": "#D5CED9"
+            }
+        },
+        {
+            "name": "Pallette Leading Color",
+            "scope": [
+                "variable",
+                "support.variable",
+                "entity.name.tag.yaml",
+                "constant.character.entity.html",
+                "source.css entity.name.tag.reference",
+                "beginning.punctuation.definition.list.markdown",
+                "source.css entity.other.attribute-name.parent-selector",
+                "meta.structure.dictionary.json support.type.property-name"
+            ],
+            "settings": {
+                "foreground": "#fca7d6"
+            }
+        },
+        {
+            "name": "Pallette Numeric",
+            "scope": [
+                "markup.bold",
+                "constant.numeric",
+                "meta.group.regexp",
+                "constant.other.php",
+                "support.constant.ext.php",
+                "constant.other.class.php",
+                "support.constant.core.php",
+                "fenced_code.block.language",
+                "constant.other.caps.python",
+                "entity.other.attribute-name",
+                "support.type.exception.python",
+                "source.css keyword.other.unit",
+                "variable.other.object.property.js.jsx",
+                "variable.other.object.js"
+            ],
+            "settings": {
+                "foreground": "#58d1eb"
+            }
+        },
+        {
+            "name": "Pallette Support Naming & Function Color",
+            "scope": [
+                "markup.list",
+                "text.xml string",
+                "entity.name.type",
+                "support.function",
+                "entity.other.attribute-name",
+                "meta.at-rule.extend",
+                "entity.name.function",
+                "entity.other.inherited-class",
+                "entity.other.keyframe-offset.css",
+                "text.html.markdown string.quoted",
+                "meta.function-call.generic.python",
+                "meta.at-rule.extend support.constant",
+                "entity.other.attribute-name.class.jade",
+                "source.css entity.other.attribute-name",
+                "text.xml punctuation.definition.string"
+            ],
+            "settings": {
+                "foreground": "#DDA2F6"
+            }
+        },
+        {
+            "name": "Pallette Self & This identifiers",
+            "scope": [
+                "markup.heading",
+                "variable.language.this.js",
+                "variable.language.this.ts",
+                "variable.language.this.jsx",
+                "variable.language.this.tsx",
+                "variable.language.special.self.python"
+            ],
+            "settings": {
+                "foreground": "#ff00aa"
+            }
+        },
+        {
+            "name": "Palette Templating & Tags",
+            "scope": [
+                "punctuation.definition.interpolation",
+                "punctuation.section.embedded.end.php",
+                "punctuation.section.embedded.end.ruby",
+                "punctuation.section.embedded.begin.php",
+                "punctuation.section.embedded.begin.ruby",
+                "punctuation.definition.template-expression",
+                "entity.name.tag"
+            ],
+            "settings": {
+                "foreground": "#8973bd"
+            }
+        },
+        {
+            "name": "Pallette Leading Reserved",
+            "scope": [
+                "storage",
+                "keyword",
+                "meta.link",
+                "meta.image",
+                "markup.italic",
+                "source.js support.type",
+                "support.type.primitive.ts",
+                "meta.interface.ts"
+            ],
+            "settings": {
+                "foreground": "#7E7EDD"
+            }
+        },
+        {
+            "name": "Pallette Expression & Markup",
+            "scope": [
+                "string.regexp",
+                "markup.changed"
+            ],
+            "settings": {
+                "foreground": "#7cb7ff"
+            }
+        },
+        {
+            "name": "Pallette Support Type Color",
+            "scope": [
+                "constant",
+                "support.class",
+                "support.constant",
+                "text.html.markdown string",
+                "source.css support.function",
+                "source.php support.function",
+                "support.function.magic.python",
+                "entity.other.attribute-name.id",
+                "markup.deleted"
+            ],
+            "settings": {
+                "foreground": "#b082ff"
+            }
+        },
+        {
+            "name": "Pallette Strings",
+            "scope": [
+                "string",
+                "text.html.php string",
+                "markup.inline.raw",
+                "markup.inserted",
+                "punctuation.definition.string",
+                "punctuation.definition.markdown",
+                "text.html meta.embedded source.js string",
+                "text.html.php punctuation.definition.string",
+                "text.html meta.embedded source.js punctuation.definition.string",
+                "text.html punctuation.definition.string",
+                "text.html string"
+            ],
+            "settings": {
+                "foreground": "#58ebd7"
+            }
+        },
+        {
+            "name": "Font Underline",
+            "scope": [
+                "entity.other.inherited-class"
+            ],
+            "settings": {
+                "fontStyle": "underline"
+            }
+        },
+        {
+            "name": "Torchlight Active Line Number Color",
+            "scope": [
+                "torchlight.activelinecolor"
+            ],
+            "settings": {
+                "foreground": "#c6c6c6"
+            }
+        },
+        {
+            "name": "Torchlight Markup Added",
+            "scope": [
+                "markup.inserted",
+                "torchlight.markup.inserted"
+            ],
+            "settings": {
+                "background": "#5d43d010",
+                "foreground": "#58ebd7"
+            }
+        },
+        {
+            "name": "Torchlight Markup Added Foreground",
+            "scope": [
+                "torchlight.markup.inserted.foreground"
+            ],
+            "settings": {
+                "foreground": "#58ebd7"
+            }
+        },
+        {
+            "name": "Torchlight Markup Removed",
+            "scope": [
+                "markup.deleted",
+                "torchlight.markup.deleted"
+            ],
+            "settings": {
+                "background": "#e052521a",
+                "foreground": "#b082ff"
+            }
+        },
+        {
+            "name": "Torchlight Markup Removed Foreground",
+            "scope": [
+                "torchlight.markup.deleted.foreground"
+            ],
+            "settings": {
+                "foreground": "#b082ff"
+            }
+        }
+    ]
+}

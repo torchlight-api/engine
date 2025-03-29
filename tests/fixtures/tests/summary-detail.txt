@@ -1,0 +1,74 @@
+:::config { "language": "php" }
+public function test1() // [tl! collapse:start]
+{
+    return function() // [tl! collapse:start open]
+    {
+        return 0;
+    } // [tl! collapse:end]
+} // [tl! collapse:end]
+
+public function test2()
+{
+    return 1;
+}
+:::style
+<style>
+    .torchlight {
+        padding: 10px;
+        display: block;
+    }
+
+    .line-number, .summary-caret {
+        margin-right: 10px;
+    }
+
+    summary:focus {
+        outline: none;
+    }
+
+    .torchlight details .summary-caret::after {
+        pointer-events: none;
+    }
+
+    .torchlight .summary-caret-empty::after,
+    .torchlight details .summary-caret-middle::after,
+    .torchlight details .summary-caret-end::after {
+        content: " ";
+    }
+    
+    .torchlight details[open] .summary-caret-start::after {
+        content: "-";
+    }
+
+    .torchlight details:not([open]) .summary-caret-start::after {
+        content: "+";
+    }
+
+    .torchlight details[open] .summary-hide-when-open {
+        display: none;
+    }
+
+    .torchlight details:not([open]) .summary-hide-when-open {
+        display: inline;
+    }
+</style>
+:::expectation
+<pre class='phiki language-php nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='php' class='torchlight has-summaries' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><details><summary style="cursor: pointer; display: block;"><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 1</span><span class="summary-caret summary-caret-start" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #81A1C1;">public</span><span class="token"> </span><span class="token" style="color: #81A1C1;">function</span><span class="token"> </span><span class="token" style="color: #88C0D0;">test1</span><span class="token" style="color: #ECEFF4;">(</span><span class="token" style="color: #ECEFF4;">)</span><span class="token"> </span><span class="summary-hide-when-open" style="color: #4c566a">...</span></div></summary><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 2</span><span class="summary-caret summary-caret-middle" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #ECEFF4;">{</span><span class="token">
+</span></div><details open><summary style="cursor: pointer; display: block;"><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 3</span><span class="summary-caret summary-caret-start" style="user-select: none;color: #4c566a"></span><span class="token">    </span><span class="token" style="color: #81A1C1;">return</span><span class="token"> </span><span class="token" style="color: #81A1C1;">function</span><span class="token" style="color: #ECEFF4;">(</span><span class="token" style="color: #ECEFF4;">)</span><span class="token"> </span><span class="summary-hide-when-open" style="color: #4c566a">...</span></div></summary><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 4</span><span class="summary-caret summary-caret-middle" style="user-select: none;color: #4c566a"></span><span class="token">    </span><span class="token" style="color: #ECEFF4;">{</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 5</span><span class="summary-caret summary-caret-middle" style="user-select: none;color: #4c566a"></span><span class="token">        </span><span class="token" style="color: #81A1C1;">return</span><span class="token"> </span><span class="token" style="color: #B48EAD;">0</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 6</span><span class="summary-caret summary-caret-end" style="user-select: none;color: #4c566a"></span><span class="token">    </span><span class="token" style="color: #ECEFF4;">}</span><span class="token"> </span></div></details></details><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 7</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #ECEFF4;">}</span><span class="token"> </span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 8</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 9</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #81A1C1;">public</span><span class="token"> </span><span class="token" style="color: #81A1C1;">function</span><span class="token"> </span><span class="token" style="color: #88C0D0;">test2</span><span class="token" style="color: #ECEFF4;">(</span><span class="token" style="color: #ECEFF4;">)</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">10</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #ECEFF4;">{</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">11</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token">    </span><span class="token" style="color: #81A1C1;">return</span><span class="token"> </span><span class="token" style="color: #B48EAD;">1</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">12</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #ECEFF4;">}</span><span class="token">
+</span></div></code></pre>
+:::end
+<pre class='phiki language-php nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='php' class='torchlight has-summaries' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><details><summary style="cursor: pointer; display: block;"><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 1</span><span class="summary-caret summary-caret-start" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #81A1C1;">public</span><span class="token"> </span><span class="token" style="color: #81A1C1;">function</span><span class="token"> </span><span class="token" style="color: #88C0D0;">test1</span><span class="token" style="color: #ECEFF4;">(</span><span class="token" style="color: #ECEFF4;">)</span><span class="token"> </span><span class="summary-hide-when-open" style="color: #4c566a">...</span></div></summary><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 2</span><span class="summary-caret summary-caret-middle" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #ECEFF4;">{</span><span class="token">
+</span></div><details open><summary style="cursor: pointer; display: block;"><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 3</span><span class="summary-caret summary-caret-start" style="user-select: none;color: #4c566a"></span><span class="token">    </span><span class="token" style="color: #81A1C1;">return</span><span class="token"> </span><span class="token" style="color: #81A1C1;">function</span><span class="token" style="color: #ECEFF4;">(</span><span class="token" style="color: #ECEFF4;">)</span><span class="token"> </span><span class="summary-hide-when-open" style="color: #4c566a">...</span></div></summary><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 4</span><span class="summary-caret summary-caret-middle" style="user-select: none;color: #4c566a"></span><span class="token">    </span><span class="token" style="color: #ECEFF4;">{</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 5</span><span class="summary-caret summary-caret-middle" style="user-select: none;color: #4c566a"></span><span class="token">        </span><span class="token" style="color: #81A1C1;">return</span><span class="token"> </span><span class="token" style="color: #B48EAD;">0</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 6</span><span class="summary-caret summary-caret-end" style="user-select: none;color: #4c566a"></span><span class="token">    </span><span class="token" style="color: #ECEFF4;">}</span><span class="token"> </span></div></details></details><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 7</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #ECEFF4;">}</span><span class="token"> </span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 8</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number"> 9</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #81A1C1;">public</span><span class="token"> </span><span class="token" style="color: #81A1C1;">function</span><span class="token"> </span><span class="token" style="color: #88C0D0;">test2</span><span class="token" style="color: #ECEFF4;">(</span><span class="token" style="color: #ECEFF4;">)</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">10</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #ECEFF4;">{</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">11</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token">    </span><span class="token" style="color: #81A1C1;">return</span><span class="token"> </span><span class="token" style="color: #B48EAD;">1</span><span class="token" style="color: #81A1C1;">;</span><span class="token">
+</span></div><div class='line'><span style="color: #4c566a; text-align: right; -webkit-user-select: none; user-select: none;" class="line-number">12</span><span class="summary-caret summary-caret-empty" style="user-select: none;color: #4c566a"></span><span class="token" style="color: #ECEFF4;">}</span><span class="token">
+</span></div></code></pre>

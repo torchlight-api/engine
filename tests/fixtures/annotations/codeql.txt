@@ -1,0 +1,5 @@
+//
+===============================================
+from FunctionExpr f
+where f.getName() = "testFunction"
+select f, "This function is named 'testFunction'."

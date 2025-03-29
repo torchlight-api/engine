@@ -1,0 +1,6 @@
+--
+===============================================
+display dialog "hello, world"
+display dialog "hello, world"
+display dialog "hello, world"
+display dialog "hello, world"
