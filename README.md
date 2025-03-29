@@ -1,6 +1,6 @@
 # Torchlight Engine
 
-Torchlight Engine brings Torchlight's code annotation syntax to PHP, built on top of the excellent [Phiki](https://github.com/phikiphp/phiki) syntax highlight package. No node or API required.
+Torchlight Engine brings Torchlight's code annotation syntax to PHP, built on top of the excellent [Phiki](https://github.com/phikiphp/phiki) syntax highlighting package. No node or API required.
 
 ## Documentation
 
@@ -16,4 +16,4 @@ Coming Soon!
 
 The Torchlight Engine is free software, released under the MIT license.
 
-Themes and grammars are governed by their own license.
+Themes and grammars may be governed by their own license.
