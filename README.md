@@ -88,6 +88,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Adding Line Number Right Padding](#adding-line-number-right-padding)
   * [Summary Indicator](#summary-indicator)
   * [Adding Extra Classes to the Torchlight Code Element](#adding-extra-classes-to-the-torchlight-code-element)
+  * [The Copyable Option](#the-copyable-option)
   * [Disabling Torchlight Annotations](#disabling-torchlight-annotations)
 * [Credits](#credits)
 * [License](#license)
@@ -1820,6 +1821,31 @@ When Torchlight renders the code block it will add those classes to the generate
 
 ```html
 <code ... class="phiki language-php moonlight-ii torchlight some extra classes">
+```
+
+### The Copyable Option
+
+You can use the `copyable` block option to instruct Torchlight to add a hidden HTML element with the `torchlight-copy-target` class to the generated output. This hidden element will contain the raw text that may be used to implement a copy & paste feature:
+
+```php
+// torchlight! {"copyable": true}
+<?php
+namespace App\Providers;
+ 
+use Illuminate\Support\ServiceProvider;
+use Statamic\Facades\Markdown;
+use Torchlight\Engine\CommonMark\Extension;
+ 
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot()
+    {
+        // Add the Torchlight Engine extension
+        Markdown::addExtension(function () {
+            return new Extension('synthwave-84');
+        });
+    }
+}
 ```
 
 ### Disabling Torchlight Annotations
