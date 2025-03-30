@@ -84,6 +84,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Changing the Starting Line Number](#changing-the-starting-line-number)
     * [Changing Line Number Styles](#changing-line-number-styles)
   * [Summary Indicator](#summary-indicator)
+  * [Adding Extra Classes to the Torchlight Wrapper](#adding-extra-classes-to-the-torchlight-wrapper)
   * [Disabling Torchlight Annotations](#disabling-torchlight-annotations)
 * [Credits](#credits)
 * [License](#license)
@@ -1742,6 +1743,23 @@ return [
 ```
 
 ![Customizing the Collapse Text](./.art/readme/example_collapse_click_to_show.png)
+
+### Adding Extra Classes to the Torchlight Wrapper
+
+You may add extra classes to the `code` element by using the `classes` block option:
+
+```php
+// torchlight! {"classes": "some extra classes"}
+return [
+    // ...
+];
+```
+
+When Torchlight renders the code block it will add those classes to the generated `code` block:
+
+```html
+<code ... class="phiki language-php moonlight-ii torchlight some extra classes">
+```
 
 ### Disabling Torchlight Annotations
 
