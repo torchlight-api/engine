@@ -84,6 +84,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
   * [Line Numbers](#line-numbers)
     * [Changing the Starting Line Number](#changing-the-starting-line-number)
     * [Changing Line Number Styles](#changing-line-number-styles)
+    * [Adding Line Number Right Padding](#adding-line-number-right-padding)
   * [Summary Indicator](#summary-indicator)
   * [Adding Extra Classes to the Torchlight Code Element](#adding-extra-classes-to-the-torchlight-code-element)
   * [Disabling Torchlight Annotations](#disabling-torchlight-annotations)
@@ -177,6 +178,7 @@ There are a small number of differences when comparing Torchlight Engine and the
 * Invalid JSON input for block options will throw an instance of `Torchlight\Engine\Exceptions\InvalidJsonException`. The API version may attempt to parse the invalid JSON or silently discard the error
 * The [reindex](#reindexing-line-numbers) annotation's range modifier behavior has [been adjusted](#reindex-differences-between-torchlight-api) to be more predictable and consistent with other modifiers
 * The `lineNumberAndDiffIndicatorRightPadding` block option applies padding more predictably
+  * When using `lineNumberAndDiffIndicatorRightPadding` and `diffIndicatorsInPlaceOfLineNumbers: false` together, the padding will be added to the _right_ of the diff indicators, instead of in-between them
 
 ## CSS and Theming
 
@@ -1719,6 +1721,44 @@ The other thing to note is that you'll need to be thoughtful when adding `color`
 
 Torchlight uses the theme's color scheme to handle insert and remove lines, so it's probably best to leave the color declaration off altogether.
 
+#### Adding Line Number Right Padding
+
+You may add _right_ padding to your line numbers using the `lineNumberAndDiffIndicatorRightPadding` block option:
+
+```php
+// torchlight! {"lineNumberAndDiffIndicatorRightPadding": 10}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class,
+    ]
+]
+```
+
+![Example of Right Padding](./.art/readme/example_right_padding.png)
+
+If you are using standalone diff indicators, right padding will be applied to the _right_ of those:
+
+```php
+// torchlight! {"lineNumberAndDiffIndicatorRightPadding": 10, "diffIndicatorsInPlaceOfLineNumbers": false}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class, // [tl! ++]
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class,
+    ]
+]
+```
+
+![Example of Right Padding with Standalone Diff Indicators](./.art/readme/example_right_padding_diff_indicators.png)
+
+Right padding being applied to the right of diff indicators is a small change in behavior compared to Torchlight API.
+
 ### Summary Indicator
 
 When using the [collapse](#collapsing) annotation, Torchlight will add an ellipses `...` to indicate where the collapsed code is.
@@ -1726,7 +1766,6 @@ When using the [collapse](#collapsing) annotation, Torchlight will add an ellips
 This is the default behavior:
 
 ![Default Summary Behavior](./.art/readme/example_summary_indicator_default.png)
-
 
 If you'd like to change the `...` to something else, you can do so by changing the `summaryCollapsedIndicator` option:
 
