@@ -55,6 +55,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Customizing the Summary Text](#customizing-the-summary-text)
     * [Collapsing Required CSS](#collapsing-required-css)
     * [Default to Open](#default-to-open)
+    * [Removing Summary Carets](#removing-summary-carets)
   * [Diffs](#diffs)
     * [Diff Shorthand](#diff-shorthand)
     * [Removing Diff Indicators](#removing-diff-indicators)
@@ -922,6 +923,35 @@ return [
     ]
 ]
 ```
+
+#### Removing Summary Carets
+
+You can disable summary carets by setting the `showSummaryCarets` block option:
+
+```php
+// torchlight! {"showSummaryCarets": false}
+return [
+    'heading_permalink' => [ // [tl! collapse:start]
+        'html_class' => 'permalink',
+        'id_prefix' => 'user-content',
+        'insert' => 'before',
+        'title' => 'Permalink',
+        'symbol' => '#',
+    ], // [tl! collapse:end]
+
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class,
+    ]
+]
+```
+
+Setting this to `false` will disable the collapse gutter entirely:
+
+![Disabling Summary Carets](./.art/readme/example_disabled_collapse_gutter.png)
 
 ### Diffs
 
