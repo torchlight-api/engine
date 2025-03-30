@@ -68,9 +68,13 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Link Requirements](#link-requirements)
     * [Link Ranges](#link-ranges)
   * [Reindexing Line Numbers](#reindexing-line-numbers)
+    * [Manually Setting a New Number](#manually-setting-a-new-number)
+    * [No Line Number at All](#no-line-number-at-all)
+    * [Relative Line Number Changes](#relative-line-number-changes)
+    * [Reindexing with Range Modifiers](#reindexing-with-range-modifiers)
+    * [Reindex Differences Between Torchlight API](#reindex-differences-between-torchlight-api)
   * [Options](#options)
   * [Line Numbers](#line-numbers)
-  * [Diff Indicators](#diff-indicators)
   * [Summary Indicator](#summary-indicator)
   * [Disabling Annotations](#disabling-annotations)
 
@@ -1227,6 +1231,165 @@ Check out the [range docs](#ranges) for more details, but here is a quick cheat 
  ```
 
 ### Reindexing Line Numbers
+
+Now we're really getting into the weeds, but that's exactly what Torchlight is here for.
+
+Sometimes it really matters what the line number is that goes along with your code sample. In the case where you can't get it right, you might be tempted to turn them off altogether.
+
+Torchlight offers a few ways to _reindex_ the lines, using the `reindex` annotation.
+
+To reindex a line, you will add the `reindex` annotation. This annotation is a little bit different than the others, because it accepts an argument in parenthesis.
+
+Here are a few examples:
+
+* `reindex(-1)`: whatever this line number _would_ have been, reduce it by one
+* `reindex(+1)`: whatever this line number _would_ have been, increment it by one
+* `reindex(5)`: regardless of what number this should be, make it `5`
+* `reindex(null)`: don't show a line number here.
+
+#### Manually Setting a New Number
+
+To just outright set a new number, use the `reindex(N)` style:
+
+```text
+'a';
+'b';
+'c';
+'x'; // [tl! reindex(24)]
+'y';
+'z';
+```
+
+![Manually Setting a New Number](./.art/readme/example_reindex_new_number.png)
+
+Torchlight will continue with the next number after the one you set.
+
+#### No Line Number at All
+
+If you want a line to have no line number, use the `reindex(null)` annotation:
+
+```text
+'a';
+'b';
+'c';
+// Lots of letters... [tl! reindex(null)]
+'x'; // [tl! reindex(24)]
+'y';
+'z';
+```
+
+![No Line Number](./.art/readme/example_reindex_no_line_number.png)
+
+If you don't immediately reindex, Torchlight just treats that line as if it doesn't exist for numbering purposes.
+
+```text
+'a';
+'b';
+'c';
+// Lots of letters... [tl! reindex(null)]
+'x';
+'y';
+'z';
+```
+
+![No Immediate Line Reindex](./.art/readme/example_no_immediate_reindex.png)
+
+#### Relative Line Number Changes
+
+Often times it's easiest to think in terms of "increment" or "decrement" instead of thinking in absolutes. Especially as time goes on and your samples may change, it's nice to have the relative numbers always work.
+
+This can be a really nice touch when showing diffs, to keep the numbering legit.
+
+To change the numbers relatively, use the `reindex(+N)` and `reindex(-N)` styles.
+
+```text
+// torchlight! {"diffIndicatorsInPlaceOfLineNumbers": false}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        SomeOtherHighlighter::class, // [tl! remove]
+        TorchlightExtension::class, // [tl! add reindex(-1)]
+    ]
+]
+```
+
+![Relative Line Number Changes with Diff](./.art/readme/example_reindex_relative_changes.png)
+
+Of course, it doesn't have to just be `1`, it could be any number.
+
+```php
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        SomeOtherHighlighter::class, // [tl! remove]
+        TorchlightExtension::class, // [tl! add reindex(+1000)]
+    ]
+]
+```
+
+![Reindexing with Any Number](./.art/readme/example_reindex_any_number.png)
+
+#### Reindexing with Range Modifiers
+
+The `reindex` annotation _does_ work with the [annotation range modifiers](ranges), so you can do some pretty wacky stuff.
+
+If you wanted to reach down several lines and apply a reindex, you totally could!
+
+Here we are going to reach down 6 lines, and apply a +5 reindex to 1 line only.
+
+```text
+// This is a long bit of text, hard to reindex the middle. [tl! reindex(+5):6,1]
+return <<<EOT
+spring sunshine
+the smell of waters
+from the stars
+
+deep winter
+the smell of a crow
+from the stars
+
+beach to school
+the smell of water
+in the sky
+EOT; // [tl! highlight:-7,3]
+```
+
+![Reindexing a Single Line with Range Modifiers](./.art/readme/example_reindex_single_line.png)
+
+Or if you wanted to null out the second stanza, you could do that also.
+
+```text
+// This is a long bit of text, hard to reindex the middle. [tl! reindex(null):5,5]
+return <<<EOT
+spring sunshine
+the smell of waters
+from the stars
+
+deep winter
+the smell of a crow
+from the stars
+
+beach to school
+the smell of water
+in the sky
+EOT; // [tl! highlight:-7,3]
+```
+
+![Example of Nulling out Ranges](./.art/readme/example_reindex_stanza_voodoo.png)
+
+Why you would ever want to do this, I have no idea. But if you want to, you can!
+
+#### Reindex Differences Between Torchlight API
+
+Torchlight Engine makes some breaking changes when compared to the behavior of the Torchlight API. This was done to make the behavior of reindexing with annotation ranges more predictable and consistent with the other annotations; there should be little to no impact on your code examples unless you are doing some crazy things.
+
+Be sure to double check any reindex examples if you are migrating from the Torchlight API!
 
 ## Options
 
