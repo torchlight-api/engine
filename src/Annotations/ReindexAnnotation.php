@@ -10,13 +10,15 @@ class ReindexAnnotation extends AbstractAnnotation
 
     public function process(ParsedAnnotation $annotation): void
     {
-        if ($annotation->methodArgs != 'null' && intval($annotation->methodArgs) != $annotation->methodArgs) {
+        if ($annotation->methodArgs != 'null' && ! in_array($annotation->methodArgs, ['vim.relative', 'vim.hybrid']) && intval($annotation->methodArgs) != $annotation->methodArgs) {
             return;
         }
 
         if ($annotation->methodArgs === 'vim.relative' || $annotation->methodArgs === 'vim.hybrid') {
+            $backwardsCount = 1;
             for ($i = $this->range->startLine - 2; $i >= 0; $i--) {
-                $this->reindexLine($i, $this->range->startLine - $i - 1);
+                $this->forceDisplayLine($i, $backwardsCount);
+                $backwardsCount++;
             }
 
             if ($annotation->methodArgs === 'vim.hybrid') {

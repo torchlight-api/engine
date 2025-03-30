@@ -171,6 +171,13 @@ abstract class AbstractAnnotation
         return $this;
     }
 
+    protected function forceDisplayLine(int $originalLine, int $newLine): static
+    {
+        $this->processor->lineNumbersGutter()->forceLineDisplay($originalLine, $newLine);
+
+        return $this;
+    }
+
     protected function surroundStartLine(string $prefix, string $suffix): static
     {
         return $this->prependLine($this->range->startLine, $prefix)

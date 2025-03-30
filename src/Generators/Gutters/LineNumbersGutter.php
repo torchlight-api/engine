@@ -15,12 +15,15 @@ class LineNumbersGutter extends AbstractGutter
 
     protected array $reindexedLines = [];
 
+    protected array $forcedDisplayLine = [];
+
     protected int $startLineOffset = 0;
 
     protected array $highlightedLines = [];
 
     public function reset(): void
     {
+        $this->forcedDisplayLine = [];
         $this->lineNumberScopes = [];
         $this->highlightedLines = [];
         $this->lineMarkerReplacements = [];
@@ -66,6 +69,13 @@ class LineNumbersGutter extends AbstractGutter
     public function setStartLineOffset(int $offset): static
     {
         $this->startLineOffset = $offset;
+
+        return $this;
+    }
+
+    public function forceLineDisplay(int $originalLine, int $display): static
+    {
+        $this->forcedDisplayLine[$originalLine] = $display;
 
         return $this;
     }
@@ -156,6 +166,10 @@ class LineNumbersGutter extends AbstractGutter
         }
 
         $displayLine = $this->startLineOffset + $relativeLine;
+
+        if (array_key_exists($index, $this->forcedDisplayLine)) {
+            $displayLine = $this->forcedDisplayLine[$index];
+        }
 
         $lineNumberText = $displayLine;
         $textLen = mb_strlen($lineNumberText);
