@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ 8.3, 8.4 ]
+        php: [ 8.4 ]
         dependency-version: [ prefer-lowest, prefer-stable ]
 
-    name: P${{ matrix.php }} on ${{ matrix.os }}
+    name: P${{ matrix.php }} with ${{ matrix.dependency-version }}
 
     steps:
       - name: Checkout
