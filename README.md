@@ -73,6 +73,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Relative Line Number Changes](#relative-line-number-changes)
     * [Reindexing with Range Modifiers](#reindexing-with-range-modifiers)
     * [Reindex Differences Between Torchlight API](#reindex-differences-between-torchlight-api)
+    * [Vim-style Relative Line Numbers](#vim-style-relative-line-numbers)
 * [Options](#options)
   * [Setting Default Options Globally](#setting-default-options-globally)
   * [Setting Default Themes Globally](#setting-default-themes-globally)
@@ -1391,6 +1392,40 @@ EOT; // [tl! highlight:-7,3]
 ![Example of Nulling out Ranges](./.art/readme/example_reindex_stanza_voodoo.png)
 
 Why you would ever want to do this, I have no idea. But if you want to, you can!
+
+#### Vim-style Relative Line Numbers
+
+You may reindex your line numbers similar to Vim's [relative line numbers](https://neovim.io/doc/user/options.html#'relativenumber). When you do this, the line numbers will count how far away they are from the annotation:
+
+```php
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class, // [tl! reindex(vim.relative)]
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class,
+    ]
+]
+```
+
+![Vim Relative Line Numbers](./.art/readme/example_vim_relative.png)
+
+The annotation's line will be reindex to `0`, since that is the distance away from the annotation. If you'd like to preserve the current line number, you may use the `vim.preserve` annotation instead:
+
+```php
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class, // [tl! reindex(vim.preserve)]
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class,
+    ]
+]
+```
+
+![Vim Preserve Current Line Number](./.art/readme/example_vim_preserve.png)
 
 #### Reindex Differences Between Torchlight API
 
