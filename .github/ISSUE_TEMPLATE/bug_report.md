@@ -7,6 +7,8 @@ assignees: ''
 
 ---
 
+> Note: Failure to provide all information required to reproduce your issue will likely result in your issue being closed. Please remove this note before submitting, and thank you for providing all the required information; it really does help!
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
