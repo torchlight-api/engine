@@ -57,7 +57,9 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Default to Open](#default-to-open)
   * [Diffs](#diffs)
     * [Diff Shorthand](#diff-shorthand)
-    * [Controlling Diff Indicators](#controlling-diff-indicators)
+    * [Removing Diff Indicators](#removing-diff-indicators)
+    * [Standalone Diff Indicators](#standalone-diff-indicators)
+    * [Diff Indicators Without Line Numbers](#diff-indicators-without-line-numbers)
     * [Diff Ranges](#diff-ranges)
   * [Classes and IDs](#classes-and-ids)
     * [Using Range Modifiers](#using-range-modifiers)
@@ -910,11 +912,151 @@ return [
 
 ### Diffs
 
+To demonstrate the addition and removal of lines, you can use the `add` and `remove` keywords.
+
+Torchlight will look through your theme to find the appropriate foreground and background colors to apply to the specific lines.
+
+It will also apply `line-add` and `line-remove` classes to the individual lines. To the code element it will apply the `has-diff-lines` class, and potentially `has-add-lines` and `has-remove-lines`.
+
+```php
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        SomeOtherHighlighter::class, // [tl! remove]
+        TorchlightExtension::class, // [tl! add]
+    ]
+]
+```
+
+![Diff Annotation Example](./.art/readme/example_diff.png)
+
 #### Diff Shorthand
 
-#### Controlling Diff Indicators
+You can use `++` and `--` as shorthand for `add` and `remove`.
+
+```text
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        SomeOtherHighlighter::class, // [tl! --]
+        TorchlightExtension::class, // [tl! ++]
+    ]
+]
+```
+
+#### Removing Diff Indicators
+
+Here is an example of a diff, with _no_ indicators.
+
+```php
+// torchlight! {"diffIndicators": false}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        SomeOtherHighlighter::class, // [tl! remove]
+        TorchlightExtension::class, // [tl! add]
+    ]
+]
+```
+
+![Example of Diff With No Indicators](./.art/readme/example_diff_no_indicators.png)
+
+Notice that the colors of the lines just change to the standard colors you expect to see.
+
+If you'd like to show the `+`/`-` indicators, you can do so by turning them on at the block level, or globally in your client's configuration.
+
+For these examples we'll do it at the block level so we can see how it works.
+
+Let's change the behavior by sending `diffIndicators: true` to the API.
+
+```php
+// torchlight! {"diffIndicators": true}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        SomeOtherHighlighter::class, // [tl! remove]
+        TorchlightExtension::class, // [tl! add]
+    ]
+]
+```
+
+Take a look where the line numbers are and notice the indicators:
+
+![Example of Diff With Indicators](./.art/readme/example_diff_with_indicators.png)
+
+> [!NOTE]
+> If you'd like to reindex the line numbers after a diff, you [can do that](#reindexing-line-numbers).
+
+#### Standalone Diff Indicators
+
+By default, we swap them in place of the line numbers, but you can also disable that behavior by using the extremely descriptive, verbose option `diffIndicatorsInPlaceOfLineNumbers`.
+
+```php
+// torchlight! {"diffIndicators": true, "diffIndicatorsInPlaceOfLineNumbers": false}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        SomeOtherHighlighter::class, // [tl! remove]
+        TorchlightExtension::class, // [tl! add]
+    ]
+]
+```
+
+![Example of Diff Standalone Indicators](./.art/readme/example_diff_standalone.png)
+
+Now the line numbers remain, and the indicators get their own column.
+
+Each standalone indicator has the `diff-indicator` class applied, along with one of the following:
+
+* `diff-indicator-add` - For lines that were added
+* `diff-indicator-remove` - For lines that were removed
+* `diff-indicator-empty` - For lines that were unchanged
+
+#### Diff Indicators Without Line Numbers
+
+In the scenario where you:
+
+* turn _on_ diff indicators
+* turn _off_ line numbers
+* turn _on_ diff indicators in place of line numbers (this is the default)
+
+Your indicators will still show up in the `line-number` classes, not the standalone classes mentioned above.
+
+The reason we have chosen this approach is so that you don't have to add the `diff-indicator` styles _ever_ when you choose to put your indicators in the line number column.
 
 #### Diff Ranges
+
+The diff annotations support the entire set of [range modifiers](#ranges) to help you quickly annotate a whole set of lines.
+
+Check out the [range docs](#ranges) for more details, but here is a quick cheat sheet.
+
+```text
+add          -- This line only
+
+add:start    -- The start of an open ended range
+add:end      -- The end of an open ended range
+
+add:10       -- This line, and the 10 following lines
+add:-10      -- This line, and the 10 preceding lines
+
+add:1,10     -- Start one line down, highlight 10 lines total
+add:-1,10    -- Start one line up, highlight 10 lines total
+```
 
 ### Classes and IDs
 
@@ -933,8 +1075,6 @@ return [
 ## Options
 
 ### Line Numbers
-
-### Diff Indicators
 
 ### Summary Indicator
 
