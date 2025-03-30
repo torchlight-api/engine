@@ -92,6 +92,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
   * [The Copyable Option](#the-copyable-option)
   * [Disabling Torchlight Annotations](#disabling-torchlight-annotations)
 * [Reporting Issues](#reporting-issues)
+* [Contributing](#contributing)
 * [Credits](#credits)
 * [License](#license)
 
@@ -1920,6 +1921,12 @@ When reporting issues, please include _all_ of the following information:
 If you know an issue is related to [Phiki](https://github.com/phikiphp/phiki) and _not_ the Torchlight renderer, please create an issue [here](https://github.com/phikiphp/phiki/issues). If you are not sure, feel free to create an issue in this repository and it will eventually end up in the right place 🙂
 
 Some issues may be difficult to resolve and take time to implement. Everyone involved thanks you in advance for your patience.
+
+## Contributing
+
+Community contributes are welcomed! However, if you are contributing additional themes or grammars, please take care to ensure their license allows it.
+
+If you spot a grammar or theme with that is being improperly used, please create an issue and it will be addressed.
 
 ## Credits
 
