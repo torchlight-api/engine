@@ -1926,7 +1926,7 @@ Some issues may be difficult to resolve and take time to implement. Everyone inv
 
 Community contributions are welcomed! However, if you are contributing additional themes or grammars, please take care to ensure their license allows it.
 
-If you spot a grammar or theme with that is being improperly used, please create an issue and it will be addressed.
+If you spot a grammar or theme that is being improperly used, please create an issue and it will be addressed.
 
 ## Credits
 
