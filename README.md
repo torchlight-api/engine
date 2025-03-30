@@ -1914,6 +1914,7 @@ When reporting issues, please include _all_ of the following information:
 
 * Grammar/Language
 * PHP Version
+* Phiki version
 * Minimum input text required to reproduce the issue
 
 If you know an issue is related to [Phiki](https://github.com/phikiphp/phiki) and _not_ the Torchlight renderer, please create an issue [here](https://github.com/phikiphp/phiki/issues). If you are not sure, feel free to create an issue in this repository and it will eventually end up in the right place 🙂
