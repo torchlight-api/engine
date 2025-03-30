@@ -74,9 +74,16 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Reindexing with Range Modifiers](#reindexing-with-range-modifiers)
     * [Reindex Differences Between Torchlight API](#reindex-differences-between-torchlight-api)
   * [Options](#options)
-  * [Line Numbers](#line-numbers)
-  * [Summary Indicator](#summary-indicator)
-  * [Disabling Annotations](#disabling-annotations)
+    * [Setting Default Options Globally](#setting-default-options-globally)
+    * [Setting Default Themes Globally](#setting-default-themes-globally)
+    * [Setting Options Per Block](#setting-options-per-block)
+    * [Line Numbers](#line-numbers)
+      * [Changing the Starting Line Number](#changing-the-starting-line-number)
+      * [Changing Line Number Styles](#changing-line-number-styles)
+    * [Summary Indicator](#summary-indicator)
+    * [Disabling Torchlight Annotations](#disabling-torchlight-annotations)
+ * [Credits](#credits)
+ * [License](#license)
 
 ## Installation
 
@@ -1393,11 +1400,266 @@ Be sure to double check any reindex examples if you are migrating from the Torch
 
 ## Options
 
+Each of these is covered in detail on its own page, but here is an overview of each option and what it does.
+
+* [lineNumbers](#line-numbers) - turn line numbers on or off
+* [lineNumbersStart](#changing-the-starting-line-number) - the number of the first line
+* [lineNumbersStyle](#changing-line-number-styles) - the CSS style to apply to line numbers
+* [diffIndicators](#removing-diff-indicators) - turn on diff indicators (`+`/`-`)
+* [diffIndicatorsInPlaceOfLineNumbers](#standalone-diff-indicators) - use the line number location for diff indicators
+* [summaryCollapsedIndicator](#summary-indicator) - the text to show when a range is collapsed
+* [torchlightAnnotations](#disabling-torchlight-annotations) - disable Torchlight annotation processing altogether.
+
+### Setting Default Options Globally
+
+When using Torchlight Engine without any clients, or helper packages, we need to tell it how to resolve any default global options. This is done by specifying a callback function that returns the default options:
+
+```php
+<?php
+
+use Torchlight\Engine\Options;
+
+Options::setDefaultOptionsBuilder(function () {
+    return new Options(
+        // Specify your options here.
+    );
+});
+```
+
+If you have an array of options, you may also use the static `fromArray` helper method:
+
+```php
+<?php
+
+use Torchlight\Engine\Options;
+
+Options::setDefaultOptionsBuilder(function () {
+    return Options::fromArray([]);
+});
+```
+
+As an example, if you are working in a Laravel project that already has a `torchlight.php` configuration file, you can continue using those options like so (this will become unnecessary once the Laravel client has been updated):
+
+```php
+<?php
+namespace App\Providers;
+ 
+use Illuminate\Support\ServiceProvider;
+use Torchlight\Engine\Options;
+ 
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot()
+    {
+        Options::setDefaultOptionsBuilder(fn () => Options::fromArray(config('torchlight.options')));
+    }
+}
+```
+
+### Setting Default Themes Globally
+
+Like with global options, we need to specify a callback letting Torchlight Engine's CommonMark extension know which theme to use. This only applies if you _do not_ specify a theme when instantiating the extension instance.
+
+For example, we can specify default themes that will be used if the extension is not configured when instantiated:
+
+```php
+<?php
+
+
+use Torchlight\Engine\CommonMark\Extension;
+
+Extension::setThemeResolver(function () {
+    return [
+        'light' => 'github-light',
+        'dark' => 'github-dark',
+    ];
+});
+```
+
+As another example, we could use the `torchlight.theme` configuration value within an existing Laravel application like so:
+
+```php
+<?php
+namespace App\Providers;
+ 
+use Illuminate\Support\ServiceProvider;
+use Torchlight\Engine\CommonMark\Extension;
+ 
+class AppServiceProvider extends ServiceProvider
+{
+    public function boot()
+    {
+        Extension::setThemeResolver(function () {
+            return config('torchlight.theme');
+        });
+    }
+}
+```
+
+### Setting Options Per Block
+
+Some blocks you'll want to set options individually. Any options you set on the block level will override that same option on the global level.
+
+To set block level options, the _first_ line of your block must be a comment, in the language of the block.
+
+The comment _must_ begin with `torchlight!` and be followed valid JSON.
+
+Here is an example turning line numbers off for a single block:
+
+```text
+// torchlight! {"lineNumbers": false}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class,
+    ]
+]
+```
+
+![No Line Numbers](./.art/readme/example_no_line_numbers.png)
+
+Any option that you can set at the global level, you can set at the block level.
+
 ### Line Numbers
+
+Torchlight add line numbers by default, but you can disable them globally or on the block level by changing the `lineNumbers` option to false.
+
+Here's an example of the block level change:
+
+```text
+// torchlight! {"lineNumbers": false}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class,
+    ]
+]
+```
+
+![No Line Numbers](./.art/readme/example_no_line_numbers.png)
+
+#### Changing the Starting Line Number
+
+To change the starting number of a block, you may use the `lineNumbersStart` option:
+
+```text
+// torchlight! {"lineNumbersStart": 99}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class,
+    ]
+]
+```
+
+![Changing the Starting Line Number](./.art/readme/example_custom_starting_line_number.png)
+
+Note: we also have a [`reindex` annotation](#reindexing-line-numbers) to control the line number line by line.
+
+#### Changing Line Number Styles
+
+By default, Torchlight applies a reasonable set of CSS style to your line numbers:
+
+```css
+.line-number {
+    text-align: right; 
+    -webkit-user-select: none; 
+    user-select: none;
+}
+```
+
+If you want to control that, you can pass in a `lineNumbersStyle` option.
+
+```text
+// torchlight! {"lineNumbersStyle": "opacity: .5;"}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class,
+    ]
+]
+```
+
+![Customizing Line Number Styles](./.art/readme/example_custom_line_number_style.png)
+
+There are a couple of things to note when using this option.
+
+The first is that you will likely want to include the `-webkit-user-select: none; user-select: none;` styles, so that when your visitors copy your code they don't get the line numbers. Because that's the worst.
+
+Copy the code above and notice that the line numbers will be selected, versus the block right above it (Torchlight default).
+
+The other thing to note is that you'll need to be thoughtful when adding `color` declarations.
+
+![Line Number Colors](./.art/readme/example_line_number_colors.png)
+
+Torchlight uses the theme's color scheme to handle insert and remove lines, so it's probably best to leave the color declaration off altogether.
 
 ### Summary Indicator
 
-### Disabling Annotations
+When using the [collapse](#collapsing) annotation, Torchlight will add an ellipses `...` to indicate where the collapsed code is.
+
+This is the default behavior:
+
+![Default Summary Behavior](./.art/readme/example_summary_indicator_default.png)
+
+
+If you'd like to change the `...` to something else, you can do so by changing the `summaryCollapsedIndicator` option:
+
+```text
+// torchlight! {"summaryCollapsedIndicator": "Click to Show"}
+return [
+    'heading_permalink' => [ // [tl! collapse:start]
+        'html_class' => 'permalink',
+        'id_prefix' => 'user-content',
+        'insert' => 'before',
+        'title' => 'Permalink',
+        'symbol' => '#',
+    ], // [tl! collapse:end]
+
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class,
+    ]
+]
+```
+
+![Customizing the Collapse Text](./.art/readme/example_collapse_click_to_show.png)
+
+### Disabling Torchlight Annotations
+
+If for whatever reason you want to disable _all_ of the Torchlight annotations, you may do so with the `torchlightAnnotations` option.
+
+This option was added specifically for these docs. We don't expect you'll need it unless you're trying to show how Torchlight works!
+
+```text
+// torchlight! {"torchlightAnnotations": false}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class, // [tl! focus]
+    ]
+]
+```
+
+![Disabling Torchlight Annotations](./.art/readme/example_disabling_annotations.png)
 
 ## Credits
 
