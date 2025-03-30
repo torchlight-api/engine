@@ -44,6 +44,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Single Lines](#single-lines)
     * [N-Many Lines](#n-many-lines)
     * [Offset and Length](#offset-and-length)
+    * [Applying an Annotation to All Lines](#applying-an-annotation-to-all-lines)
     * [Start and End](#start-and-end)
     * [Supported Annotations](#supported-annotations)
   * [Highlighting Lines](#highlighting-lines)
@@ -588,6 +589,17 @@ EOT; // [tl! highlight:-7,3]
 ```
 
 ![HEREDOC Offset and Length Example](./.art/readme/example_offset_length_1.png)
+
+#### Applying an Annotation to All Lines
+
+You may use the `all` modifier to apply an annotation to _all_ lines. For example, the following would apply the `autolinks` annotation to every line:
+
+```text
+### Added [tl! autolink:all]
+- Support for Laravel 9 [#29](https://github.com/torchlight-api/torchlight-laravel/pull/29)
+- Better support for PHP 8.1 [#30](https://github.com/torchlight-api/torchlight-laravel/pull/30) 
+
+```
 
 #### Start and End
 
