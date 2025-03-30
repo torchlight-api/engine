@@ -1169,9 +1169,62 @@ For example, the range `.inner-highlight:c26,34` instructs Torchlight to wrap th
 
 ### Auto-linking URLs
 
+Sometimes your code contains URLs to other supporting documentation. It's a nice experience for the reader if those URLs were actually links instead of having to copy-paste them.
+
+It's a little thing, but Torchlight sweats the little things so you don't have to.
+
+Using the `autolink` annotation, Torchlight will look for URLs and turn them into links for you.
+
+```php
+/**
+ * @see https://youtu.be/LEXIYgOXsRU?si=wDC7GxC1y3pNdHjZ&t=69. [tl! autolink]
+ */
+
+$link = 'https://youtu.be/LEXIYgOXsRU?si=wDC7GxC1y3pNdHjZ&t=69'; // [tl! autolink]
+```
+
+The resulting link will look like this (color will change depending on your theme):
+
+```html
+<a target="_blank" 
+   rel="noopener" 
+   class="torchlight-link" 
+   style="color: #032F62;" 
+   href="https://youtu.be/LEXIYgOXsRU?si=wDC7GxC1y3pNdHjZ&t=6">https://youtu.be/LEXIYgOXsRU?si=wDC7GxC1y3pNdHjZ&t=6</a>
+```
+
+Torchlight adds a `torchlight-link` class, and `rel` + `target` attributes.
+
+The `rel=noopener` attribute ensures that no a malicious website doesn't have access to the `window.opener` property. Although this is less of a concern now with modern browsers, we still want you to be covered.
+
+Read more about `rel=noopener` at [mathiasbynens.github.io/rel-noopener](https://mathiasbynens.github.io/rel-noopener/).
+
 #### Link Requirements
 
+Your URL must start with one of the following in order to match:
+
+* `http:`
+* `https:`
+* `www.`
+
 #### Link Ranges
+
+The auto-link annotation supports the entire set of [range modifiers](#ranges) to help you quickly annotate a whole set of lines.
+
+Check out the [range docs](#ranges) for more details, but here is a quick cheat sheet.
+
+ ```text
+ autolink          -- This line only
+ 
+ autolink:start    -- The start of an open ended range
+ autolink:end      -- The end of an open ended range
+ 
+ autolink:10       -- This line, and the 10 following lines
+ autolink:-10      -- This line, and the 10 preceding lines
+ 
+ autolink:1,10     -- Start one line down, highlight 10 lines total
+ autolink:-1,10    -- Start one line up, highlight 10 lines total
+ ```
 
 ### Reindexing Line Numbers
 
