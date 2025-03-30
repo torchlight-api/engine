@@ -178,10 +178,10 @@ class AppServiceProvider extends ServiceProvider
 
 There are a small number of differences when comparing Torchlight Engine and the Torchlight API versions:
 
-* Invalid JSON input for block options will throw an instance of `Torchlight\Engine\Exceptions\InvalidJsonException`. The API version may attempt to parse the invalid JSON or silently discard the error
-* The [reindex](#reindexing-line-numbers) annotation's range modifier behavior has [been adjusted](#reindex-differences-between-torchlight-api) to be more predictable and consistent with other modifiers
-* The `lineNumberAndDiffIndicatorRightPadding` block option applies padding more predictably
-  * When using `lineNumberAndDiffIndicatorRightPadding` and `diffIndicatorsInPlaceOfLineNumbers: false` together, the padding will be added to the _right_ of the diff indicators, instead of in-between them
+* Invalid JSON input for block options will throw an instance of `Torchlight\Engine\Exceptions\InvalidJsonException`. The API version may attempt to parse the invalid JSON or silently discard the error.
+* The [reindex](#reindexing-line-numbers) annotation's range modifier behavior has [been adjusted](#reindex-differences-between-torchlight-api) to be more predictable and consistent with other modifiers.
+* The `lineNumberAndDiffIndicatorRightPadding` block option applies padding more predictably.
+  * When using `lineNumberAndDiffIndicatorRightPadding` and `diffIndicatorsInPlaceOfLineNumbers: false` together, the padding will be added to the _right_ of the diff indicators, instead of in-between them.
 * Some themes available via. Torchlight API are not available with Torchlight Engine; this is largely due to them not being distributed any longer, or licensing information was not readily available. More information on adding custom themes to Torchlight will be coming in the future.
 
 ## CSS and Theming
