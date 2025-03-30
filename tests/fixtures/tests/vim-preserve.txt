@@ -2,7 +2,7 @@
 return [
     'extensions' => [
         // Add attributes straight from markdown.
-        AttributesExtension::class, // [tl! reindex(vim.hybrid)]
+        AttributesExtension::class, // [tl! reindex(vim.preserve)]
 
         // Add Torchlight syntax highlighting.
         TorchlightExtension::class,
