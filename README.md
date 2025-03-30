@@ -1060,9 +1060,112 @@ add:-1,10    -- Start one line up, highlight 10 lines total
 
 ### Classes and IDs
 
+You can add your own custom classes by preceding them with a `.`, or add an ID with a `#`.
+
+```php
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting. [tl! highlight .animate-pulse]
+        TorchlightExtension::class, // [tl! highlight .font-bold .italic .animate-pulse #pulse]
+    ]
+]
+```
+
+You can space out your classes like we did above, or just run them all together: `.font-bold.italic.animate-pulse#pulse`
+
+Torchlight also supports Tailwind + the Tailwind JIT syntax, so you can do pretty much anything you can think of:
+
+```text
+torchlight! {"torchlightAnnotations": false}
+ID only                   // [tl! #id]
+ID + Class                // [tl! #id.pt-4]
+Negative Tailwind classes // [tl! .-pt-4 .pb-8]
+ID + Classes Mixed        // [tl! .-pt-4#id1.pb-8]
+Tailwind Prefixes         // [tl! .sm:pb-8]
+Tailwind JIT              // [tl! .sm:pb-[calc(8px-4px)]]
+Tailwind JIT              // [tl! .pr-[8px]]
+Tailwind JIT + ID         // [tl! .-pt-4.pb-8.pr-[8px] #id]
+```
+
 #### Using Range Modifiers
 
+You can also apply any [range modifiers](#ranges) to custom classes.
+
+```php
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting. [tl! .bg-gray-900:-1,4 .animate-pulse:1]
+        TorchlightExtension::class,
+    ]
+]
+```
+
+![Example of Pulse Class](./.art/readme//classes_pulse.gif)
+
+Check out the [range docs](#ranges) for more details, but here is a quick cheat sheet.
+
+```text
+.class          -- This line only
+
+.class:start    -- The start of an open ended range
+.class:end      -- The end of an open ended range
+
+.class:10       -- This line, and the 10 following lines
+.class:-10      -- This line, and the 10 preceding lines
+
+.class:1,10     -- Start one line down, highlight 10 lines total
+.class:-1,10    -- Start one line up, highlight 10 lines total
+```
+
+Remember that an HTML ID must be unique on the page, so while it's unlikely that you'd want to apply an ID to a _range_ of lines, you may want to apply it to a line you cannot reach.
+
+For example, to reach four lines down and add an ID of `popover-trigger`, you could do the following:
+
+```text
+// Reach down 4 lines, add the ID to one line [tl! #popover-trigger:4,1]
+return <<<EOT
+spring sunshine
+the smell of waters
+from the stars
+
+deep winter
+the smell of a crow
+from the stars
+
+beach to school
+the smell of water
+in the sky
+EOT;
+```
+
 #### Character Ranges
+
+You may also apply classes and IDs to character ranges on the current line by prefixing your range with the `c` character. Instead of supplying a range of line numbers, we supply the *character* range.
+
+For example, the range `.inner-highlight:c26,34` instructs Torchlight to wrap the tokens from characters 26 through 34 with the `inner-highlight` class:
+
+```text
+<script src="//unpkg.com/alpinejs" defer></script> <!-- [tl! .inner-highlight:c26,34] -->
+ 
+<div x-data="{ open: false }">
+    <button @click="open = true">Expand</button>
+ 
+    <span x-show="open">
+        Content...
+    </span>
+</div>
+```
+
+![Character Range Example](./.art/readme/example_character_ranges.png)
+
+> [!NOTE]
+> You will need to add the desired CSS to style your character ranges.
 
 ### Auto-linking URLs
 
