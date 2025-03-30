@@ -793,11 +793,11 @@ return [
 
 **Collapsed section closed:**
 
-![Collapsed Section Closed](./.art/readme/example_collapse_closed.png)
+![Collapsed Section Closed](./.art/readme/example_summary_closed.png)
 
 **Collapsed section open:**
 
-![Collapsed Section Open](./.art/readme/example_collapse_open.png)
+![Collapsed Section Open](./.art/readme/example_summary_open.png)
 
 These lines will now be wrapped in a `summary` / `detail` pair of tags, that allows the user to natively toggle the open and closed start of the block. Torchlight will also add a `has-summaries` class to your `code` tag anytime you define a summary range.
 
@@ -850,7 +850,7 @@ return [
 ]
 ```
 
-![Customized Collapse Text](./.art/readme/example_collapse_custom_text.png)
+![Customized Collapse Text](./.art/readme/example_summary_text_customized.png)
 
 #### Collapsing Required CSS
 
