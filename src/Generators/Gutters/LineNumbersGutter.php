@@ -2,6 +2,7 @@
 
 namespace Torchlight\Engine\Generators\Gutters;
 
+use Phiki\Theme\TokenSettings;
 use Torchlight\Engine\Options;
 
 class LineNumbersGutter extends AbstractGutter
@@ -98,6 +99,24 @@ class LineNumbersGutter extends AbstractGutter
         return array_key_exists($line, $this->highlightedLines);
     }
 
+    /**
+     * @param  TokenSettings[]  $settings
+     */
+    private function removeBackground(array $settings): array
+    {
+        $newSettings = [];
+
+        foreach ($settings as $id => $setting) {
+            $newSettings[$id] = new TokenSettings(
+                background: null,
+                foreground: $setting->foreground,
+                fontStyle: $setting->fontStyle,
+            );
+        }
+
+        return $newSettings;
+    }
+
     public function renderLine(int $relativeLine, int $index, array $tokens): string
     {
         if (! $this->options->lineNumbersEnabled && count($this->lineMarkerReplacements) === 0) {
@@ -111,7 +130,11 @@ class LineNumbersGutter extends AbstractGutter
             : $this->getLineNumberColorStyles();
 
         if (array_key_exists($relativeLine, $this->lineNumberScopes)) {
-            $colorStyles = $this->getScopeStyles($this->lineNumberScopes[$relativeLine]);
+            $settings = $this->removeBackground(
+                $this->getScopeSettings($this->lineNumberScopes[$relativeLine])
+            );
+
+            $colorStyles = $this->htmlGenerator->getSettingsStyleString($settings);
         }
 
         $lineNumberStyles = '';
