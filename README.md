@@ -78,6 +78,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Reindexing with Range Modifiers](#reindexing-with-range-modifiers)
     * [Reindex Differences Between Torchlight API](#reindex-differences-between-torchlight-api)
     * [Vim-style Relative Line Numbers](#vim-style-relative-line-numbers)
+* [Highlighting Files and Directory Structures](#highlighting-files-and-directory-structures)
 * [Options](#options)
   * [Setting Default Options Globally](#setting-default-options-globally)
   * [Setting Default Themes Globally](#setting-default-themes-globally)
@@ -1526,6 +1527,43 @@ return [
 Torchlight Engine makes some breaking changes when compared to the behavior of the Torchlight API. This was done to make the behavior of reindexing with annotation ranges more predictable and consistent with the other annotations; there should be little to no impact on your code examples unless you are doing some crazy things.
 
 Be sure to double check any reindex examples if you are migrating from the Torchlight API!
+
+## Highlighting Files and Directory Structures
+
+Torchlight provides a custom `files` language that can be used to highlight files and directory structures:
+
+````
+```files
+// torchlight! { "lineNumbers": false, "fileStyle": "ascii" }
+resources/
+    name with space/
+    # Full line comment
+    blueprints/ # Partial comment
+        collections/
+            blog/
+                post.yaml       # Old name [tl! --]
+                basic_post.yaml # New name [tl! ++]
+                art_directed_post.yaml
+        taxonomies/
+            tags/
+                tag.yaml
+        globals/
+            global.yaml
+            company.yaml
+        assets/
+            main.yaml
+        forms/
+            contact.yaml
+        user.yaml
+```
+````
+
+![ASCII Files Example](./.art/readme/example_files.png)
+
+The `files` language supports two modes or styles:
+
+* `ascii`: Renders connecting lines using ASCII characters
+* `html`: Adds a number of HTML elements with class names that can be styled using CSS. If you'd like to use this option, you are encouraged to experiment with the generated output
 
 ## Options
 
