@@ -423,7 +423,7 @@ in the sky
 
 JSON uses the double slash // comment style, even though it's not official spec. Forgive us.
 
-```json
+```text
 {
     "torchlightAnnotations": true,
     "lineNumbers": true, // [tl! focus:2]
