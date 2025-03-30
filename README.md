@@ -31,6 +31,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
   * [Laravel](#laravel)
   * [Statamic](#statamic)
   * [Notes on User Provided Content](#notes-on-user-provided-content)
+* [Differences Between Torchlight Engine and Torchlight API](#differences-between-torchlight-engine-and-torchlight-api)
 * [CSS and Theming](#css-and-theming)
   * [Standard CSS](#standard-css)
   * [Tailwind](#tailwind)
@@ -168,6 +169,14 @@ class AppServiceProvider extends ServiceProvider
 ### Notes on User Provided Content
 
 [Phiki](https://github.com/phikiphp/phiki) and Torchlight Engine, while incredibly powerful, are still early projects, and it is possible to encounter infinite loops with some grammars and input. As always, you should exercise caution when rendering any user-provided content.
+
+## Differences Between Torchlight Engine and Torchlight API
+
+There are a small number of differences when comparing Torchlight Engine and the Torchlight API versions:
+
+* Invalid JSON input for block options will throw an instance of `Torchlight\Engine\Exceptions\InvalidJsonException`. The API version may attempt to parse the invalid JSON or silently discard the error
+* The [reindex](#reindexing-line-numbers) annotation's range modifier behavior has [been adjusted](#reindex-differences-between-torchlight-api) to be more predictable and consistent with other modifiers
+* The `lineNumberAndDiffIndicatorRightPadding` block option applies padding more predictably
 
 ## CSS and Theming
 
