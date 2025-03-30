@@ -4,7 +4,7 @@ Torchlight Engine brings Torchlight's code annotation syntax to PHP, built on to
 
 Torchlight enables you to add annotations to your code, drawing your reader's attention to specific parts, highlighting lines, visualizing diffs, and much more. Combined with the syntax highlighting provided by Phiki, Torchlight is a perfect fit for technical blogs, documentation, and so much more.
 
-Torchlight annotations are written as comments in the language of your code sample, eliminating all red squigglies and errors within your editor or IDE.
+Torchlight annotations are written as comments in the language of your code sample, eliminating red squigglies and errors within your editor or IDE.
 
 As an example, here is how we could focus our reader's attention on lines 6 and 7:
 
