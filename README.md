@@ -61,6 +61,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Standalone Diff Indicators](#standalone-diff-indicators)
     * [Diff Indicators Without Line Numbers](#diff-indicators-without-line-numbers)
     * [Diff Ranges](#diff-ranges)
+    * [Preserving Syntax Colors](#preserving-syntax-colors)
   * [Classes and IDs](#classes-and-ids)
     * [Using Range Modifiers](#using-range-modifiers)
     * [Character Ranges](#character-ranges)
@@ -1069,6 +1070,43 @@ add:-10      -- This line, and the 10 preceding lines
 add:1,10     -- Start one line down, highlight 10 lines total
 add:-1,10    -- Start one line up, highlight 10 lines total
 ```
+
+#### Preserving Syntax Colors
+
+By default, the diff `add` and `remove` annotations will apply the corresponding text color, replacing the original token colors:
+
+```php
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        SomeOtherHighlighter::class, // [tl! remove]
+        TorchlightExtension::class, // [tl! add]
+    ]
+]
+```
+
+![Diff Annotation Example](./.art/readme/example_diff.png)
+
+Notice how the text color has changed to red and green? We can disable this by setting the `diffPreserveSyntaxColors` block option:
+
+```text
+// torchlight! {"diffPreserveSyntaxColors": true}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        SomeOtherHighlighter::class, // [tl! remove]
+        TorchlightExtension::class, // [tl! add]
+    ]
+]
+```
+
+![Preserving Diff Syntax Colors](./.art/readme/example_diff_preserve_colors.png)
 
 ### Classes and IDs
 
