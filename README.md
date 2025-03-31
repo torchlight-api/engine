@@ -212,7 +212,7 @@ There are plans to upgrade both of these packages to support Torchlight Engine. 
 
 ### Will this package replace the existing CommonMark package?
 
-No, there are no immediate plans to deprecate the [existing CommonMark package](https://github.com/torchlight-api/torchlight-commonmark-php) as it provides additional features not currently available in the extension shipped this package (notably integration with the `torchlight.php` configuration file and replacers). However, if you need a CommonMark extension that has no Laravel dependency, the extension provided by this package is what you are looking for.
+No, there are no immediate plans to deprecate the [existing CommonMark package](https://github.com/torchlight-api/torchlight-commonmark-php) as it provides additional features not currently available in the extension shipped with this package (notably integration with the `torchlight.php` configuration file and replacers). However, if you need a CommonMark extension that has no Laravel dependency, the extension provided by this package is what you are looking for.
 
 ### Some themes are missing compared to the API version. How come?
 
