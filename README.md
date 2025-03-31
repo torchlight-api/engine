@@ -198,7 +198,7 @@ The Torchlight API will remain as-is for now. Any changes to the hosted service 
 
 ### Does Torchlight Engine require an API key or network access?
 
-No. Torchlight Engine is PHP-based, offline renderer built on top of [Phiki](https://github.com/phikiphp/phiki).
+No. Torchlight Engine is a PHP-based, offline renderer built on top of [Phiki](https://github.com/phikiphp/phiki).
 
 ### What about the Laravel and CommonMark packages?
 
