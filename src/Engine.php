@@ -41,6 +41,8 @@ use Torchlight\Engine\Theme\ThemeRepository;
 
 class Engine extends BasePhiki
 {
+    public const VERSION = '0.1.0';
+
     use LoadsGrammars,
         ManagesCommentTokens,
         ManagesPreprocessors,
