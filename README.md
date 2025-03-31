@@ -1334,7 +1334,7 @@ For example, the range `.inner-highlight:c26,34` instructs Torchlight to wrap th
 ![Character Range Example](./.art/readme/example_character_ranges.png)
 
 > [!NOTE]
-> You will need to add the desired CSS to style your character ranges.
+> You will need to add the desired CSS to style your character range classes.
 
 ### Auto-linking URLs
 
