@@ -42,7 +42,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
   * [Can I add custom themes to Torchlight Engine?](#can-i-add-custom-themes-to-torchlight-engine)
   * [Are the custom grammars from the API version supported?](#are-the-custom-grammars-from-the-api-version-supported)
   * [Some of my highlighting looks different now. How come?](#some-of-my-highlighting-looks-different-now-how-come)
-  * [Will this package replace the existing CommonMark package](#will-this-package-replace-the-existing-commonmark-package)
+  * [Will this package replace the existing CommonMark package?](#will-this-package-replace-the-existing-commonmark-package)
   * [Are there breaking changes?](#are-there-breaking-changes)
 * [Differences Between Torchlight Engine and Torchlight API](#differences-between-torchlight-engine-and-torchlight-api)
 * [CSS and Theming](#css-and-theming)
