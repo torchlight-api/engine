@@ -1974,7 +1974,7 @@ Some issues may be difficult to resolve and take time to implement. Everyone inv
 
 ## Contributing
 
-Community contributions are welcomed! However, if you are contributing additional themes or grammars, please take care to ensure their license allows it.
+Community contributions are welcome! However, if you are contributing additional themes or grammars, please take care to ensure their license allows it.
 
 If you spot a grammar or theme that is being improperly used, please create an issue and it will be addressed.
 
