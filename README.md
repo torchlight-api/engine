@@ -42,6 +42,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
   * [Can I add custom themes to Torchlight Engine?](#can-i-add-custom-themes-to-torchlight-engine)
   * [Are the custom grammars from the API version supported?](#are-the-custom-grammars-from-the-api-version-supported)
   * [Some of my highlighting looks different now. How come?](#some-of-my-highlighting-looks-different-now-how-come)
+  * [Will this package replace the existing CommonMark package](#will-this-package-replace-the-existing-commonmark-package)
   * [Are there breaking changes?](#are-there-breaking-changes)
 * [Differences Between Torchlight Engine and Torchlight API](#differences-between-torchlight-engine-and-torchlight-api)
 * [CSS and Theming](#css-and-theming)
@@ -219,6 +220,10 @@ Yes, even the [`files`](#highlighting-files-and-directory-structures) grammar!
 ### Some of my highlighting looks different now. How come?
 
 There may be differences in highlighting due to the underlying tokenizer and theme system. Please report any egregious issues and we will work to help get them resolved.
+
+### Will this package replace the existing CommonMark package?
+
+No, there are no immediate plans to deprecate the [existing CommonMark package](https://github.com/torchlight-api/torchlight-commonmark-php) as it provides additional features not currently available in the extension shipped this package (notably integration with the `torchlight.php` configuration file and replacers). However, if you need a CommonMark extension that has no Laravel dependency, the extension provided by this package is what you are looking for.
 
 ### Are there breaking changes?
 
