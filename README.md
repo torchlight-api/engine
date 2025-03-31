@@ -122,7 +122,7 @@ Torchlight Engine requires at least PHP 8.2, but PHP 8.4+ is recommended.
 
 ## Getting Started
 
-Torchlight Engine provides a `league/commonmark` extension, making it simple to start using Torchlight in your markdown-powered content.
+Torchlight Engine provides a `league/commonmark` extension, making it simple to start using Torchlight in your markdown content.
 
 You may register the extension with any CommonMark `Environment` object like so:
 
