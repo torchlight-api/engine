@@ -166,7 +166,7 @@ echo str()->markdown('...your markdown content...', extensions: [
 
 ### Statamic
 
-To integrate Torchlight Engine with Statamic, you may add the CommonMark extension to your desired markdown parser by [adding the extension](https://statamic.dev/extending/markdown#adding-extensions):
+To integrate Torchlight Engine with Statamic, you may [add the CommonMark extension](https://statamic.dev/extending/markdown#adding-extensions) like so:
 
 ```php
 <?php
