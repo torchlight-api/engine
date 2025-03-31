@@ -34,6 +34,15 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
   * [Laravel](#laravel)
   * [Statamic](#statamic)
   * [Notes on User Provided Content](#notes-on-user-provided-content)
+* [Frequently Asked Questions](#frequently-asked-questions)
+  * [Is the Torchlight API going away now?](#is-the-torchlight-api-going-away-now)
+  * [Does Torchlight Engine require an API key or network access?](#does-torchlight-engine-require-an-api-key-or-network-access)
+  * [What about the Laravel and CommonMark packages?](#what-about-the-laravel-and-commonmark-packages)
+  * [Some themes are missing compared to the API version. How come?](#some-themes-are-missing-compared-to-the-api-version-how-come)
+  * [Can I add custom themes to Torchlight Engine?](#can-i-add-custom-themes-to-torchlight-engine)
+  * [Are the custom grammars from the API version supported?](#are-the-custom-grammars-from-the-api-version-supported)
+  * [Some of my highlighting looks different now. How come?](#some-of-my-highlighting-looks-different-now-how-come)
+  * [Are there breaking changes?](#are-there-breaking-changes)
 * [Differences Between Torchlight Engine and Torchlight API](#differences-between-torchlight-engine-and-torchlight-api)
 * [CSS and Theming](#css-and-theming)
   * [Standard CSS](#standard-css)
@@ -179,15 +188,51 @@ class AppServiceProvider extends ServiceProvider
 
 [Phiki](https://github.com/phikiphp/phiki) and Torchlight Engine, while incredibly powerful, are still early projects, and it is possible to encounter infinite loops with some grammars and input. As always, you should exercise caution when rendering any user-provided content.
 
+## Frequently Asked Questions
+
+### Is the Torchlight API going away now?
+
+The Torchlight API will remain as-is for now. Any changes to the hosted service will be communicated ahead of time.
+
+### Does Torchlight Engine require an API key or network access?
+
+No. Torchlight Engine is PHP-based, offline renderer built on top of [Phiki](https://github.com/phikiphp/phiki).
+
+### What about the Laravel and CommonMark packages?
+
+There are plans to upgrade both of these packages to support Torchlight Engine. More information on this topic will come in the future.
+
+### Some themes are missing compared to the API version. How come?
+
+Some themes available via. Torchlight API are not available with Torchlight Engine; this is largely due to them not being distributed any longer, or licensing information was not readily available. More information on adding custom themes to Torchlight will be coming in the future.
+
+### Can I add custom themes to Torchlight Engine?
+
+Technically _yes_, but it is a slightly involved process to account for the Torchlight colors. More information on adding custom themes will be coming in the future once the process is a bit simpler.
+
+### Are the custom grammars from the API version supported?
+
+Yes, even the [`files`](#highlighting-files-and-directory-structures) grammar!
+
+### Some of my highlighting looks different now. How come?
+
+There may be differences in highlighting due to the underlying tokenizer and theme system. Please report any egregious issues and we will work to help get them resolved.
+
+### Are there breaking changes?
+
+Great care has been taken to avoid breaking changes, and adhere to the existing HTML structure as closely as possible. However, there are some scenarios where behavior has been changed.
+
+Please refer to the [Differences Between Torchlight Engine and Torchlight API](#differences-between-torchlight-engine-and-torchlight-api) section for more information.
+
 ## Differences Between Torchlight Engine and Torchlight API
 
 There are a small number of differences when comparing Torchlight Engine and the Torchlight API versions:
 
 * Invalid JSON input for block options will throw an instance of `Torchlight\Engine\Exceptions\InvalidJsonException`. The API version may attempt to parse the invalid JSON or silently discard the error.
 * The [reindex](#reindexing-line-numbers) annotation's range modifier behavior has [been adjusted](#reindex-differences-between-torchlight-api) to be more predictable and consistent with other modifiers.
+* Dark mode support no longer requires duplicate code blocks.
 * The `lineNumberAndDiffIndicatorRightPadding` block option applies padding more predictably.
   * When using `lineNumberAndDiffIndicatorRightPadding` and `diffIndicatorsInPlaceOfLineNumbers: false` together, the padding will be added to the _right_ of the diff indicators, instead of in-between them.
-* Some themes available via. Torchlight API are not available with Torchlight Engine; this is largely due to them not being distributed any longer, or licensing information was not readily available. More information on adding custom themes to Torchlight will be coming in the future.
 
 ## CSS and Theming
 
