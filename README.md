@@ -192,6 +192,8 @@ class AppServiceProvider extends ServiceProvider
 
 [Phiki](https://github.com/phikiphp/phiki) and Torchlight Engine, while incredibly powerful, are still early projects, and it is possible to encounter infinite loops with some grammars and input. As always, you should exercise caution when rendering any user-provided content.
 
+If you encounter one of these scenarios please create an issue so it can be looked into.
+
 ## Frequently Asked Questions
 
 ### Is the Torchlight API going away now?
