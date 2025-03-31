@@ -116,6 +116,8 @@ You may install Torchlight Engine via Composer:
 # TODO: Update once added to the registry.
 ```
 
+Torchlight Engine requires at least PHP 8.2, but PHP 8.4+ is recommended.
+
 ## Getting Started
 
 Torchlight Engine provides a `league/commonmark` extension, making it simple to start using Torchlight in your markdown-powered content.
