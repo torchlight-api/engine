@@ -1542,6 +1542,9 @@ Why you would ever want to do this, I have no idea. But if you want to, you can!
 
 #### Vim-style Relative Line Numbers
 
+> [!IMPORTANT]  
+> The `vim.relative` and `vim.preserve` annotations were not designed to work in conjunction with _other_ reindex annotations. Because of this, their use in combination with other reindex annotations is considered undefined behavior.
+
 You may reindex your line numbers similar to Vim's [relative line numbers](https://neovim.io/doc/user/options.html#'relativenumber). When you do this, the line numbers will count how far away they are from the annotation:
 
 ```php
