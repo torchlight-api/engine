@@ -1,4 +1,7 @@
-![Torchlight Engine](./.art/banner.png)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./.art/banner_dark.png">
+  <img alt="Torchlight Engine" src="./.art/banner.png">
+</picture>
 
 Torchlight Engine brings Torchlight's code annotation syntax to PHP, built on top of the excellent [Phiki](https://github.com/phikiphp/phiki) syntax highlighting package. **No node or API required**.
 
