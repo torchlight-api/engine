@@ -36,6 +36,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
   * [Notes on User Provided Content](#notes-on-user-provided-content)
 * [Frequently Asked Questions](#frequently-asked-questions)
   * [Is the Torchlight API going away now?](#is-the-torchlight-api-going-away-now)
+  * [How much does Torchlight Engine cost?](#how-much-does-torchlight-engine-cost)
   * [Does Torchlight Engine require an API key or network access?](#does-torchlight-engine-require-an-api-key-or-network-access)
   * [What about the Laravel and CommonMark packages?](#what-about-the-laravel-and-commonmark-packages)
   * [Some themes are missing compared to the API version. How come?](#some-themes-are-missing-compared-to-the-api-version-how-come)
@@ -196,6 +197,10 @@ class AppServiceProvider extends ServiceProvider
 ### Is the Torchlight API going away now?
 
 The Torchlight API will remain as-is for now. Any changes to the hosted service will be communicated ahead of time.
+
+### How much does Torchlight Engine cost?
+
+Torchlight Engine is free.
 
 ### Does Torchlight Engine require an API key or network access?
 
