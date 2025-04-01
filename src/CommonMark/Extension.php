@@ -53,6 +53,11 @@ class Extension implements ExtensionInterface
         }
     }
 
+    public function renderer(): CodeBlockRenderer
+    {
+        return $this->renderer;
+    }
+
     public function addRenderCallback(Closure $callback): static
     {
         $this->renderer->addRenderCallback($callback);

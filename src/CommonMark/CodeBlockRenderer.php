@@ -14,6 +14,10 @@ use Torchlight\Engine\Engine;
 
 class CodeBlockRenderer implements NodeRendererInterface
 {
+    protected ?BlockCache $cache = null;
+
+    protected string $defaultGrammar = 'txt';
+
     public function __construct(
         private string|array|Theme $theme,
         private Engine $engine = new Engine,
@@ -21,6 +25,20 @@ class CodeBlockRenderer implements NodeRendererInterface
     ) {}
 
     protected array $renderCallbacks = [];
+
+    public function setBlockCache(?BlockCache $cache): static
+    {
+        $this->cache = $cache;
+
+        return $this;
+    }
+
+    public function setDefaultGrammar(string $grammar): static
+    {
+        $this->defaultGrammar = $grammar;
+
+        return $this;
+    }
 
     public function addRenderCallback(Closure $callback): static
     {
@@ -42,6 +60,10 @@ class CodeBlockRenderer implements NodeRendererInterface
             throw new InvalidArgumentException('Block must be instance of '.FencedCode::class);
         }
 
+        if ($this->cache && $this->cache->has($node)) {
+            return $this->cache->get($node);
+        }
+
         $code = rtrim($node->getLiteral(), "\n");
         $grammar = $this->detectGrammar($node, $code);
 
@@ -51,13 +73,17 @@ class CodeBlockRenderer implements NodeRendererInterface
             $result = $callback($result);
         }
 
+        if ($this->cache) {
+            $this->cache->set($node, $result);
+        }
+
         return $result;
     }
 
     protected function detectGrammar(FencedCode $node, string $code): Grammar|string
     {
         if (! isset($node->getInfoWords()[0]) || $node->getInfoWords()[0] === '') {
-            return $this->engine->detectGrammar($code) ?? 'txt';
+            return $this->engine->detectGrammar($code) ?? $this->defaultGrammar;
         }
 
         return $node->getInfoWords()[0];
