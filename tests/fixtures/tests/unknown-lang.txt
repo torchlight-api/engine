@@ -2,8 +2,8 @@
 # torchlight! { "lineNumbers": false }
 return 1
 :::expectation
-<pre class='phiki language-plaintext github-dark' style='background-color: #24292e;color: #e1e4e8;'><code data-theme='github-dark' data-lang='plaintext' class='torchlight' style='--theme-selection-background: #39414a'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #e1e4e8;">return 1
+<pre><code data-theme='github-dark' data-lang='plaintext' class='phiki language-plaintext github-dark torchlight' style='background-color: #24292e;color: #e1e4e8;--theme-selection-background: #39414a'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #e1e4e8;">return 1
 </span></div></code></pre>
 :::end
-<pre class='phiki language-plaintext github-dark' style='background-color: #24292e;color: #e1e4e8;'><code data-theme='github-dark' data-lang='plaintext' class='torchlight' style='--theme-selection-background: #39414a'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #e1e4e8;">return 1
+<pre><code data-theme='github-dark' data-lang='plaintext' class='phiki language-plaintext github-dark torchlight' style='background-color: #24292e;color: #e1e4e8;--theme-selection-background: #39414a'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #e1e4e8;">return 1
 </span></div></code></pre>

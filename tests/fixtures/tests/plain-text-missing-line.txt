@@ -4,12 +4,12 @@
 
 11101111 -- ~16 (Completely opposite)
 :::expectation
-<pre class='phiki language-text nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='text' class='torchlight' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #d8dee9ff;">00010000 --  16
+<pre><code data-theme='nord' data-lang='text' class='phiki language-text nord torchlight' style='background-color: #2e3440;color: #d8dee9;--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #d8dee9ff;">00010000 --  16
 </span></div><div class='line'><span class="token">
 </span></div><div class='line'><span class="token" style="color: #d8dee9ff;">11101111 -- ~16 (Completely opposite)
 </span></div></code></pre>
 :::end
-<pre class='phiki language-text nord' style='background-color: #2e3440;color: #d8dee9;'><code data-theme='nord' data-lang='text' class='torchlight' style='--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #d8dee9ff;">00010000 --  16
+<pre><code data-theme='nord' data-lang='text' class='phiki language-text nord torchlight' style='background-color: #2e3440;color: #d8dee9;--theme-selection-background: #88c0d099'><!-- Syntax highlighted by Phiki and torchlight.dev --><div class='line'><span class="token" style="color: #d8dee9ff;">00010000 --  16
 </span></div><div class='line'><span class="token">
 </span></div><div class='line'><span class="token" style="color: #d8dee9ff;">11101111 -- ~16 (Completely opposite)
 </span></div></code></pre>

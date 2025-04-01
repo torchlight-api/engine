@@ -209,7 +209,7 @@ class HtmlGenerator extends BaseHtmlGenerator
     private function buildPre(RenderedBlock $block): string
     {
         return implode('', [
-            "<pre class='{$block->wrapperClassString}' style='{$block->wrapperStyleString}'>",
+            '<pre>',
             $this->buildCode($block),
             '</pre>',
         ]);
@@ -239,7 +239,7 @@ class HtmlGenerator extends BaseHtmlGenerator
     private function buildCode(RenderedBlock $block): string
     {
         return implode('', [
-            "<code {$block->attributeString} class='{$block->classString}' style='{$block->styleString}'>",
+            "<code {$block->attributeString} class='{$block->allClassesToString()}' style='{$block->allStylesToString()}'>",
             $block->code,
             '</code>',
         ]);
