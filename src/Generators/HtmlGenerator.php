@@ -23,6 +23,8 @@ class HtmlGenerator extends BaseHtmlGenerator
         ManagesThemeHooks,
         ProcessesFileLanguage;
 
+    protected string $vanityLabel = '';
+
     private WeakMap $tokenOptions;
 
     private WeakMap $rawTokenContent;
@@ -49,6 +51,13 @@ class HtmlGenerator extends BaseHtmlGenerator
         $this->rawTokenContent = new WeakMap;
 
         $this->loadDefaultThemeHooks();
+    }
+
+    public function setLanguageVanityLabel(string $vanityLabel): static
+    {
+        $this->vanityLabel = $vanityLabel;
+
+        return $this;
     }
 
     public function setTorchlightOptions(Options $options): static
@@ -91,8 +100,16 @@ class HtmlGenerator extends BaseHtmlGenerator
         $output = [];
         $attrs = $this->makeThemeAttributes();
 
-        if ($this->grammarName) {
-            $attrs['data-lang'] = htmlspecialchars($this->grammarName);
+        $label = null;
+
+        if ($this->vanityLabel) {
+            $label = $this->vanityLabel;
+        } elseif ($this->grammarName) {
+            $label = $this->grammarName;
+        }
+
+        if ($label) {
+            $attrs['data-lang'] = htmlspecialchars($label);
         }
 
         foreach ($tokens as $i => $line) {

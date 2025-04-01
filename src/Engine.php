@@ -58,6 +58,10 @@ class Engine extends BasePhiki
         'text.tsv',
     ];
 
+    protected array $commonVanityLabels = [
+        'php-html' => 'php',
+    ];
+
     protected string $activeScopeName = '';
 
     protected AnnotationTokenParser $annotationParser;
@@ -78,6 +82,8 @@ class Engine extends BasePhiki
     protected string $cleanedText = '';
 
     protected ?array $overrideThemes = null;
+
+    protected string $languageVanityLabel = '';
 
     public function __construct(?Environment $environment = null)
     {
@@ -152,6 +158,7 @@ class Engine extends BasePhiki
 
     protected function reset(): void
     {
+        $this->languageVanityLabel = '';
         $this->overrideThemes = null;
         $this->annotationsEnabled = true;
         $this->sourceLineOffset = 0;
@@ -182,7 +189,8 @@ class Engine extends BasePhiki
 
         $generator
             ->setGenerationOptions($options)
-            ->setCleanedText($this->cleanedText);
+            ->setCleanedText($this->cleanedText)
+            ->setLanguageVanityLabel($this->languageVanityLabel);
 
         return $generator;
     }
@@ -402,7 +410,10 @@ class Engine extends BasePhiki
 
         $this->torchlightOptions = Options::default();
 
+        $this->reset();
+
         if ((is_string($grammar) && mb_strlen($grammar) > 0) && ! $this->environment->getGrammarRepository()->has($grammar) && $this->torchlightOptions->fallbackOnUnknownGrammar) {
+            $this->languageVanityLabel = $grammar;
             $grammar = 'plaintext';
         }
 
@@ -410,10 +421,12 @@ class Engine extends BasePhiki
             $theme = Options::adjustOptionThemes([$theme]);
         }
 
+        if (is_string($grammar) && array_key_exists($grammar, $this->commonVanityLabels)) {
+            $this->languageVanityLabel = $this->commonVanityLabels[$grammar];
+        }
+
         // Remove trailing whitespace.
         $code = rtrim($code);
-
-        $this->reset();
 
         // We need to tokenize the code first as this will
         // retrieve the annotation information which we
