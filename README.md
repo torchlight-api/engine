@@ -31,8 +31,12 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
 
 * [Installation](#installation)
 * [Getting Started](#getting-started)
+  * [Modifying the CommonMark Extension](#modifying-the-commonmark-extension)
+    * [Specifying the Extension's Default Language](#specifying-the-extensions-default-language)
+    * [Caching Highlighted Code](#caching-highlighted-code)
   * [Laravel](#laravel)
   * [Statamic](#statamic)
+  * [Rendering Code Manually](#rendering-code-manually)
   * [Notes on User Provided Content](#notes-on-user-provided-content)
 * [Frequently Asked Questions](#frequently-asked-questions)
   * [Is the Torchlight API going away now?](#is-the-torchlight-api-going-away-now)
@@ -147,6 +151,68 @@ $output = $converter->convert(<<<'MD'
 MD);
 ````
 
+### Modifying the CommonMark Extension
+
+The CommonMark extension provides a few different ways to modify its behavior.
+
+#### Specifying the Extension's Default Language
+
+To change the extension's default language that should be used when author's omit the language on a code block, we can call the `setDefaultGrammar` on the underlying renderer:
+
+```php
+<?php
+
+use Torchlight\Engine\CommonMark\Extension;
+
+
+$extension = new Extension('github-light');
+
+$extension->renderer()
+    ->setDefaultGrammar('php');
+```
+
+````
+```
+This code block would now use PHP by default.
+```
+````
+
+#### Caching Highlighted Code
+
+A custom cache may be used to cache highlighted code blocks. Integrators may implement the `Torchlight\Engine\CommonMark\BlockCache` interface:
+
+```php
+<?php
+
+namespace Torchlight\Engine\CommonMark;
+
+use League\CommonMark\Extension\CommonMark\Node\Block\FencedCode;
+
+interface BlockCache
+{
+    public function has(FencedCode $node): bool;
+
+    public function get(FencedCode $node): string;
+
+    public function set(FencedCode $node, string $result): void;
+}
+
+```
+
+The cache implementation may be set on the extension by calling the `setBlockCache` on the underling renderer:
+
+```php
+<?php
+
+use Torchlight\Engine\CommonMark\Extension;
+
+
+$extension = new Extension('github-light');
+
+$extension->renderer()
+    ->setBlockCache(new MyCacheImplementation);
+```
+
 ### Laravel
 
 > [!NOTE]
@@ -186,6 +252,28 @@ class AppServiceProvider extends ServiceProvider
         });
     }
 }
+```
+
+### Rendering Code Manually
+
+You may also use the engine "manually". The following code example provides the minimum amount of code to use the Engine to render code:
+
+```php
+<?php
+
+use Torchlight\Engine\Engine;
+
+$engine = new Engine;
+
+$code = <<<'PHP'
+echo "Hello, world!"; // [tl! ++]
+PHP;
+
+$code->toHtml(
+    $code,         // The code to highlight
+    'php',         // The language
+    'github-light' // The theme(s) to use
+);
 ```
 
 ### Notes on User Provided Content
