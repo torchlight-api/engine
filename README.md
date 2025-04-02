@@ -115,7 +115,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
 You may install Torchlight Engine via Composer:
 
 ```bash
-# TODO: Update once added to the registry.
+composer require torchlight/engine
 ```
 
 Torchlight Engine requires at least PHP 8.2, but PHP 8.4+ is recommended.
