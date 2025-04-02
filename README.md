@@ -54,6 +54,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
   * [Standard CSS](#standard-css)
   * [Tailwind](#tailwind)
   * [Dark Mode](#dark-mode)
+  * [Available Themes](#available-themes)
 * [Annotations](#annotations)
   * [Plain Text Annotations](#plain-text-annotations)
   * [JSON Annotations](#json-annotations)
@@ -486,6 +487,82 @@ html.dark .phiki span {
 ```
 
 You can learn more about rendering multiple themes with Phiki [here](https://github.com/phikiphp/phiki?tab=readme-ov-file#multi-theme-support). The only change when rendering multiple themes with Torchlight Engine is the placement of the `background-color` property, to prevent conflicts with some annotations, such as diff add and remove.
+
+### Available Themes
+
+The following themes are available:
+
+* one-dark-pro
+* solarized-light
+* vitesse-black
+* github-light-default
+* slack-dark
+* everforest-dark
+* rose-pine-moon
+* everforest-light
+* laserwave
+* github-light-high-contrast
+* catppuccin-mocha
+* red
+* material-theme-lighter
+* one-light
+* aurora-x
+* tokyo-night
+* catppuccin-macchiato
+* github-dark
+* rose-pine-dawn
+* poimandres
+* github-dark-high-contrast
+* material-theme
+* dracula
+* github-dark-default
+* github-dark-dimmed
+* rose-pine
+* kanagawa-lotus
+* kanagawa-dragon
+* dark-plus
+* ayu-dark
+* min-dark
+* monokai
+* nord
+* catppuccin-frappe
+* github-light
+* dracula-soft
+* synthwave-84
+* vitesse-dark
+* andromeeda
+* light-plus
+* slack-ochin
+* solarized-dark
+* material-theme-ocean
+* vitesse-light
+* vesper
+* kanagawa-wave
+* plastic
+* material-theme-darker
+* night-owl
+* catppuccin-latte
+* min-light
+* snazzy-light
+* houston
+* material-theme-palenight
+* atom-one-dark
+* cobalt2
+* dark-404
+* fortnite
+* material-theme-default
+* moonlight-ii
+* moonlight
+* olaolu-palenight-contrast
+* olaolu-palenight
+* serendipity-dark
+* serendipity-light
+* shades-of-purple
+* slack-theme-dark-mode
+* slack-theme-ochin
+* winter-is-coming-blue
+* winter-is-coming-dark
+* winter-is-coming-light
 
 ## Annotations
 
