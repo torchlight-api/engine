@@ -19,7 +19,8 @@
     ],
     "require": {
         "php": "^8.2",
-        "phiki/phiki": "^1.1.4"
+        "phiki/phiki": "^1.1.4",
+        "league/commonmark": "^2.5.3"
     },
     "require-dev": {
         "pestphp/pest": "^2",
