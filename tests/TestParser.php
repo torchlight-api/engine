@@ -10,7 +10,6 @@ class TestParser
     {
         $request = [];
         $block = [];
-        $clean = [];
         $expect = [];
         $style = [];
         $section = 'code';
@@ -20,7 +19,7 @@ class TestParser
 
         foreach ($lines as $line) {
             $cleaned[] = $line;
-            $trimmedLine = trim($line);
+            $trimmedLine = trim((string) $line);
 
             if (str_starts_with($trimmedLine, ':::request')) {
                 $request = json_decode(Str::after($trimmedLine, ':::request'), true);

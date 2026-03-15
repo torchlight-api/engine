@@ -1,9 +1,11 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
 use Torchlight\Engine\Tests\TestParser;
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('it parses test details', function () {
+uses(TorchlightTestCase::class);
+
+test('it parses test details', function (): void {
     $test = <<<'TEST'
 :::request { "options": { "fileStyle": "html" } }
 :::config { "language": "alpinejs", "theme":"material-theme-palenight" }

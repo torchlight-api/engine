@@ -6,15 +6,19 @@ use Phiki\Token\Token;
 
 trait ManagesCommentTokens
 {
-    private string $commonChars = " \t-#/";
+    protected string $commonChars = " \t-#/";
 
-    private array $trailingCommentChars = [
+    /** @var array<string, string> */
+    protected array $trailingCommentChars = [
         'source.coq' => '*)',
         'text.html.statamic' => '#}}',
+        'text.html.jinja' => '#}',
     ];
 
-    private array $leadingCommentChars = [
+    /** @var array<string, string> */
+    protected array $leadingCommentChars = [
         'text.html.statamic' => '{{#',
+        'text.html.jinja' => '{#',
         'source.coq' => '(*',
         'source.abap' => '"',
         'source.actionscript.3' => '/*',
@@ -25,6 +29,54 @@ trait ManagesCommentTokens
         'source.clar' => ';',
         'source.cobol' => '*>',
     ];
+
+    /**
+     * @param  string  $scope  The TextMate scope name (e.g., 'source.mylang')
+     * @param  string|null  $leadingChars  Characters to trim from the start of comments
+     * @param  string|null  $trailingChars  Characters to trim from the end of comments
+     */
+    public function registerCommentPattern(
+        string $scope,
+        ?string $leadingChars = null,
+        ?string $trailingChars = null
+    ): static {
+        if ($leadingChars !== null) {
+            $this->leadingCommentChars[$scope] = $leadingChars;
+        }
+
+        if ($trailingChars !== null) {
+            $this->trailingCommentChars[$scope] = $trailingChars;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param  array<string, array{leading?: string, trailing?: string}>  $patterns
+     */
+    public function registerCommentPatterns(array $patterns): static
+    {
+        foreach ($patterns as $scope => $config) {
+            $this->registerCommentPattern(
+                $scope,
+                $config['leading'] ?? null,
+                $config['trailing'] ?? null
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return array{leading: array<string, string>, trailing: array<string, string>}
+     */
+    public function getCommentPatterns(): array
+    {
+        return [
+            'leading' => $this->leadingCommentChars,
+            'trailing' => $this->trailingCommentChars,
+        ];
+    }
 
     protected function isComment(Token $token): bool
     {

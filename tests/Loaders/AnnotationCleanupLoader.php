@@ -15,8 +15,8 @@ class AnnotationCleanupLoader
 
             $noAnnotation = implode("\n", $codeLines);
 
-            if (str_contains($commentStyle, '|')) {
-                $parts = explode('|', $commentStyle);
+            if (str_contains((string) $commentStyle, '|')) {
+                $parts = explode('|', (string) $commentStyle);
                 $open = $parts[0];
                 $close = $parts[1];
 

@@ -4,31 +4,39 @@ namespace Torchlight\Engine\Support;
 
 class Str
 {
+    /** @var non-empty-string */
     const CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
     public static function random(int $length = 16): string
     {
         $result = '';
-        $charLen = strlen(static::CHARS);
+        $maxIndex = strlen(static::CHARS) - 1;
+
+        if ($maxIndex < 0) {
+            return $result;
+        }
 
         for ($i = 0; $i < $length; $i++) {
-            $result .= static::CHARS[random_int(0, $charLen - 1)];
+            $result .= static::CHARS[random_int(0, $maxIndex)];
         }
 
         return $result;
     }
 
-    public static function substr($string, $start, $length = null, $encoding = 'UTF-8')
+    public static function substr(string|\Stringable|int|float|bool $string, int $start, ?int $length = null, ?string $encoding = 'UTF-8'): string
     {
-        return mb_substr($string, $start, $length, $encoding);
+        return mb_substr((string) $string, $start, $length, $encoding);
     }
 
-    public static function beforeLast($subject, $search)
+    public static function beforeLast(string|\Stringable|int|float|bool $subject, string|\Stringable|int|float|bool $search): string
     {
+        $search = (string) $search;
+
         if ($search === '') {
-            return $subject;
+            return (string) $subject;
         }
 
+        $subject = (string) $subject;
         $pos = mb_strrpos($subject, $search);
 
         if ($pos === false) {
@@ -38,18 +46,28 @@ class Str
         return static::substr($subject, 0, $pos);
     }
 
-    public static function after($subject, $search)
+    public static function after(string|\Stringable|int|float|bool $subject, string|\Stringable|int|float|bool $search): string
     {
-        return $search === '' ? $subject : array_reverse(explode($search, $subject, 2))[0];
-    }
+        $subject = (string) $subject;
+        $search = (string) $search;
 
-    public static function afterLast($subject, $search)
-    {
         if ($search === '') {
             return $subject;
         }
 
-        $position = strrpos($subject, (string) $search);
+        return array_reverse(explode($search, $subject, 2))[0];
+    }
+
+    public static function afterLast(string|\Stringable|int|float|bool $subject, string|\Stringable|int|float|bool $search): string
+    {
+        $subject = (string) $subject;
+        $search = (string) $search;
+
+        if ($search === '') {
+            return $subject;
+        }
+
+        $position = strrpos($subject, $search);
 
         if ($position === false) {
             return $subject;
@@ -58,13 +76,23 @@ class Str
         return substr($subject, $position + strlen($search));
     }
 
+    /**
+     * @return list<string>
+     */
     public static function nlSplit(string $subject): array
     {
-        return preg_split('/\r\n|\r|\n/', $subject);
+        return preg_split('/\r\n|\r|\n/', $subject) ?: [];
     }
 
-    public static function substrReplace($string, $replace, $offset = 0, $length = null)
-    {
+    public static function substrReplace(
+        string|\Stringable|int|float|bool $string,
+        string|\Stringable|int|float|bool $replace,
+        int $offset = 0,
+        ?int $length = null,
+    ): string {
+        $string = (string) $string;
+        $replace = (string) $replace;
+
         if ($length === null) {
             $length = strlen($string);
         }

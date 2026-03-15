@@ -57,15 +57,10 @@ class TorchlightTestCase extends TestCase
     {
         $engine = $this->makeEngine();
 
-        if ($options) {
-            Options::setDefaultOptionsBuilder(fn () => $options);
-        }
+        $baseOptions = ($options ?? new Options)->mergeWith(['withGutter' => true]);
+        $engine->setTorchlightOptions($baseOptions);
 
-        $result = $engine->codeToHtml($code, $grammar, $theme, true, true);
-
-        Options::setDefaultOptionsBuilder(null);
-
-        return $result;
+        return $engine->codeToHtml($code, $grammar, $theme);
     }
 
     protected function toParsedResult(string $code, string $grammar = 'php', string $theme = 'github-light'): Result
@@ -77,7 +72,7 @@ class TorchlightTestCase extends TestCase
 
     protected function parseTokens(string $code, string $grammar = 'php'): array
     {
-        return $this->makeEngine()->codeToTokens($code, $grammar);
+        return $this->makeEngine()->processCode($code, $grammar)->tokens;
     }
 
     protected function parseLineAnnotations(array $lines, array $names = []): array

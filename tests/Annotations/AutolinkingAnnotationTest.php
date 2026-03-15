@@ -1,8 +1,10 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('it inserts links', function () {
+uses(TorchlightTestCase::class);
+
+test('it inserts links', function (): void {
     $code = <<<'PHP'
 /**
  * @see https://bit.ly/2UMUsiu. [tl! autolink]

@@ -1,8 +1,10 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('manually setting a new number', function () {
+uses(TorchlightTestCase::class);
+
+test('manually setting a new number', function (): void {
     $code = <<<'PHP'
 'a';
 'b';
@@ -22,7 +24,7 @@ PHP;
     $this->assertSame('26', $results->line(6)->lineNumberContent);
 });
 
-test('no number at all', function () {
+test('no number at all', function (): void {
     $code = <<<'PHP'
 'a';
 'b';
@@ -44,7 +46,7 @@ PHP;
     $this->assertSame('26', $results->line(7)->lineNumberContent);
 });
 
-test('not immediately reindexing after clearing a line number', function () {
+test('not immediately reindexing after clearing a line number', function (): void {
     $code = <<<'PHP'
 'a';
 'b';
@@ -66,7 +68,7 @@ PHP;
     $this->assertSame('6', $results->line(7)->lineNumberContent);
 });
 
-test('relative reindex changes', function () {
+test('relative reindex changes', function (): void {
     $code = <<<'PHP'
 // torchlight! {"diffIndicatorsInPlaceOfLineNumbers": false}
 return [
@@ -95,7 +97,7 @@ PHP;
     $this->assertSame('9', $results->line(10)->lineNumberContent);
 });
 
-test('diff and reindex', function () {
+test('diff and reindex', function (): void {
     $code = <<<'PHP'
 return [
     'extensions' => [
@@ -123,7 +125,7 @@ PHP;
     $this->assertSame('1010', $results->line(10)->lineNumberContent);
 });
 
-test('reindex with range modifiers', function () {
+test('reindex with range modifiers', function (): void {
     $code = <<<'PHP'
 // This is a long bit of text, hard to reindex the middle. [tl! reindex(+5):6,1]
 return <<<EOT
@@ -169,7 +171,7 @@ PHP;
     $this->assertSame('14', $results->line(14)->lineNumberContent);
 });
 
-test('removing line numbers in the middle of code blocks', function () {
+test('removing line numbers in the middle of code blocks', function (): void {
     $code = <<<'PHP'
 // This is a long bit of text, hard to reindex the middle. [tl! reindex(null):5,5]
 return <<<EOT

@@ -1,10 +1,12 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
 use Torchlight\Engine\Tests\Loaders\AnnotationCleanupLoader;
 use Torchlight\Engine\Tests\Results\ResultParser;
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('annotations do not leak between renders', function (string $language, string $commentStyle, string $annotatedCode, string $code) {
+uses(TorchlightTestCase::class);
+
+test('annotations do not leak between renders', function (string $language, string $commentStyle, string $annotatedCode, string $code): void {
     $phiki = $this->makeEngine();
     $resultParser = new ResultParser;
 
@@ -23,6 +25,4 @@ test('annotations do not leak between renders', function (string $language, stri
         $this->assertFalse($plainResult->line($i)->isHighlighted());
         $this->assertFalse($plainResult->line($i)->hasBackground());
     }
-})->with(function () {
-    return AnnotationCleanupLoader::load();
-});
+})->with(fn () => AnnotationCleanupLoader::load());
