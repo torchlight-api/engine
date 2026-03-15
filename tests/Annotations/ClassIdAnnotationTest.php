@@ -1,8 +1,10 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('it adds basic class names to lines', function () {
+uses(TorchlightTestCase::class);
+
+test('it adds basic class names to lines', function (): void {
     $code = <<<'PHP'
 return [
     'extensions' => [
@@ -30,7 +32,7 @@ PHP;
     $this->assertTrue($results->line(7)->hasClass('animate-pulse'));
 });
 
-test('it supports tailwind JIT syntax', function () {
+test('it supports tailwind JIT syntax', function (): void {
     $code = <<<'TEXT'
 ID only                   // [tl! #id]
 ID + Class                // [tl! #id.pt-4]
@@ -68,7 +70,7 @@ TEXT;
     $this->assertTrue($results->line(8)->hasClass('pr-[8px]'));
 });
 
-test('tailwind classes with colons can be used with start/end ranges', function () {
+test('tailwind classes with colons can be used with start/end ranges', function (): void {
     $code = <<<'TEXT'
 One // [tl! .sm:pb-8:start]
 Two
@@ -93,7 +95,7 @@ TEXT;
     }
 });
 
-test('add classes numeric ranges', function () {
+test('add classes numeric ranges', function (): void {
     $code = <<<'TEXT'
 One
 Two

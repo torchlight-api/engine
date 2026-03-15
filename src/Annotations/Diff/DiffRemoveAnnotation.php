@@ -2,36 +2,29 @@
 
 namespace Torchlight\Engine\Annotations\Diff;
 
-use Torchlight\Engine\Annotations\AbstractAnnotation;
-use Torchlight\Engine\Annotations\Parser\ParsedAnnotation;
+use Torchlight\Engine\Annotations\Annotation;
 
-class DiffRemoveAnnotation extends AbstractAnnotation
+#[Annotation(name: 'remove', aliases: ['--'], charRanges: true)]
+class DiffRemoveAnnotation extends AbstractDiffAnnotation
 {
-    public static string $name = 'remove';
+    public const DIFF_REMOVE_SCOPES = [
+        'markup.deleted',
+        'torchlight.markup.deleted',
+        'torchlight.markup.deleted.foreground',
+    ];
 
-    public static array $aliases = ['--'];
-
-    public const DIFF_REMOVE_SCOPES = ['markup.deleted', 'torchlight.markup.deleted', 'torchlight.markup.deleted.foreground'];
-
-    public function process(ParsedAnnotation $annotation): void
+    protected function marker(): string
     {
-        $this->addBlockClass('has-remove-lines')
-            ->addLineClass(['line-remove', 'line-has-background']);
+        return '-';
+    }
 
-        if (! $this->options->diffPreserveSyntaxColors) {
-            $this->addLineScope(['markup.deleted', 'torchlight.markup.deleted']);
-        }
+    protected function classPrefix(): string
+    {
+        return 'remove';
+    }
 
-        if ($this->options->diffIndicatorsEnabled) {
-            if ($this->options->diffIndicatorsInPlaceOfNumbers) {
-                $this->replaceLineMarker('-', self::DIFF_REMOVE_SCOPES);
-            } else {
-                $this
-                    ->setDiffLineMarker('-')
-                    ->setLineScopes(self::DIFF_REMOVE_SCOPES);
-            }
-        } else {
-            $this->setLineScopes(self::DIFF_REMOVE_SCOPES);
-        }
+    protected function scopePrefix(): string
+    {
+        return 'deleted';
     }
 }

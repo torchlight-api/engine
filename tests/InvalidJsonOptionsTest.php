@@ -1,8 +1,11 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
+use Torchlight\Engine\Exceptions\InvalidJsonException;
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('invalid json option throws exception', function () {
+uses(TorchlightTestCase::class);
+
+test('invalid json option throws exception', function (): void {
     $code = <<<'CODE'
 // torchlight! {"lineNumbers": false, asdfasdfasfdasdfasdf}
 'a';
@@ -15,7 +18,7 @@ test('invalid json option throws exception', function () {
 'h';
 CODE;
 
-    $this->expectException(\Torchlight\Engine\Exceptions\InvalidJsonException::class);
+    $this->expectException(InvalidJsonException::class);
     $this->expectExceptionMessage('Syntax error when parsing options ["lineNumbers": false, asdfasdfasfdasdfasdf].');
 
     $this->toHtml($code);

@@ -1,8 +1,10 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('it resolves simple relative ranges', function () {
+uses(TorchlightTestCase::class);
+
+test('it resolves simple relative ranges', function (): void {
     $lines = [
         // Start 3 lines down from 2, and extend cover 2 lines total.
         ['// [tl! add:3,2]', 2],
@@ -20,7 +22,7 @@ test('it resolves simple relative ranges', function () {
     $this->assertSame(6, $range->endLine);
 });
 
-test('it resolves start/end ranges', function () {
+test('it resolves start/end ranges', function (): void {
     $lines = [
         ['// [tl! highlight:start]', 5],
         ['// [tl! highlight:end]', 15],
@@ -37,7 +39,7 @@ test('it resolves start/end ranges', function () {
     $this->assertSame(15, $range->endLine);
 });
 
-test('it uses max line number if no end annotation is found', function () {
+test('it uses max line number if no end annotation is found', function (): void {
     $lines = [
         ['// [tl! highlight:start]', 5],
     ];
@@ -53,7 +55,7 @@ test('it uses max line number if no end annotation is found', function () {
     $this->assertSame(20, $range->endLine);
 });
 
-test('it resolves negative ranges', function () {
+test('it resolves negative ranges', function (): void {
     $lines = [
         // Start one line up, highlight 10 lines total
         ['// [tl! highlight:-1,10]', 10],
@@ -67,7 +69,7 @@ test('it resolves negative ranges', function () {
     $this->assertSame(18, $range->endLine);
 });
 
-test('it resets to one if negative range under flows', function () {
+test('it resets to one if negative range under flows', function (): void {
 
     $lines = [
         ['// [tl! highlight:-5,10]', 1],
@@ -81,7 +83,7 @@ test('it resets to one if negative range under flows', function () {
     $this->assertSame(5, $range->endLine);
 });
 
-test('it resets to max line if range exceeds line count', function () {
+test('it resets to max line if range exceeds line count', function (): void {
 
     $lines = [
         ['// [tl! highlight:5,10]', 12],
@@ -95,7 +97,7 @@ test('it resets to max line if range exceeds line count', function () {
     $this->assertSame(20, $range->endLine);
 });
 
-test('it returns null if end line would be negative', function () {
+test('it returns null if end line would be negative', function (): void {
     $lines = [
         ['// [tl! highlight:-5,1]', 1],
     ];
@@ -107,7 +109,7 @@ test('it returns null if end line would be negative', function () {
     $this->assertNull($range);
 });
 
-test('it returns null if start and end exceed maximum line count', function () {
+test('it returns null if start and end exceed maximum line count', function (): void {
     $lines = [
         ['// [tl! highlight:20,1]', 15],
     ];
@@ -119,7 +121,7 @@ test('it returns null if start and end exceed maximum line count', function () {
     $this->assertNull($range);
 });
 
-test('it swaps start and end lines if ending is within range but starting exceeds line count', function () {
+test('it swaps start and end lines if ending is within range but starting exceeds line count', function (): void {
     $lines = [
         ['// [tl! highlight:10,-15]', 15],
     ];
@@ -132,7 +134,7 @@ test('it swaps start and end lines if ending is within range but starting exceed
     $this->assertSame(20, $range->endLine);
 });
 
-test('it resolves single forward ranges', function () {
+test('it resolves single forward ranges', function (): void {
     $lines = [
         ['// [tl! highlight:10]', 15],
     ];
@@ -145,7 +147,7 @@ test('it resolves single forward ranges', function () {
     $this->assertSame(25, $range->endLine);
 });
 
-test('it resolves single backward ranges', function () {
+test('it resolves single backward ranges', function (): void {
     $lines = [
         ['// [tl! highlight:-10]', 15],
     ];
@@ -158,7 +160,7 @@ test('it resolves single backward ranges', function () {
     $this->assertSame(15, $range->endLine);
 });
 
-test('relative ranges with 1 are correctly calculated', function () {
+test('relative ranges with 1 are correctly calculated', function (): void {
     $lines = [
         ['// [tl! highlight:1]', 5],
     ];
@@ -171,7 +173,7 @@ test('relative ranges with 1 are correctly calculated', function () {
     $this->assertSame(6, $range->endLine);
 });
 
-test('relative ranges with 2 are correctly calculated', function () {
+test('relative ranges with 2 are correctly calculated', function (): void {
     $lines = [
         ['// [tl! highlight:2]', 5],
     ];
@@ -184,7 +186,7 @@ test('relative ranges with 2 are correctly calculated', function () {
     $this->assertSame(7, $range->endLine);
 });
 
-test('ranges in middle are correctly calculated', function () {
+test('ranges in middle are correctly calculated', function (): void {
     $lines = [
         ['// [tl! highlight:3]', 4],
     ];
@@ -197,7 +199,7 @@ test('ranges in middle are correctly calculated', function () {
     $this->assertSame(7, $range->endLine);
 });
 
-test('range all modifier', function () {
+test('range all modifier', function (): void {
     $code = <<<'PHP'
 return [
     'one',

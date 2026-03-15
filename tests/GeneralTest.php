@@ -1,12 +1,13 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
-
 use Torchlight\Engine\Options;
 use Torchlight\Engine\Tests\Loaders\TestLoader;
 use Torchlight\Engine\Tests\TestBlock;
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('general acceptance tests', function (TestBlock $test) {
+uses(TorchlightTestCase::class);
+
+test('general acceptance tests', function (TestBlock $test): void {
     $language = $test->config['language'] ?? $test->request['options']['defaultLanguage'] ?? null;
     $options = array_merge($test->request['options'] ?? [], $test->config ?? []);
     $theme = $options['theme'] ?? 'nord';

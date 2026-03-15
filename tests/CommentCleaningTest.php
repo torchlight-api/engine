@@ -1,10 +1,11 @@
 <?php
 
 use Torchlight\Engine\Tests\Loaders\CommentCleaningLoader;
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
+uses(TorchlightTestCase::class);
 
-test('it can handle tokens that represent the entire comment line', function () {
+test('it can handle tokens that represent the entire comment line', function (): void {
     $code = <<<'ABAP'
 * Full Line Comment Content: [tl! highlight]
 REPORT zhello_world.
@@ -25,7 +26,7 @@ ABAP;
     }
 });
 
-test('it does not leave comments behind in apache', function () {
+test('it does not leave comments behind in apache', function (): void {
     $code = <<<'APACHE'
 # [tl! highlight:1,1]
 <Directory "/www/htdocs/example">
@@ -44,7 +45,7 @@ APACHE;
     }
 });
 
-test('it does not leave comments behind in asciidoc', function () {
+test('it does not leave comments behind in asciidoc', function (): void {
     $code = <<<'APACHE'
 // [tl! highlight:1,1]
 *_bold italic phrase_*
@@ -63,7 +64,7 @@ APACHE;
     }
 });
 
-test('it does not leave comments behind in bat', function () {
+test('it does not leave comments behind in bat', function (): void {
     $code = <<<'BAT'
 Rem [tl! highlight]
 @echo off
@@ -101,7 +102,7 @@ BAT;
     }
 });
 
-test('it does not leave comments behind', function (string $language, string $commentStyle, string $code) {
+test('it does not leave comments behind', function (string $language, string $commentStyle, string $code): void {
     $result = $this->toParsedResult($code, $language);
     $this->assertTrue($result->line(1)->isHighlighted());
     $this->assertTrue($result->line(1)->hasBackground());
@@ -114,6 +115,4 @@ test('it does not leave comments behind', function (string $language, string $co
         $this->assertFalse($result->line($i)->isHighlighted());
         $this->assertFalse($result->line($i)->hasBackground());
     }
-})->with(function () {
-    return CommentCleaningLoader::load();
-});
+})->with(fn () => CommentCleaningLoader::load());

@@ -8,13 +8,21 @@ use Torchlight\Engine\Support\Str;
 
 class AnnotationTokenParser
 {
-    public const ANNOTATION_PATTERN = '/\[tl!([^]]*(?:\][^]]*)*)\]/';
+    public const ANNOTATION_PATTERN = '/\[tl!([^]]*(?:\](?!\s*\[tl!)[^]]*)*)\]/';
 
     /**
      * @var string[]
      */
     protected array $annotationNames = [];
 
+    /**
+     * Registered prefixes for prefix-based annotations.
+     *
+     * @var string[]
+     */
+    protected array $registeredPrefixes = ['.', '#'];
+
+    /** @var list<ParsedAnnotation> */
     protected array $annotations = [];
 
     protected int $annotationIndex = 0;
@@ -27,6 +35,7 @@ class AnnotationTokenParser
         return $this;
     }
 
+    /** @param list<string> $names */
     public function setAnnotationNames(array $names): static
     {
         $this->annotationNames = $names;
@@ -41,31 +50,73 @@ class AnnotationTokenParser
         return $this;
     }
 
+    /** @param list<string> $prefixes */
+    public function setRegisteredPrefixes(array $prefixes): static
+    {
+        $this->registeredPrefixes = array_values(array_unique($prefixes));
+
+        return $this;
+    }
+
+    public function addRegisteredPrefix(string $prefix): static
+    {
+        if (! in_array($prefix, $this->registeredPrefixes, true)) {
+            $this->registeredPrefixes[] = $prefix;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getPrefixesBySpecificity(): array
+    {
+        $prefixes = $this->registeredPrefixes;
+
+        usort($prefixes, function (string $left, string $right): int {
+            $lengthCompare = mb_strlen($right) <=> mb_strlen($left);
+
+            return $lengthCompare !== 0 ? $lengthCompare : strcmp($left, $right);
+        });
+
+        return $prefixes;
+    }
+
+    protected function matchesPrefix(string $text): ?string
+    {
+        foreach ($this->getPrefixesBySpecificity() as $prefix) {
+            if (str_starts_with($text, $prefix)) {
+                return $prefix;
+            }
+        }
+
+        return null;
+    }
+
     protected function extractAnnotationName(string $text): string
     {
         $lastColonText = Str::afterLast($text, ':');
         $colonPos = strrpos($text, ':');
+        $colonPos = $colonPos === false ? PHP_INT_MAX : $colonPos;
 
-        if (! $this->isValidRange($lastColonText ?? '')) {
-            $colonPos = INF;
+        if (! $this->isValidRange($lastColonText)) {
+            $colonPos = PHP_INT_MAX;
         }
 
-        $leftParenPos = INF;
+        $leftParenPos = PHP_INT_MAX;
 
-        if (! str_starts_with($text, '.')) {
+        // Only check for parentheses if this is not a prefix-based annotation
+        if ($this->matchesPrefix($text) === null) {
             $leftParenPos = mb_strpos($text, '(');
-
-            if (! $colonPos) {
-                $colonPos = INF;
-            }
-            if (! $leftParenPos) {
-                $leftParenPos = INF;
+            if ($leftParenPos === false) {
+                $leftParenPos = PHP_INT_MAX;
             }
         }
 
         $loc = min($colonPos, $leftParenPos);
 
-        if (! is_infinite($loc)) {
+        if ($loc !== PHP_INT_MAX) {
             $text = mb_substr($text, 0, $loc);
         }
 
@@ -74,24 +125,25 @@ class AnnotationTokenParser
 
     protected function isAnnotation(string $text): bool
     {
-        if (str_starts_with($text, '.') || str_starts_with($text, '#')) {
+        if ($this->matchesPrefix($text) !== null) {
             return true;
         }
 
         return in_array(mb_strtolower($text), $this->annotationNames);
     }
 
-    protected function getAnnotationType(string $name): AnnotationType
+    /**
+     * @return array{AnnotationType, string|null} [type, matched_prefix]
+     */
+    protected function getAnnotationTypeAndPrefix(string $name): array
     {
-        if (str_starts_with($name, '.')) {
-            return AnnotationType::ClassName;
+        $matchedPrefix = $this->matchesPrefix($name);
+
+        if ($matchedPrefix !== null) {
+            return [AnnotationType::Prefixed, $matchedPrefix];
         }
 
-        if (str_starts_with($name, '#')) {
-            return AnnotationType::IdAttribute;
-        }
-
-        return AnnotationType::Named;
+        return [AnnotationType::Named, null];
     }
 
     protected function parseRange(string $text): ?AnnotationRange
@@ -137,7 +189,7 @@ class AnnotationTokenParser
         return $range;
     }
 
-    protected function parseMethodArgs(string $text): ?string
+    protected function extractMethodArgs(string $text): ?string
     {
         if (! str_contains($text, ')')) {
             return null;
@@ -149,6 +201,22 @@ class AnnotationTokenParser
         );
     }
 
+    protected function parseMethodArgs(string $text): ?string
+    {
+        $args = $this->extractMethodArgs($text);
+
+        if ($args === null) {
+            return null;
+        }
+
+        if ((str_starts_with($args, '"') && str_ends_with($args, '"')) ||
+            (str_starts_with($args, "'") && str_ends_with($args, "'"))) {
+            $args = mb_substr($args, 1, -1);
+        }
+
+        return $args;
+    }
+
     private function isValidRange(string $text): bool
     {
         return str_contains($text, ',') ||
@@ -156,6 +224,10 @@ class AnnotationTokenParser
             is_numeric($text);
     }
 
+    /**
+     * @param  list<list<string>>  $annotations
+     * @return list<ParsedAnnotation>
+     */
     protected function convertAnnotations(array $annotations, int $sourceLine): array
     {
         $results = [];
@@ -168,19 +240,36 @@ class AnnotationTokenParser
             $annotation->index = $this->annotationIndex;
 
             $tmpName = array_shift($tmpAnnotation);
+            if ($tmpName === null) {
+                continue;
+            }
 
             $name = $this->extractAnnotationName($tmpName);
 
             $annotation->text = $annotationText;
-            $annotation->type = $this->getAnnotationType($name);
+
+            [$type, $prefix] = $this->getAnnotationTypeAndPrefix($name);
+            $annotation->type = $type;
+            $annotation->prefix = $prefix;
             $annotation->name = $name;
 
-            if (str_contains($tmpName, ':') && $this->isValidRange(Str::afterLast($tmpName, ':'))) {
+            if (str_contains((string) $tmpName, ':') && $this->isValidRange(Str::afterLast($tmpName, ':'))) {
                 $annotation->range = $this->parseRange($tmpName);
             }
 
-            if (str_contains($tmpName, '(')) {
-                $annotation->methodArgs = $this->parseMethodArgs($tmpName);
+            if (str_contains($annotationText, '(')) {
+                $annotation->rawMethodArgs = $this->extractMethodArgs($annotationText);
+                $annotation->methodArgs = $this->parseMethodArgs($annotationText);
+
+                // When method args span spaces, the range suffix may be after the closing
+                // paren in the full annotation text rather than in $tmpName alone.
+                if ($annotation->range === null && str_contains($annotationText, ')')) {
+                    $afterParen = Str::after($annotationText, ')');
+
+                    if (str_starts_with($afterParen, ':') && $this->isValidRange(Str::afterLast($afterParen, ':'))) {
+                        $annotation->range = $this->parseRange($afterParen);
+                    }
+                }
             }
 
             $annotation->options = $tmpAnnotation;
@@ -193,20 +282,36 @@ class AnnotationTokenParser
         return $results;
     }
 
+    /** @return list<ParsedAnnotation> */
     protected function parseAnnotations(string $text, int $sourceLine): array
     {
         $parts = explode(' ', trim($text));
         $tmpAnnotations = [];
         $annotationParts = [];
         $annotationPart = null;
-        $annotationName = null;
+        $insideParens = false;
 
         foreach ($parts as $part) {
+            // Track whether we're inside method args parentheses.
+            // We don't allow annotations to start inside args.
+            if ($insideParens) {
+                $annotationParts[] = $part;
+                if (str_contains($part, ')')) {
+                    $insideParens = false;
+                }
+
+                continue;
+            }
+
+            if (str_contains($part, '(') && ! str_contains($part, ')')) {
+                $insideParens = true;
+            }
+
             $checkName = $this->extractAnnotationName($part);
 
             if ($this->isAnnotation($checkName)) {
                 if (
-                    ($annotationName != null && $checkName != $annotationName) ||
+                    $annotationPart != null ||
                     count($annotationParts) > 0
                 ) {
                     if ($annotationPart != null) {
@@ -218,7 +323,6 @@ class AnnotationTokenParser
                     $annotationParts = [];
                 }
 
-                $annotationName = $checkName;
                 $annotationPart = $part;
 
                 continue;
@@ -238,8 +342,9 @@ class AnnotationTokenParser
         $finalAnnotations = [];
 
         foreach ($tmpAnnotations as $tmpAnnotation) {
-            if (str_starts_with($tmpAnnotation[0], '.') || str_starts_with($tmpAnnotation[0], '#')) {
-                foreach ($this->parseCombinedClassIdAnnotations($tmpAnnotation) as $annotation) {
+            // Check if this is a prefix-based annotation that may be combined
+            if ($this->matchesPrefix($tmpAnnotation[0]) !== null) {
+                foreach ($this->parseCombinedPrefixAnnotations($tmpAnnotation) as $annotation) {
                     $finalAnnotations[] = $annotation;
                 }
 
@@ -252,14 +357,22 @@ class AnnotationTokenParser
         return $this->convertAnnotations($finalAnnotations, $sourceLine);
     }
 
-    protected function parseCombinedClassIdAnnotations(array $annotation): array
+    /**
+     * @param  list<string>  $annotation
+     * @return list<list<string>>
+     */
+    protected function parseCombinedPrefixAnnotations(array $annotation): array
     {
         $results = [];
         $value = array_shift($annotation);
+        $prefixes = $this->getPrefixesBySpecificity();
 
-        $pattern = '/([.#])([^.#]+)/';
+        $escapedPrefixes = array_map(fn ($p) => preg_quote($p, '/'), $prefixes);
+        $prefixPattern = implode('|', $escapedPrefixes);
 
-        preg_match_all($pattern, $value, $matches, PREG_SET_ORDER);
+        $pattern = '/('.$prefixPattern.')([^'.preg_quote(implode('', $prefixes), '/').']+)/';
+
+        preg_match_all($pattern, (string) $value, $matches, PREG_SET_ORDER);
 
         foreach ($matches as $match) {
             $results[] = array_merge(
@@ -275,7 +388,7 @@ class AnnotationTokenParser
     {
         $parseResult = new ParseResult;
 
-        $parseResult->text = preg_replace(static::ANNOTATION_PATTERN, '', $text);
+        $parseResult->text = preg_replace(self::ANNOTATION_PATTERN, '', $text) ?? $text;
 
         preg_match_all(self::ANNOTATION_PATTERN, $text, $matches);
 
@@ -289,6 +402,7 @@ class AnnotationTokenParser
         return $parseResult;
     }
 
+    /** @return list<ParsedAnnotation> */
     public function getAnnotations(): array
     {
         return $this->annotations;

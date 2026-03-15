@@ -4,15 +4,18 @@ namespace Torchlight\Engine\Annotations;
 
 use Torchlight\Engine\Annotations\Parser\ParsedAnnotation;
 
+#[Annotation(name: 'mono', charRanges: true)]
 class MonoAnnotation extends AbstractAnnotation
 {
-    public static string $name = 'mono';
-
-    public static array $aliases = [];
-
-    public function process(ParsedAnnotation $annotation): void
+    protected function onLine(ParsedAnnotation $annotation): void
     {
         $this->addBlockClass('has-mono-lines')
             ->addLineClass(['line-mono']);
+    }
+
+    protected function onCharacterRange(ParsedAnnotation $annotation): void
+    {
+        $this->addBlockClass('has-mono-lines')
+            ->addAttributesToCharacterRange(['class' => 'char-mono']);
     }
 }

@@ -1,11 +1,12 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
-
 use Torchlight\Engine\Annotations\Parser\AnnotationType;
 use Torchlight\Engine\Annotations\Ranges\RangeType;
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('it parses basic annotations', function () {
+uses(TorchlightTestCase::class);
+
+test('it parses basic annotations', function (): void {
     $results = $this->parseAnnotations('// [tl! add highlight]');
 
     $this->assertSame('// ', $results->text);
@@ -26,7 +27,7 @@ test('it parses basic annotations', function () {
     $this->assertEmpty($highlight->options);
 });
 
-test('it parses shorthand annotations', function () {
+test('it parses shorthand annotations', function (): void {
     $results = $this->parseAnnotations('// [tl! ++]');
 
     $this->assertSame('// ', $results->text);
@@ -40,7 +41,7 @@ test('it parses shorthand annotations', function () {
     $this->assertEmpty($add->options);
 });
 
-test('it parses annotations with ranges', function () {
+test('it parses annotations with ranges', function (): void {
     $results = $this->parseAnnotations('// [tl! add:3,2]');
 
     $this->assertCount(1, $results->annotations);
@@ -55,7 +56,7 @@ test('it parses annotations with ranges', function () {
     $this->assertEmpty($add->options);
 });
 
-test('it parses start of open ended range', function () {
+test('it parses start of open ended range', function (): void {
     $results = $this->parseAnnotations('// [tl! add:start]');
 
     $this->assertCount(1, $results->annotations);
@@ -70,7 +71,7 @@ test('it parses start of open ended range', function () {
     $this->assertEmpty($add->options);
 });
 
-test('it parses end of open ended range', function () {
+test('it parses end of open ended range', function (): void {
     $results = $this->parseAnnotations('// [tl! add:end]');
 
     $this->assertCount(1, $results->annotations);
@@ -85,7 +86,7 @@ test('it parses end of open ended range', function () {
     $this->assertEmpty($add->options);
 });
 
-test('it parses multiple annotations with ranges', function () {
+test('it parses multiple annotations with ranges', function (): void {
     $results = $this->parseAnnotations('// [tl! add:3,2 highlight:-3,-2]');
 
     $this->assertCount(2, $results->annotations);
@@ -109,7 +110,7 @@ test('it parses multiple annotations with ranges', function () {
     $this->assertEmpty($highlight->options);
 });
 
-test('it parses relative following line ranges', function () {
+test('it parses relative following line ranges', function (): void {
     $results = $this->parseAnnotations('// [tl! add:3]');
 
     $this->assertCount(1, $results->annotations);
@@ -124,7 +125,7 @@ test('it parses relative following line ranges', function () {
     $this->assertEmpty($add->options);
 });
 
-test('it parses relative preceding line ranges', function () {
+test('it parses relative preceding line ranges', function (): void {
     $results = $this->parseAnnotations('// [tl! add:-3]');
 
     $this->assertCount(1, $results->annotations);
@@ -139,7 +140,7 @@ test('it parses relative preceding line ranges', function () {
     $this->assertEmpty($add->options);
 });
 
-test('it parses annotations with parenthesis', function () {
+test('it parses annotations with parenthesis', function (): void {
     $results = $this->parseAnnotations('// [tl! reindex(24)]');
 
     $this->assertCount(1, $results->annotations);
@@ -153,7 +154,7 @@ test('it parses annotations with parenthesis', function () {
     $this->assertEmpty($reindex->options);
 });
 
-test('it parses annotations with parenthesis and ranges', function () {
+test('it parses annotations with parenthesis and ranges', function (): void {
     $results = $this->parseAnnotations('// [tl! reindex(+5):6,1]');
 
     $this->assertCount(1, $results->annotations);
@@ -171,7 +172,7 @@ test('it parses annotations with parenthesis and ranges', function () {
     $this->assertEmpty($reindex->options);
 });
 
-test('it parses relative following lines with parenthesis', function () {
+test('it parses relative following lines with parenthesis', function (): void {
 
     $results = $this->parseAnnotations('// [tl! reindex(+5):6]');
 
@@ -190,7 +191,7 @@ test('it parses relative following lines with parenthesis', function () {
     $this->assertEmpty($reindex->options);
 });
 
-test('it parses relative preceding lines with parenthesis', function () {
+test('it parses relative preceding lines with parenthesis', function (): void {
     $results = $this->parseAnnotations('// [tl! reindex(+5):-6]');
 
     $this->assertCount(1, $results->annotations);
@@ -208,7 +209,7 @@ test('it parses relative preceding lines with parenthesis', function () {
     $this->assertEmpty($reindex->options);
 });
 
-test('it parses different types of method args', function ($arg) {
+test('it parses different types of method args', function ($arg): void {
     $results = $this->parseAnnotations("// [tl! reindex({$arg}):-6]");
     $expectedText = "reindex({$arg}):-6";
 
@@ -234,7 +235,7 @@ test('it parses different types of method args', function ($arg) {
     '+1000',
 ]);
 
-test('it parses annotations with extra options', function () {
+test('it parses annotations with extra options', function (): void {
     $results = $this->parseAnnotations('// [tl! collapse:start open]');
 
     $this->assertCount(1, $results->annotations);
@@ -249,7 +250,7 @@ test('it parses annotations with extra options', function () {
     $this->assertSame(['open'], $collapse->options);
 });
 
-test('it parses annotations with extra options and ranges', function () {
+test('it parses annotations with extra options and ranges', function (): void {
     $results = $this->parseAnnotations('// [tl! collapse:3,2 open]');
 
     $this->assertCount(1, $results->annotations);
@@ -264,7 +265,7 @@ test('it parses annotations with extra options and ranges', function () {
     $this->assertSame(['open'], $collapse->options);
 });
 
-test('it parses annotations with multiple options', function () {
+test('it parses annotations with multiple options', function (): void {
     $results = $this->parseAnnotations('// [tl! collapse:start open something else here]');
 
     $this->assertCount(1, $results->annotations);
@@ -279,7 +280,7 @@ test('it parses annotations with multiple options', function () {
     $this->assertSame(['open', 'something', 'else', 'here'], $collapse->options);
 });
 
-test('it parses multiple annotations with options', function () {
+test('it parses multiple annotations with options', function (): void {
     $results = $this->parseAnnotations('// [tl! add highlight collapse:start open something else here]');
 
     $this->assertCount(3, $results->annotations);

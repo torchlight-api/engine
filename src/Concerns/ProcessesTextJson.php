@@ -2,21 +2,26 @@
 
 namespace Torchlight\Engine\Concerns;
 
+use Phiki\Token\Token;
 use Torchlight\Engine\Exceptions\InvalidJsonException;
 
 trait ProcessesTextJson
 {
     /**
+     * @param  array<int, array<int, Token>>  $tokens
+     * @return array<int, array<int, Token>>
+     *
      * @throws InvalidJsonException
      */
     protected function processTextOrJson(array $tokens): array
     {
+        /** @var array<int, array<int, Token>> $newTokens */
         $newTokens = [];
         $currentLine = 1;
 
         /** @var Token[] $line */
         foreach ($tokens as $line) {
-            if (! $this->annotationsEnabled) {
+            if (! $this->state->annotationsEnabled) {
                 $newTokens[] = $line;
 
                 $currentLine++;
@@ -32,12 +37,12 @@ trait ProcessesTextJson
                 $token = $line[$i];
 
                 if ($currentLine === 1) {
-                    if ($this->isPlainText() && str_contains($token->text, 'torchlight! ')) {
+                    if ($this->isPlainText() && str_contains($token->text, $this->blockOptionsKeyword)) {
                         $this->parseBlockOptions($token->text);
 
                         $skipLine = true;
                         break;
-                    } elseif ($this->isComment($token) && $i + 1 < $tokenLen && str_contains($line[$i + 1]->text, 'torchlight! ')) {
+                    } elseif ($this->isComment($token) && $i + 1 < $tokenLen && str_contains($line[$i + 1]->text, $this->blockOptionsKeyword)) {
                         $this->parseBlockOptions($line[$i + 1]->text);
 
                         $skipLine = true;
@@ -54,7 +59,7 @@ trait ProcessesTextJson
                 [$annotationText, $newToken] = $this->removeAnnotationFromToken($token);
 
                 if ($this->isPlainText()) {
-                    $trimmedText = rtrim($newToken->text);
+                    $trimmedText = rtrim((string) $newToken->text);
 
                     // Clean up danging comments
                     if (str_ends_with($trimmedText, '//')) {
@@ -85,6 +90,7 @@ trait ProcessesTextJson
             $newTokens[] = $newLineTokens;
         }
 
+        /** @var array<int, array<int, Token>> $newTokens */
         return $newTokens;
     }
 }

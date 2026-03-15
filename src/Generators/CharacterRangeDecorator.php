@@ -2,15 +2,18 @@
 
 namespace Torchlight\Engine\Generators;
 
-use Torchlight\Engine\Generators\Concerns\ManagesStyles;
-
 class CharacterRangeDecorator
 {
-    use ManagesStyles;
-
+    /**
+     * @param  list<array<string, int|string>>  $ranges
+     */
     public function decorateCharacterRanges(string $html, array $ranges): string
     {
         $tokens = preg_split('/(<[^>]+>)/', $html, -1, PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY);
+        if ($tokens === false) {
+            return $html;
+        }
+
         $output = [];
 
         for ($i = 0; $i < count($tokens); $i++) {
@@ -24,6 +27,14 @@ class CharacterRangeDecorator
         $tagStack = [];
         $visCount = 0;
         $foundAnyRanges = false;
+
+        foreach ($ranges as $range) {
+            if ($range['start'] === 0) {
+                $attributes = ThemeStyleResolver::toAttributeString($this->stringAttributes($range));
+                $output[] = "<span {$attributes}>";
+                $foundAnyRanges = true;
+            }
+        }
 
         foreach ($tokens as $token) {
             if (str_starts_with($token, '<span')) {
@@ -59,16 +70,14 @@ class CharacterRangeDecorator
                 }
 
                 if (count($rangesStarting) > 0) {
-                    usort($rangesStarting, function ($a, $b) {
-                        return $b['end'] <=> $a['end'];
-                    });
+                    usort($rangesStarting, fn ($a, $b) => $b['end'] <=> $a['end']);
 
                     foreach ($tagStack as $item) {
                         $output[] = '</span>';
                     }
 
                     foreach ($rangesStarting as $range) {
-                        $attributes = $this->toAttributeString(array_diff_key($range, array_flip(['start', 'end'])));
+                        $attributes = ThemeStyleResolver::toAttributeString($this->stringAttributes($range));
                         $output[] = "<span {$attributes}>";
                     }
 
@@ -95,6 +104,30 @@ class CharacterRangeDecorator
             return $html;
         }
 
-        return implode('', $output);
+        $result = implode('', $output);
+
+        // Remove empty spans produced when range boundaries align with token boundaries.
+        // The close-reopen cycle for the tag stack can leave behind <span ...></span>
+        // with no content when the boundary falls exactly at a token edge.
+        return preg_replace('/<span[^>]*><\/span>/', '', $result) ?? $result;
+    }
+
+    /**
+     * @param  array<string, int|string>  $range
+     * @return array<string, string>
+     */
+    private function stringAttributes(array $range): array
+    {
+        $attributes = [];
+
+        foreach ($range as $name => $value) {
+            if ($name === 'start' || $name === 'end' || ! is_string($value)) {
+                continue;
+            }
+
+            $attributes[$name] = $value;
+        }
+
+        return $attributes;
     }
 }

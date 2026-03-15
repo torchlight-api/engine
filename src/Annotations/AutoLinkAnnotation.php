@@ -2,39 +2,50 @@
 
 namespace Torchlight\Engine\Annotations;
 
-use Phiki\Token\HighlightedToken;
 use Torchlight\Engine\Annotations\Parser\ParsedAnnotation;
+use Torchlight\Engine\Generators\RenderableToken;
 
+#[Annotation(name: 'autolink')]
 class AutoLinkAnnotation extends AbstractAnnotation
 {
     const PATTERN_URL = '/\b((?:https?:\/\/|www\.)[^\s]+?)(?=[.,!?;:\]"\']?(?:\s|$))/i';
 
-    public static string $name = 'autolink';
-
     public function process(ParsedAnnotation $annotation): void
     {
-        $this->modifyRangeTokens(function ($tokens) {
-            return $this->injectLinksIntoContent($tokens);
-        });
+        $this->modifyRangeTokens(
+            function (array $tokens): array {
+                /** @var array<int, RenderableToken> $tokens */
+                return $this->injectLinksIntoContent($tokens);
+            }
+        );
     }
 
+    /**
+     * @param  array<int, RenderableToken>  $line
+     * @return array<int, RenderableToken>
+     */
     protected function injectLinksIntoContent(array $line): array
     {
-        /** @var HighlightedToken $token */
+        /** @var RenderableToken $token */
         foreach ($line as $token) {
-            preg_match_all(static::PATTERN_URL, $token->token->text, $links);
+            $tokenText = $token->highlighted->token->text;
+
+            preg_match_all(self::PATTERN_URL, $tokenText, $links);
 
             if (empty($links[0])) {
                 continue;
             }
 
-            $styles = implode('', $this->getTokenStyles($token));
+            $styles = implode('', $this->themeResolver()->getTokenStyles($token->highlighted));
 
             foreach ($links[0] as $href) {
                 $link = '<a href="'.$href.'" target="_blank" rel="noopener" class="torchlight-link" style="'.$styles.'">'.htmlspecialchars($href).'</a>';
 
-                $token->token->text = $this->safeReplace($href, $link, $token->token->text);
+                $tokenText = $this->safeReplace($href, $link, $tokenText);
             }
+
+            $token->highlighted->token->text = $tokenText;
+            $token->metadata->setRawContent($tokenText);
         }
 
         return $line;

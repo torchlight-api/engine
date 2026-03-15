@@ -1,8 +1,10 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('it applies highlight annotation', function () {
+uses(TorchlightTestCase::class);
+
+test('it applies highlight annotation', function (): void {
     $code = <<<'PHP'
 return [
     'extensions' => [

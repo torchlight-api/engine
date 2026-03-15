@@ -20,7 +20,7 @@ class Moonlight
         ];
 
         foreach ($replacements as $replacement) {
-            $html = preg_replace($replacement[0], $replacement[1], $html);
+            $html = preg_replace($replacement[0], $replacement[1], $html) ?? $html;
         }
 
         return $html;

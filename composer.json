@@ -19,14 +19,16 @@
     ],
     "require": {
         "php": "^8.2",
-        "phiki/phiki": "^1.1.4",
+        "phiki/phiki": "^2",
         "league/commonmark": "^2.5.3"
     },
     "require-dev": {
         "pestphp/pest": "^2",
         "laravel/pint": "^1.13",
         "ext-libxml": "*",
-        "ext-dom": "*"
+        "ext-dom": "*",
+        "phpstan/phpstan": "^2.1",
+        "rector/rector": "^2.1"
     },
     "autoload": {
         "psr-4": {
@@ -37,6 +39,9 @@
         "psr-4": {
             "Torchlight\\Engine\\Tests\\": "tests"
         }
+    },
+    "scripts": {
+        "review-tests": "php -S localhost:8000 -t tests/review"
     },
     "config": {
         "allow-plugins": {

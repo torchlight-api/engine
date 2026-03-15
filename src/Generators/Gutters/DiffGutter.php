@@ -4,9 +4,13 @@ namespace Torchlight\Engine\Generators\Gutters;
 
 use Torchlight\Engine\Annotations\Diff\DiffAddAnnotation;
 use Torchlight\Engine\Annotations\Diff\DiffRemoveAnnotation;
+use Torchlight\Engine\Generators\RenderableToken;
 
 class DiffGutter extends AbstractGutter
 {
+    protected string $cssClass = 'diff-indicator';
+
+    /** @var array<int, string> */
     protected array $lineMarkers = [];
 
     public function reset(): void
@@ -26,6 +30,9 @@ class DiffGutter extends AbstractGutter
             $this->options->diffIndicatorsInPlaceOfNumbers == false;
     }
 
+    /**
+     * @param  array<int, RenderableToken>  $tokens
+     */
     public function renderLine(int $relativeLine, int $index, array $tokens): string
     {
         if (count($this->lineMarkers) === 0) {
@@ -33,14 +40,7 @@ class DiffGutter extends AbstractGutter
         }
 
         if (! array_key_exists($index, $this->lineMarkers)) {
-            $styles = $this->getThemeValueStylesString('color', 'editorLineNumber.foreground');
-            $contentLen = 1;
-
-            if ($this->shouldRenderPadding()) {
-                $contentLen += $this->options->lineNumberAndDiffIndicatorRightPadding;
-            }
-
-            return '<span class="diff-indicator diff-indicator-empty" style="user-select: none;'.$styles.'">'.str_repeat(' ', $contentLen).'</span>';
+            return $this->renderEmptyIndicator();
         }
 
         $marker = $this->lineMarkers[$index];
@@ -61,6 +61,30 @@ class DiffGutter extends AbstractGutter
         }
 
         return $this->renderText($marker, $scopes, ['diff-indicator', $className], ['user-select' => 'none']);
+    }
+
+    public function renderSpacer(): string
+    {
+        if (count($this->lineMarkers) === 0) {
+            return '';
+        }
+
+        return $this->renderEmptyIndicator();
+    }
+
+    private function renderEmptyIndicator(): string
+    {
+        $contentLen = 1;
+
+        if ($this->shouldRenderPadding()) {
+            $contentLen += $this->options->lineNumberAndDiffIndicatorRightPadding;
+        }
+
+        return $this->renderGutterSpan(
+            str_repeat(' ', $contentLen),
+            class: 'diff-indicator diff-indicator-empty',
+            colorStyles: $this->getThemeValueStylesString('color', 'editorLineNumber.foreground'),
+        );
     }
 
     public function setLineMarker(int $line, string $marker): static

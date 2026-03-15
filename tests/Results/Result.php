@@ -4,15 +4,12 @@ namespace Torchlight\Engine\Tests\Results;
 
 class Result
 {
-    /**
-     * @var Line[]
-     */
-    protected array $lines = [];
-
-    public function __construct(array $lines)
-    {
-        $this->lines = $lines;
-    }
+    public function __construct(
+        /**
+         * @var Line[]
+         */
+        protected array $lines
+    ) {}
 
     public function lines(): array
     {

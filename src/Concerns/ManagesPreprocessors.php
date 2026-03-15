@@ -4,15 +4,23 @@ namespace Torchlight\Engine\Concerns;
 
 use Closure;
 use Phiki\Grammar\Grammar;
+use Phiki\Grammar\ParsedGrammar;
+use Phiki\Token\Token;
 use Torchlight\Engine\Contracts\Preprocessor;
 use Torchlight\Engine\Preprocessors\PreprocessorArgs;
 
 trait ManagesPreprocessors
 {
+    /** @var list<Closure|Preprocessor> */
     protected array $preprocessors = [];
 
+    /** @var array<string, list<Closure|Preprocessor>> */
     protected array $languageSpecificPreprocessors = [];
 
+    /**
+     * @param  string  $languageName  The grammar name to filter on
+     * @param  Closure|Preprocessor  $preprocessor  The preprocessor to register
+     */
     public function registerPreprocessorForLanguage(string $languageName, Closure|Preprocessor $preprocessor): static
     {
         if (! array_key_exists($languageName, $this->languageSpecificPreprocessors)) {
@@ -24,6 +32,10 @@ trait ManagesPreprocessors
         return $this;
     }
 
+    /**
+     * @param  Closure|Preprocessor  $preprocessor  The preprocessor to register
+     * @param  string|null  $languageName  Optional: restrict to a specific language
+     */
     public function registerPreprocessor(Closure|Preprocessor $preprocessor, ?string $languageName = null): static
     {
         if ($languageName) {
@@ -35,7 +47,12 @@ trait ManagesPreprocessors
         return $this;
     }
 
-    protected function runPreprocessors(array $tokens, string $originalCode, string|Grammar $grammar, ?string $languageName, array $preprocessors): array
+    /**
+     * @param  array<int, array<int, Token>>  $tokens
+     * @param  list<Closure|Preprocessor>  $preprocessors
+     * @return array<int, array<int, Token>>
+     */
+    protected function runPreprocessors(array $tokens, string $originalCode, string|Grammar|ParsedGrammar $grammar, ?string $languageName, array $preprocessors): array
     {
         $args = new PreprocessorArgs(
             $tokens,
@@ -46,16 +63,25 @@ trait ManagesPreprocessors
 
         foreach ($preprocessors as $preprocessor) {
             if ($preprocessor instanceof Preprocessor) {
+                if (! $preprocessor->supports($languageName)) {
+                    continue;
+                }
+
                 $tokens = $preprocessor->process($args, $this);
             } elseif (is_callable($preprocessor)) {
                 $tokens = $preprocessor($args, $this);
             }
         }
 
+        /** @var array<int, array<int, Token>> $tokens */
         return $tokens;
     }
 
-    protected function preprocess(array $tokens, string $originalCode, string|Grammar $grammar, ?string $languageName): array
+    /**
+     * @param  array<int, array<int, Token>>  $tokens
+     * @return array<int, array<int, Token>>
+     */
+    protected function preprocess(array $tokens, string $originalCode, string|Grammar|ParsedGrammar $grammar, ?string $languageName): array
     {
         if (count($this->preprocessors) > 0) {
             $tokens = $this->runPreprocessors($tokens, $originalCode, $grammar, $languageName, $this->preprocessors);

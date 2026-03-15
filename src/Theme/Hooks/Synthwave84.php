@@ -6,6 +6,7 @@ use Torchlight\Engine\Options;
 
 class Synthwave84
 {
+    /** @var array<int, string> */
     protected static array $opacities = [
         100 => 'FF',
         95 => 'F2',
@@ -38,28 +39,27 @@ class Synthwave84
         $replacement = $propertyPrefix.'color: #fff5f6; '.$propertyPrefix.'text-shadow: 0 0 2px #000, 0 0 10px #fc1f2c'.$opacity.
             ', 0 0 5px #fc1f2c'.$opacity.
             ', 0 0 25px #fc1f2c'.$opacity.';';
-        $html = preg_replace($pattern, $replacement, $html);
+        $html = preg_replace($pattern, $replacement, $html) ?? $html;
 
         $pattern = '/'.$propertyPrefix.'color:\s*#ff7edb;/i';
         $replacement = $propertyPrefix.'color: #f92aad; '.$propertyPrefix.'text-shadow: 0 0 2px #100c0f, 0 0 5px #dc078e33, 0 0 10px #fff3;';
-        $html = preg_replace($pattern, $replacement, $html);
+        $html = preg_replace($pattern, $replacement, $html) ?? $html;
 
         $pattern = '/'.$propertyPrefix.'color:\s*#fede5d;/i';
         $replacement = $propertyPrefix.'color: #f4eee4; '.$propertyPrefix.'text-shadow: 0 0 2px #393a33, 0 0 8px #f39f05'.$opacity.
             ', 0 0 2px #f39f05'.$opacity.';';
-        $html = preg_replace($pattern, $replacement, $html);
+        $html = preg_replace($pattern, $replacement, $html) ?? $html;
 
         $pattern = '/'.$propertyPrefix.'color:\s*#72f1b8;/i';
         $replacement = $propertyPrefix.'color: #72f1b8; '.$propertyPrefix.'text-shadow: 0 0 2px #100c0f, 0 0 10px #257c55'.$opacity.
             ', 0 0 35px #212724'.$opacity.';';
-        $html = preg_replace($pattern, $replacement, $html);
+        $html = preg_replace($pattern, $replacement, $html) ?? $html;
 
         $pattern = '/'.$propertyPrefix.'color:\s*#36f9f6;/i';
         $replacement = $propertyPrefix.'color: #fdfdfd; '.$propertyPrefix.'text-shadow: 0 0 2px #001716, 0 0 3px #03edf9'.$opacity.
             ', 0 0 5px #03edf9'.$opacity.
             ', 0 0 8px #03edf9'.$opacity.';';
-        $html = preg_replace($pattern, $replacement, $html);
 
-        return $html;
+        return preg_replace($pattern, $replacement, $html) ?? $html;
     }
 }

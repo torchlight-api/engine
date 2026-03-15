@@ -3,9 +3,13 @@
 namespace Torchlight\Engine\Generators\Gutters;
 
 use Torchlight\Engine\Annotations\Ranges\ImpactedRange;
+use Torchlight\Engine\Generators\RenderableToken;
 
 class CollapseGutter extends AbstractGutter
 {
+    protected string $cssClass = 'summary-caret';
+
+    /** @var array<int, string> */
     protected array $lineMarkers = [];
 
     public function reset(): void
@@ -15,22 +19,22 @@ class CollapseGutter extends AbstractGutter
 
     protected function getStartIndicator(string $styles): string
     {
-        return '<span class="summary-caret summary-caret-start" style="user-select: none;'.$styles.'"></span>';
+        return $this->renderGutterSpan('', extraClasses: ['summary-caret-start'], colorStyles: $styles);
     }
 
     protected function getMiddleIndicator(string $styles): string
     {
-        return '<span class="summary-caret summary-caret-middle" style="user-select: none;'.$styles.'"></span>';
+        return $this->renderGutterSpan('', extraClasses: ['summary-caret-middle'], colorStyles: $styles);
     }
 
     protected function getEndIndicator(string $styles): string
     {
-        return '<span class="summary-caret summary-caret-end" style="user-select: none;'.$styles.'"></span>';
+        return $this->renderGutterSpan('', extraClasses: ['summary-caret-end'], colorStyles: $styles);
     }
 
     protected function getEmptyIndicator(string $styles): string
     {
-        return '<span class="summary-caret summary-caret-empty" style="user-select: none;'.$styles.'"></span>';
+        return $this->renderGutterSpan('', extraClasses: ['summary-caret-empty'], colorStyles: $styles);
     }
 
     public function markRange(ImpactedRange $range): static
@@ -55,12 +59,28 @@ class CollapseGutter extends AbstractGutter
         return $this;
     }
 
+    public function renderSpacer(): string
+    {
+        if (empty($this->lineMarkers) || ! $this->options->showSummaryCarets) {
+            return '';
+        }
+
+        return $this->getEmptyIndicator($this->getLineNumberColorStyles());
+    }
+
+    /**
+     * @param  array<int, RenderableToken>  $tokens
+     */
     public function renderLine(int $relativeLine, int $index, array $tokens): string
     {
         if (empty($this->lineMarkers) || ! $this->options->showSummaryCarets) {
             return '';
         }
 
-        return $this->lineMarkers[$index] ?? $this->getEmptyIndicator($this->getLineNumberColorStyles());
+        $marker = $this->lineMarkers[$index] ?? null;
+
+        return is_string($marker)
+            ? $marker
+            : $this->getEmptyIndicator($this->getLineNumberColorStyles());
     }
 }

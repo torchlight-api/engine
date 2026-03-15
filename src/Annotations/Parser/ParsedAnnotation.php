@@ -16,9 +16,14 @@ class ParsedAnnotation
 
     public ?string $methodArgs = null;
 
+    public ?string $rawMethodArgs = null;
+
+    /** @var array<int|string, mixed> */
     public array $options = [];
 
     public ?AnnotationRange $range = null;
 
     public AnnotationType $type = AnnotationType::Named;
+
+    public ?string $prefix = null;
 }
