@@ -2,35 +2,29 @@
 
 namespace Torchlight\Engine\Annotations\Diff;
 
-use Torchlight\Engine\Annotations\AbstractAnnotation;
-use Torchlight\Engine\Annotations\Parser\ParsedAnnotation;
+use Torchlight\Engine\Annotations\Annotation;
 
-class DiffAddAnnotation extends AbstractAnnotation
+#[Annotation(name: 'add', aliases: ['++'], charRanges: true)]
+class DiffAddAnnotation extends AbstractDiffAnnotation
 {
-    public static string $name = 'add';
+    public const DIFF_ADD_SCOPES = [
+        'markup.inserted',
+        'torchlight.markup.inserted',
+        'torchlight.markup.inserted.foreground',
+    ];
 
-    public static array $aliases = ['++'];
-
-    public const DIFF_ADD_SCOPES = ['markup.inserted', 'torchlight.markup.inserted', 'torchlight.markup.inserted.foreground'];
-
-    public function process(ParsedAnnotation $annotation): void
+    protected function marker(): string
     {
-        $this->addBlockClass('has-add-lines')
-            ->addLineClass(['line-add', 'line-has-background']);
+        return '+';
+    }
 
-        if (! $this->options->diffPreserveSyntaxColors) {
-            $this->addLineScope(['markup.inserted', 'torchlight.markup.inserted']);
-        }
+    protected function classPrefix(): string
+    {
+        return 'add';
+    }
 
-        if ($this->options->diffIndicatorsEnabled) {
-            if ($this->options->diffIndicatorsInPlaceOfNumbers) {
-                $this->replaceLineMarker('+', self::DIFF_ADD_SCOPES);
-            } else {
-                $this->setDiffLineMarker('+')
-                    ->setLineScopes(self::DIFF_ADD_SCOPES);
-            }
-        } else {
-            $this->setLineScopes(self::DIFF_ADD_SCOPES);
-        }
+    protected function scopePrefix(): string
+    {
+        return 'inserted';
     }
 }

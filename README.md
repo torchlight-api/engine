@@ -55,6 +55,10 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
   * [Tailwind](#tailwind)
   * [Dark Mode](#dark-mode)
   * [Available Themes](#available-themes)
+  * [Custom Themes](#custom-themes)
+    * [Registering a Theme from a File](#registering-a-theme-from-a-file)
+    * [Registering a Theme from an Array](#registering-a-theme-from-an-array)
+    * [Overriding Theme Colors](#overriding-theme-colors)
 * [Annotations](#annotations)
   * [Plain Text Annotations](#plain-text-annotations)
   * [JSON Annotations](#json-annotations)
@@ -77,6 +81,7 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Collapsing Required CSS](#collapsing-required-css)
     * [Default to Open](#default-to-open)
     * [Removing Summary Carets](#removing-summary-carets)
+  * [Hiding Lines](#hiding-lines)
   * [Diffs](#diffs)
     * [Diff Shorthand](#diff-shorthand)
     * [Removing Diff Indicators](#removing-diff-indicators)
@@ -84,9 +89,12 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
     * [Diff Indicators Without Line Numbers](#diff-indicators-without-line-numbers)
     * [Diff Ranges](#diff-ranges)
     * [Preserving Syntax Colors](#preserving-syntax-colors)
+    * [Word Diff](#word-diff)
   * [Classes and IDs](#classes-and-ids)
     * [Using Range Modifiers](#using-range-modifiers)
     * [Character Ranges](#character-ranges)
+
+  * [Linking](#linking)
   * [Auto-linking URLs](#auto-linking-urls)
     * [Link Requirements](#link-requirements)
     * [Link Ranges](#link-ranges)
@@ -109,7 +117,15 @@ How simple is that? We're pretty proud of it and know you'll love it, too.
   * [Summary Indicator](#summary-indicator)
   * [Adding Extra Classes to the Torchlight Code Element](#adding-extra-classes-to-the-torchlight-code-element)
   * [The Copyable Option](#the-copyable-option)
+  * [Indent Guides](#indent-guides)
+  * [Column Guides](#column-guides)
   * [Disabling Torchlight Annotations](#disabling-torchlight-annotations)
+* [Extensibility](#extensibility)
+  * [Custom Annotations](#custom-annotations)
+  * [Annotation Macros](#annotation-macros)
+  * [Replacers](#replacers)
+  * [Token Transformers](#token-transformers)
+  * [Block Decorators](#block-decorators)
 * [Reporting Issues](#reporting-issues)
 * [Contributing](#contributing)
 * [Credits](#credits)
@@ -158,7 +174,7 @@ The CommonMark extension provides a few different ways to modify its behavior.
 
 #### Specifying the Extension's Default Language
 
-To change the extension's default language that should be used when author's omit the language on a code block, we can call the `setDefaultGrammar` on the underlying renderer:
+To change the extension's default language that should be used when authors omit the language on a code block, we can call the `setDefaultGrammar` on the underlying renderer:
 
 ```php
 <?php
@@ -200,7 +216,7 @@ interface BlockCache
 
 ```
 
-The cache implementation may be set on the extension by calling the `setBlockCache` on the underling renderer:
+The cache implementation may be set on the extension by calling the `setBlockCache` on the underlying renderer:
 
 ```php
 <?php
@@ -270,7 +286,7 @@ $code = <<<'PHP'
 echo "Hello, world!"; // [tl! ++]
 PHP;
 
-$code->toHtml(
+$engine->codeToHtml(
     $code,         // The code to highlight
     'php',         // The language
     'github-light' // The theme(s) to use
@@ -303,15 +319,15 @@ There are plans to upgrade both of these packages to support Torchlight Engine. 
 
 ### Will this package replace the existing CommonMark package?
 
-No, there are no immediate plans to deprecate the [existing CommonMark package](https://github.com/torchlight-api/torchlight-commonmark-php) as it provides additional features not currently available in the extension shipped with this package (notably integration with the `torchlight.php` configuration file and replacers). However, if you need a CommonMark extension that has no Laravel dependency, the extension provided by this package is what you are looking for.
+No, there are no immediate plans to deprecate the [existing CommonMark package](https://github.com/torchlight-api/torchlight-commonmark-php) as it provides additional features not currently available in the extension shipped with this package (notably integration with the `torchlight.php` configuration file). However, if you need a CommonMark extension that has no Laravel dependency, the extension provided by this package is what you are looking for.
 
 ### Some themes are missing compared to the API version. How come?
 
-Some themes available via. Torchlight API are not available with Torchlight Engine; this is largely due to them not being distributed any longer, or licensing information was not readily available. More information on adding custom themes to Torchlight will be coming in the future.
+Some themes available via. Torchlight API are not available with Torchlight Engine; this is largely due to them not being distributed any longer, or licensing information was not readily available. You can add your own themes using the methods described in [Custom Themes](#custom-themes).
 
 ### Can I add custom themes to Torchlight Engine?
 
-Technically _yes_, but it is a slightly involved process to account for the Torchlight colors. More information on adding custom themes will be coming in the future once the process is a bit simpler.
+Yes! You can register custom themes from a file or an array, and override colors on existing themes. See [Custom Themes](#custom-themes) for details.
 
 ### Are the custom grammars from the API version supported?
 
@@ -435,7 +451,7 @@ pre code.torchlight .summary-caret {
 
 ### Dark Mode
 
-Torchlight Engine utilizes Phiki for syntax highlighting, and recommends using it's multi-theme support for dark mode.
+Torchlight Engine utilizes Phiki for syntax highlighting, and recommends using its multi-theme support for dark mode.
 
 When instantiating an instance of the CommonMark extension, you may supply multiple themes like so:
 
@@ -564,15 +580,96 @@ The following themes are available:
 * winter-is-coming-dark
 * winter-is-coming-light
 
+### Custom Themes
+
+You can register custom themes from a VS Code theme file, an array, or override colors on existing themes.
+
+#### Registering a Theme from a File
+
+```php
+<?php
+
+use Torchlight\Engine\Engine;
+
+$engine = new Engine;
+
+$engine->registerTheme('my-theme', '/path/to/my-theme.json');
+
+echo $engine->codeToHtml('echo "hello";', 'php', 'my-theme');
+```
+
+The theme file should be a standard VS Code theme JSON file with `colors` and `tokenColors` keys.
+
+#### Registering a Theme from an Array
+
+```php
+$engine->registerTheme('my-theme', [
+    'name' => 'My Custom Theme',
+    'colors' => [
+        'editor.background' => '#1a1a2e',
+        'editor.foreground' => '#e0e0e0',
+        'editorLineNumber.foreground' => '#666666',
+    ],
+    'tokenColors' => [
+        [
+            'scope' => ['keyword', 'storage.type'],
+            'settings' => ['foreground' => '#c792ea'],
+        ],
+        [
+            'scope' => ['string'],
+            'settings' => ['foreground' => '#c3e88d'],
+        ],
+    ],
+]);
+```
+
+#### Overriding Theme Colors
+
+You can override specific colors on any theme using `Theme::override()`:
+
+```php
+<?php
+
+use Torchlight\Engine\Engine;
+use Torchlight\Engine\Theme\Theme;
+
+$engine = new Engine;
+
+echo $engine->codeToHtml(
+    'echo "hello";',
+    'php',
+    Theme::override('nord', [
+        'editor.background' => '#000000',
+        'editor.lineHighlightBackground' => '#ff000033',
+    ])
+);
+```
+
+This works with multi-theme dark mode as well:
+
+```php
+$engine->codeToHtml($code, 'php', [
+    'light' => Theme::override('github-light', [
+        'editor.background' => '#fafafa',
+    ]),
+    'dark' => Theme::override('nord', [
+        'editor.background' => '#111111',
+    ]),
+]);
+```
+
+Torchlight-specific color keys are also available, such as `torchlight.markupInsertedBackground`, `torchlight.markupDeletedBackground`, `torchlight.activeLineNumberColor`, and `torchlight.lineNumberColor`.
+
 ## Annotations
 
 One of the things that makes Torchlight such a joy to author with is that you can control how your code is rendered via _comments in the code you're writing._
 
-If you want to highlight a specific line, you can add a code comment with the magic syntax `[tl! highglight]` and that line will be highlighted.
+If you want to highlight a specific line, you can add a code comment with the magic syntax `[tl! highlight]` and that line will be highlighted.
 
 Gone are the days of inscrutable line number definitions at the top of your file, only to have them become outdated the moment you add or remove a line.
 
 Most other tools use a series of line numbers up front to denote highlight or focus lines:
+
 ````text
 ```php{3}{2,4-5}{9}
 return [
@@ -824,7 +921,7 @@ EOT; // [tl! highlight:-7,3]
 
 #### Applying an Annotation to All Lines
 
-You may use the `all` modifier to apply an annotation to _all_ lines. For example, the following would apply the `autolinks` annotation to every line:
+You may use the `all` modifier to apply an annotation to _all_ lines. For example, the following would apply the `autolink` annotation to every line:
 
 ```text
 ### Added [tl! autolink:all]
@@ -857,13 +954,21 @@ return [
 
 All of them! Ranges are supported for all of the Torchlight annotation keywords:
 
-* `highlight`
-* `focus`
-* `insert`
-* `remove`
+* `highlight` (alias `~~`)
+* `focus` (alias `**`)
+* `add` (alias `++`)
+* `remove` (alias `--`)
 * `collapse`
 * `autolink`
 * `reindex`
+* `word-diff` (alias `wd`)
+* `mono`
+* `hide`
+* `mark`
+* `link`
+* `lens`
+* `gutter`
+* `region`
 
 Custom classes and IDs are supported as well.
 
@@ -1056,7 +1161,7 @@ return [
 
 ![Collapsed Section Open](./.art/readme/example_summary_open.png)
 
-These lines will now be wrapped in a `summary` / `detail` pair of tags, that allows the user to natively toggle the open and closed start of the block. Torchlight will also add a `has-summaries` class to your `code` tag anytime you define a summary range.
+These lines will now be wrapped in a `summary` / `detail` pair of tags, that allows the user to natively toggle the open and closed state of the block. Torchlight will also add a `has-summaries` class to your `code` tag anytime you define a summary range.
 
 You can use the `start` `end` method of defining a range, or any of the other [range modifiers](#ranges).
 
@@ -1209,6 +1314,32 @@ Setting this to `false` will disable the collapse gutter entirely:
 
 ![Disabling Summary Carets](./.art/readme/example_disabled_collapse_gutter.png)
 
+### Hiding Lines
+
+The `hide` annotation removes lines from the rendered output entirely. Contiguous hidden ranges are replaced with an elision indicator:
+
+```php
+return [
+    'heading_permalink' => [ // [tl! hide:start]
+        'html_class' => 'permalink',
+        'id_prefix' => 'user-content',
+        'insert' => 'before',
+        'title' => 'Permalink',
+        'symbol' => '#',
+    ], // [tl! hide:end]
+
+    'extensions' => [
+        TorchlightExtension::class,
+    ]
+]
+```
+
+The hidden lines will be replaced with a `<span class="tl-elision">...</span>` marker. You can customize the placeholder text by passing it as an argument: `[tl! hide("--- snip ---")]`.
+
+The first line of a hidden range receives the `line-elided` class, and remaining hidden lines receive the `line-hidden` class. The code block gets a `has-hidden-lines` class.
+
+Unlike `collapse`, hidden lines cannot be expanded by the user -- they are fully removed from the output.
+
 ### Diffs
 
 To demonstrate the addition and removal of lines, you can use the `add` and `remove` keywords.
@@ -1275,7 +1406,7 @@ If you'd like to show the `+`/`-` indicators, you can do so by turning them on a
 
 For these examples we'll do it at the block level so we can see how it works.
 
-Let's change the behavior by sending `diffIndicators: true` to the API.
+Let's change the behavior by passing `diffIndicators: true`.
 
 ```php
 // torchlight! {"diffIndicators": true}
@@ -1394,6 +1525,19 @@ return [
 
 ![Preserving Diff Syntax Colors](./.art/readme/example_diff_preserve_colors.png)
 
+#### Word Diff
+
+For more granular diffs, you can use the `word-diff` annotation (shorthand `wd`) to show _word-level_ differences between two consecutive lines. Place the annotation on the second line, and Torchlight will compute the differences against the line above it:
+
+```php
+$greeting = "Hello, World!";
+$greeting = "Hello, PHP!"; // [tl! wd]
+```
+
+The annotated line is removed from the output, and the differences are rendered inline on the previous line using `<span class="word-diff-del">` and `<span class="word-diff-ins">` elements. A `has-word-diff` class is added to the code block, and the modified line receives a `line-word-diff` class.
+
+You can use multiple `wd` annotations in a single block, each comparing against its preceding line.
+
 ### Classes and IDs
 
 You can add your own custom classes by preceding them with a `.`, or add an ID with a `#`.
@@ -1441,8 +1585,6 @@ return [
     ]
 ]
 ```
-
-![Example of Pulse Class](./.art/readme//classes_pulse.gif)
 
 Check out the [range docs](#ranges) for more details, but here is a quick cheat sheet.
 
@@ -1503,6 +1645,28 @@ For example, the range `.inner-highlight:c26,34` instructs Torchlight to wrap th
 > [!NOTE]
 > You will need to add the desired CSS to style your character range classes.
 
+### Linking
+
+The `link` annotation makes lines or character ranges clickable. Pass the URL as an argument:
+
+```php
+// Learn more about Torchlight: [tl! link("https://torchlight.dev")]
+TorchlightExtension::class,
+```
+
+This wraps the line content in an `<a href="..." class="tl-link">` tag and adds a `has-links` class to the code block.
+
+For inline links on specific text, use a character range:
+
+```php
+TorchlightExtension::class, // [tl! link("https://torchlight.dev"):c0,26]
+```
+
+This adds a `tl-link` class and `data-href` attribute to the character range, which you can style with CSS.
+
+> [!NOTE]
+> For automatically linking URLs that appear in your code, see [Auto-linking URLs](#auto-linking-urls) instead.
+
 ### Auto-linking URLs
 
 Sometimes your code contains URLs to other supporting documentation. It's a nice experience for the reader if those URLs were actually links instead of having to copy-paste them.
@@ -1531,7 +1695,7 @@ The resulting link will look like this (color will change depending on your them
 
 Torchlight adds a `torchlight-link` class, and `rel` + `target` attributes.
 
-The `rel=noopener` attribute ensures that no a malicious website doesn't have access to the `window.opener` property. Although this is less of a concern now with modern browsers, we still want you to be covered.
+The `rel=noopener` attribute ensures that a malicious website doesn't have access to the `window.opener` property. Although this is less of a concern now with modern browsers, we still want you to be covered.
 
 Read more about `rel=noopener` at [mathiasbynens.github.io/rel-noopener](https://mathiasbynens.github.io/rel-noopener/).
 
@@ -1669,7 +1833,7 @@ return [
 
 #### Reindexing with Range Modifiers
 
-The `reindex` annotation _does_ work with the [annotation range modifiers](ranges), so you can do some pretty wacky stuff.
+The `reindex` annotation _does_ work with the [annotation range modifiers](#ranges), so you can do some pretty wacky stuff.
 
 If you wanted to reach down several lines and apply a reindex, you totally could!
 
@@ -1804,9 +1968,17 @@ Each of these is covered in detail on its own page, but here is an overview of e
 * [lineNumbers](#line-numbers) - turn line numbers on or off
 * [lineNumbersStart](#changing-the-starting-line-number) - the number of the first line
 * [lineNumbersStyle](#changing-line-number-styles) - the CSS style to apply to line numbers
+* [lineNumberAndDiffIndicatorRightPadding](#adding-line-number-right-padding) - padding to the right of line numbers/indicators
 * [diffIndicators](#removing-diff-indicators) - turn on diff indicators (`+`/`-`)
 * [diffIndicatorsInPlaceOfLineNumbers](#standalone-diff-indicators) - use the line number location for diff indicators
+* [diffPreserveSyntaxColors](#preserving-syntax-colors) - keep syntax colors on diff lines
 * [summaryCollapsedIndicator](#summary-indicator) - the text to show when a range is collapsed
+* [classes](#adding-extra-classes-to-the-torchlight-code-element) - extra CSS classes on the code element
+* [copyable](#the-copyable-option) - add a hidden element for copy-to-clipboard
+* [indentGuides](#indent-guides) - show indent guide lines (`"html"`, `"ascii"`, or `false`)
+* [indentGuidesTabWidth](#indent-guides) - control the tab width used for indent guide calculation
+* [columnGuides](#column-guides) - show vertical column guides at specific positions
+* [withGutter](#gutter-visibility) - show or hide the gutter area
 * [torchlightAnnotations](#disabling-torchlight-annotations) - disable Torchlight annotation processing altogether.
 
 ### Setting Default Options Globally
@@ -1901,7 +2073,9 @@ Some blocks you'll want to set options individually. Any options you set on the 
 
 To set block level options, the _first_ line of your block must be a comment, in the language of the block.
 
-The comment _must_ begin with `torchlight!` and be followed valid JSON.
+The comment _must_ begin with `torchlight!` and be followed by valid JSON.
+
+Line-based annotations may also be configured directly through block or global options. The following option keys map to their matching annotations: `highlightLines`, `addLines`, `removeLines`, `focusLines`, `autolinkLines`, `monoLines`, and `hideLines`.
 
 Here is an example turning line numbers off for a single block:
 
@@ -1924,7 +2098,7 @@ Any option that you can set at the global level, you can set at the block level.
 
 ### Line Numbers
 
-Torchlight add line numbers by default, but you can disable them globally or on the block level by changing the `lineNumbers` option to false.
+Torchlight adds line numbers by default, but you can disable them globally or on the block level by changing the `lineNumbers` option to false.
 
 Here's an example of the block level change:
 
@@ -2118,6 +2292,152 @@ class AppServiceProvider extends ServiceProvider
 }
 ```
 
+### Indent Guides
+
+Torchlight can render vertical indent guide lines to help visualize code structure. Enable them with the `indentGuides` option:
+
+```text
+// torchlight! {"indentGuides": "html"}
+return [
+    'extensions' => [
+        AttributesExtension::class,
+
+        TorchlightExtension::class,
+    ]
+]
+```
+
+The `indentGuides` option accepts:
+
+* `"html"` - render stylable guide spans inside the highlighted output
+* `"ascii"` - render ASCII guide characters directly in the code output
+* `false` - disable indent guides (default)
+
+You can also set the tab width used for guide calculation with `indentGuidesTabWidth`. If not set, Torchlight will auto-detect it from the code.
+
+```text
+// torchlight! {"indentGuides": "html", "indentGuidesTabWidth": 4}
+```
+
+When using `indentGuides: "html"`, indent guides require CSS for styling. The following snippet provides an example of how you might style indent guides:
+
+```css
+.has-indent-guides .tl-guide {
+    display: inline-block;
+    line-height: inherit;
+    border-right: 1px solid transparent;
+}
+
+.has-codelens .codelens .tl-guide {
+    display: inline-block;
+    line-height: inherit;
+}
+
+.has-indent-guides .tl-guide-d1 {
+    background-color: rgba(255, 128, 128, 0.06);
+    border-right-color: rgba(255, 128, 128, 0.28);
+}
+
+.has-indent-guides .tl-guide-d2 {
+    background-color: rgba(255, 185, 100, 0.06);
+    border-right-color: rgba(255, 185, 100, 0.28);
+}
+
+.has-indent-guides .tl-guide-d3 {
+    background-color: rgba(255, 230, 90, 0.06);
+    border-right-color: rgba(255, 230, 90, 0.28);
+}
+
+.has-indent-guides .tl-guide-d4 {
+    background-color: rgba(120, 210, 120, 0.06);
+    border-right-color: rgba(120, 210, 120, 0.28);
+}
+
+.has-indent-guides .tl-guide-d5 {
+    background-color: rgba(100, 200, 220, 0.06);
+    border-right-color: rgba(100, 200, 220, 0.28);
+}
+
+.has-indent-guides .tl-guide-d6 {
+    background-color: rgba(130, 150, 255, 0.06);
+    border-right-color: rgba(130, 150, 255, 0.28);
+}
+
+.has-indent-guides .tl-guide-d7 {
+    background-color: rgba(180, 130, 255, 0.06);
+    border-right-color: rgba(180, 130, 255, 0.28);
+}
+
+.has-indent-guides .tl-guide-d8 {
+    background-color: rgba(240, 130, 220, 0.06);
+    border-right-color: rgba(240, 130, 220, 0.28);
+}
+
+.has-indent-guides .tl-guide-d9  { background-color: rgba(255, 128, 128, 0.06); border-right-color: rgba(255, 128, 128, 0.28); }
+.has-indent-guides .tl-guide-d10 { background-color: rgba(255, 185, 100, 0.06); border-right-color: rgba(255, 185, 100, 0.28); }
+.has-indent-guides .tl-guide-d11 { background-color: rgba(255, 230,  90, 0.06); border-right-color: rgba(255, 230,  90, 0.28); }
+.has-indent-guides .tl-guide-d12 { background-color: rgba(120, 210, 120, 0.06); border-right-color: rgba(120, 210, 120, 0.28); }
+
+```
+
+### Column Guides
+
+Column guides render vertical guide markers at specific column positions, useful for showing line length limits:
+
+```text
+// torchlight! {"columnGuides": [80]}
+```
+
+You can specify multiple column positions:
+
+```text
+// torchlight! {"columnGuides": [80, 120]}
+```
+
+For each column guide, Torchlight injects a `<span class="torchlight-colguide torchlight-colguide-{col}">` element into each line and adds `torchlight-colguide-{col}` classes to line elements. The block receives a `has-column-guides` class and a `--tl-colguide-max` CSS variable set to the largest column value.
+
+You may style these column guides with CSS:
+
+```css
+.has-column-guides .line {
+  position: relative;
+  min-width: calc(var(--tl-colguide-max) * 1ch);
+}
+
+.torchlight-colguide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--col) * 1ch);
+  width: 1px;
+  background: rgba(68, 68, 68, 0.25);
+  pointer-events: none;
+}
+```
+
+```text
+// torchlight! {"columnGuides": [40, 65, 80]}
+return [
+    'extensions' => [
+        // Add attributes straight from markdown.
+        AttributesExtension::class,
+        
+        // Add Torchlight syntax highlighting.
+        TorchlightExtension::class, // [tl! ++]
+    ]
+]
+```
+
+![Column Guides](./.art/readme/example_colguides.png)
+
+### Gutter Visibility
+
+Set `withGutter` to `false` to remove the entire gutter area, including line numbers, diff markers, collapse indicators, and any custom gutter content:
+
+```text
+// torchlight! {"withGutter": false}
+```
+
 ### Disabling Torchlight Annotations
 
 If for whatever reason you want to disable _all_ of the Torchlight annotations, you may do so with the `torchlightAnnotations` option.
@@ -2139,6 +2459,158 @@ return [
 
 ![Disabling Torchlight Annotations](./.art/readme/example_disabling_annotations.png)
 
+## Extensibility
+
+Torchlight Engine provides several extension points for customizing behavior without modifying the core.
+
+### Custom Annotations
+
+You can register custom annotations using closures:
+
+```php
+<?php
+
+use Torchlight\Engine\Engine;
+use Torchlight\Engine\Annotations\AnnotationContext;
+
+$engine = new Engine;
+
+$engine->registerAnnotation('important', function (AnnotationContext $ctx) {
+    $ctx->addBlockClass('has-important-lines')
+        ->addLineClass('line-important');
+});
+```
+
+The `AnnotationContext` provides helpers for modifying lines and character ranges:
+
+* `addBlockClass(string $class)` - add a class to the code block
+* `addLineClass(array|string $class)` - add a class to the annotated line(s)
+* `addLineAttribute(string $name, string $value)` - add an HTML attribute to the line
+* `addAttributesToCharacterRange(array $attributes)` - add attributes to a character range
+* `addClassToCharacterRange(string $class)` - add a class to a character range
+* `getMethodArgs()` - get the annotation's method arguments (e.g., the value in `[tl! name("value")]`)
+* `getOptions()` - get the annotation's options
+* `isCharacterRange()` - check if this is a character range annotation
+* `getLineText(int $line)` - get the text content of a line
+* `getStartLine()` / `getEndLine()` - get the annotation's line range
+
+To support character ranges, pass `true` as the third argument:
+
+```php
+$engine->registerAnnotation('badge', function (AnnotationContext $ctx) {
+    if ($ctx->isCharacterRange()) {
+        $ctx->addClassToCharacterRange('badge');
+    } else {
+        $ctx->addLineClass('line-badge');
+    }
+}, charRanges: true);
+```
+
+### Annotation Macros
+
+Macros compose existing annotations under a single name:
+
+```php
+$engine->registerAnnotationMacro('important', ['highlight', '.important-line']);
+```
+
+Now `[tl! important]` will apply both `highlight` and the `.important-line` class.
+
+### Replacers
+
+Replacers post-process the final HTML output. Use them to redact secrets or transform content:
+
+```php
+// String replacement
+$engine->addReplacer('sk_live_abc123', 'YOUR_API_KEY');
+
+// Callable replacement
+$engine->addReplacer(function (string $html) {
+    return str_replace('old-class', 'new-class', $html);
+});
+```
+
+### Token Transformers
+
+Token transformers modify the token output for specific grammars before rendering. Implement the `TokenTransformer` interface:
+
+```php
+<?php
+
+use Torchlight\Engine\Contracts\TokenTransformer;
+use Torchlight\Engine\Generators\RenderContext;
+
+$engine->registerTokenTransformerFactory(function () {
+    return new class implements TokenTransformer {
+        public function transform(RenderContext $context, array $tokens): array
+        {
+            // Modify tokens here
+            return $tokens;
+        }
+
+        public function supports(string $grammarName): bool
+        {
+            return $grammarName === 'my-grammar';
+        }
+    };
+});
+```
+
+### Block Decorators
+
+Block decorators add content after the main code block. Implement the `BlockDecorator` interface:
+
+```php
+<?php
+
+use Torchlight\Engine\Contracts\BlockDecorator;
+use Torchlight\Engine\Generators\RenderContext;
+
+$engine->registerBlockDecoratorFactory(function () {
+    return new class implements BlockDecorator {
+        public function shouldRender(RenderContext $context): bool
+        {
+            return true;
+        }
+
+        public function render(RenderContext $context, string $cleanedText): string
+        {
+            return '<div class="my-footer">Custom content</div>';
+        }
+
+        public function getPriority(): int
+        {
+            return 100;
+        }
+    };
+});
+```
+
+### Upgrading Custom Preprocessors
+
+If you implement `Torchlight\Engine\Contracts\Preprocessor`, add a `supports()` method when upgrading:
+
+```php
+use Torchlight\Engine\Contracts\Preprocessor;
+use Torchlight\Engine\Engine;
+use Torchlight\Engine\Preprocessors\PreprocessorArgs;
+
+class MyPreprocessor implements Preprocessor
+{
+    public function process(PreprocessorArgs $args, Engine $engine): array
+    {
+        return $args->tokens;
+    }
+
+    public function supports(?string $grammarName): bool
+    {
+        return true;
+    }
+}
+```
+
+If your preprocessor should only run for specific languages, return `true` only for those grammar names. Closure-based preprocessors are unchanged.
+
 ## Reporting Issues
 
 When reporting issues, please include _all_ of the following information:
@@ -2148,7 +2620,7 @@ When reporting issues, please include _all_ of the following information:
 * Phiki version
 * Minimum input text required to reproduce the issue
 
-If you know an issue is related to [Phiki](https://github.com/phikiphp/phiki) and _not_ the Torchlight renderer, please create an issue [here](https://github.com/phikiphp/phiki/issues). If you are not sure, feel free to create an issue in this repository and it will eventually end up in the right place 🙂
+If you know an issue is related to [Phiki](https://github.com/phikiphp/phiki) and _not_ the Torchlight renderer, please create an issue [here](https://github.com/phikiphp/phiki/issues). If you are not sure, feel free to create an issue in this repository and it will eventually end up in the right place.
 
 Some issues may be difficult to resolve and take time to implement. Everyone involved thanks you in advance for your patience.
 

@@ -1,3 +1,5 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
+use Torchlight\Engine\Tests\TorchlightTestCase;
+
+uses(TorchlightTestCase::class);

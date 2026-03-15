@@ -1,3 +1,5 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class)->in('Unit', 'Feature');
+use Torchlight\Engine\Tests\TorchlightTestCase;
+
+uses(TorchlightTestCase::class)->in('Unit', 'Feature');

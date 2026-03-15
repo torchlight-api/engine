@@ -1,8 +1,10 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('it parses annotations in json', function () {
+uses(TorchlightTestCase::class);
+
+test('it parses annotations in json', function (): void {
     $code = <<<'CODE'
 {
     "torchlightAnnotations": true,

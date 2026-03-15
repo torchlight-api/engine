@@ -13,8 +13,8 @@ class CommentCleaningLoader
             $commentStyle = $sample[0][1];
             $codeLines = $sample[1];
 
-            if (str_contains($commentStyle, '|')) {
-                $parts = explode('|', $commentStyle);
+            if (str_contains((string) $commentStyle, '|')) {
+                $parts = explode('|', (string) $commentStyle);
                 $open = $parts[0];
                 $close = $parts[1];
 

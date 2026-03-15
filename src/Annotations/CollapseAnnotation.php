@@ -46,10 +46,8 @@ class CollapseAnnotation extends AbstractAnnotation
             ->addBlockClass('has-summaries')
             ->surroundRange("<details{$attributes}>", '</details>')
             ->surroundStartLine('<summary style="cursor: pointer; display: block;">', '</summary>')
-            ->modifyStartLineContents(function ($content) {
-                return $this->insertBeforeFinalSpanIfNewline($content, $this->getCollapseIndicator());
-            });
+            ->modifyStartLineContents(fn (string $content): string => $this->insertBeforeFinalSpanIfNewline($content, $this->getCollapseIndicator()));
 
-        $this->collapseGutter()->markRange($this->range);
+        $this->collapseGutter()->markRange($this->activeRange());
     }
 }

@@ -9,8 +9,11 @@ use League\CommonMark\Node\Node;
 use League\CommonMark\Renderer\ChildNodeRendererInterface;
 use League\CommonMark\Renderer\NodeRendererInterface;
 use Phiki\Grammar\Grammar;
+use Phiki\Theme\ParsedTheme;
 use Phiki\Theme\Theme;
+use Stringable;
 use Torchlight\Engine\Engine;
+use Torchlight\Engine\Theme\Theme as TorchlightTheme;
 
 class CodeBlockRenderer implements NodeRendererInterface
 {
@@ -18,12 +21,15 @@ class CodeBlockRenderer implements NodeRendererInterface
 
     protected string $defaultGrammar = 'txt';
 
+    /**
+     * @param  string|Theme|TorchlightTheme|ParsedTheme|array<int|string, string|Theme|TorchlightTheme|ParsedTheme>  $theme
+     */
     public function __construct(
-        private string|array|Theme $theme,
-        private Engine $engine = new Engine,
-        private bool $withGutter = false,
+        private readonly string|array|Theme|TorchlightTheme|ParsedTheme $theme,
+        private readonly Engine $engine = new Engine,
     ) {}
 
+    /** @var list<Closure(string): string> */
     protected array $renderCallbacks = [];
 
     public function setBlockCache(?BlockCache $cache): static
@@ -40,6 +46,7 @@ class CodeBlockRenderer implements NodeRendererInterface
         return $this;
     }
 
+    /** @param Closure(string): string $callback */
     public function addRenderCallback(Closure $callback): static
     {
         $this->renderCallbacks[] = $callback;
@@ -54,7 +61,7 @@ class CodeBlockRenderer implements NodeRendererInterface
         return $this;
     }
 
-    public function render(Node $node, ChildNodeRendererInterface $childRenderer)
+    public function render(Node $node, ChildNodeRendererInterface $childRenderer): string|Stringable|null
     {
         if (! $node instanceof FencedCode) {
             throw new InvalidArgumentException('Block must be instance of '.FencedCode::class);
@@ -65,9 +72,9 @@ class CodeBlockRenderer implements NodeRendererInterface
         }
 
         $code = rtrim($node->getLiteral(), "\n");
-        $grammar = $this->detectGrammar($node, $code);
+        $grammar = $this->detectGrammar($node);
 
-        $result = $this->engine->codeToHtml($code, $grammar, $this->theme, $this->withGutter, false);
+        $result = $this->engine->codeToHtml($code, $grammar, $this->theme);
 
         foreach ($this->renderCallbacks as $callback) {
             $result = $callback($result);
@@ -80,10 +87,10 @@ class CodeBlockRenderer implements NodeRendererInterface
         return $result;
     }
 
-    protected function detectGrammar(FencedCode $node, string $code): Grammar|string
+    protected function detectGrammar(FencedCode $node): Grammar|string
     {
         if (! isset($node->getInfoWords()[0]) || $node->getInfoWords()[0] === '') {
-            return $this->engine->detectGrammar($code) ?? $this->defaultGrammar;
+            return $this->defaultGrammar;
         }
 
         return $node->getInfoWords()[0];

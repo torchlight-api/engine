@@ -13,6 +13,7 @@ class RangeResolver
 
     protected int $maxLine = 0;
 
+    /** @var array<int, ImpactedRange> */
     protected array $annotationRanges = [];
 
     public function reset(): static
@@ -31,6 +32,9 @@ class RangeResolver
         return $this;
     }
 
+    /**
+     * @param  array<int, ParsedAnnotation>  $annotations
+     */
     public function setAnnotations(array $annotations): static
     {
         $this->annotations = $annotations;
@@ -45,7 +49,12 @@ class RangeResolver
 
     protected function makeRelativeRange(ParsedAnnotation $annotation): ?ImpactedRange
     {
-        $range = clone $annotation->range;
+        $annotationRange = $annotation->range;
+        if ($annotationRange === null) {
+            return null;
+        }
+
+        $range = clone $annotationRange;
 
         $startingLine = $annotation->sourceLine;
 
@@ -85,7 +94,7 @@ class RangeResolver
                 return new ImpactedRange($startingLine == $endingLine, $startingLine, $endingLine);
             }
 
-            if ($annotation->range->start === null) {
+            if ($annotationRange->start === null) {
                 return new ImpactedRange($startingLine === $endingLine, $endingLine, $startingLine);
             }
 

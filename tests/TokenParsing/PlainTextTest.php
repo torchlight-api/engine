@@ -1,8 +1,10 @@
 <?php
 
-uses(\Torchlight\Engine\Tests\TorchlightTestCase::class);
+use Torchlight\Engine\Tests\TorchlightTestCase;
 
-test('it parses annotations in plain text', function () {
+uses(TorchlightTestCase::class);
+
+test('it parses annotations in plain text', function (): void {
     $code = <<<'CODE'
 spring sunshine
 the smell of waters
