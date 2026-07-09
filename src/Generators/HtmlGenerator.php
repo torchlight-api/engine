@@ -691,7 +691,7 @@ class HtmlGenerator
     {
         $lineStyles = $this->themeResolver()->getLineStyles($classes);
         $styles = $this->themeResolver()->toStyleString($lineStyles);
-        $styleAttr = $styles !== '' ? "style=\"{$styles}\"" : '';
+        $styleAttr = $styles !== '' ? "style=\"{$styles}\" " : '';
 
         $attributes = $this->generationOptions()->lineAttributes[$currentLine] ?? [];
         $attributeString = ! empty($attributes)
